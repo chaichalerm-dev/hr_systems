@@ -1,69 +1,205 @@
-import Image from "next/image";
+import type { Metadata } from "next"
+import Link from "next/link"
+import {
+  Users,
+  CalendarCheck,
+  CalendarDays,
+  Banknote,
+  ShieldCheck,
+  FileBarChart,
+  LayoutDashboard,
+  GitBranch,
+  Database,
+  Lock,
+  ClipboardList,
+  TestTube2,
+  Rocket,
+  ArrowRight,
+} from "lucide-react"
 
-export default function Home() {
+import { Logo } from "@/components/shared/logo"
+import { LinkButton } from "@/components/shared/link-button"
+import { APP_NAME } from "@/lib/constants"
+import { getDictionary } from "@/i18n/server"
+import type { Dictionary } from "@/i18n/dictionaries/en"
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getDictionary()
+  return {
+    title: `${APP_NAME} — Modern HR Management`,
+    description: t.app.tagline,
+  }
+}
+
+const TECH_STACK = [
+  "Next.js",
+  "TypeScript",
+  "React",
+  "Tailwind CSS",
+  "shadcn/ui",
+  "Prisma",
+  "PostgreSQL",
+  "Auth.js",
+  "Zod",
+  "React Hook Form",
+  "TanStack Table",
+  "Recharts",
+  "Vitest",
+  "Playwright",
+]
+
+// Icons stay here; the copy comes from the dictionary so the page follows the
+// viewer's language without duplicating the icon wiring per locale.
+const featureList = (t: Dictionary) => [
+  { icon: Users, title: t.landing.features.employees, description: t.landing.features.employeesDescription },
+  { icon: CalendarCheck, title: t.landing.features.attendance, description: t.landing.features.attendanceDescription },
+  { icon: CalendarDays, title: t.landing.features.leave, description: t.landing.features.leaveDescription },
+  { icon: Banknote, title: t.landing.features.payroll, description: t.landing.features.payrollDescription },
+  { icon: LayoutDashboard, title: t.landing.features.dashboard, description: t.landing.features.dashboardDescription },
+  { icon: FileBarChart, title: t.landing.features.reports, description: t.landing.features.reportsDescription },
+]
+
+const highlightList = (t: Dictionary) => [
+  { icon: Lock, title: t.landing.highlights.authorization, description: t.landing.highlights.authorizationDescription },
+  { icon: GitBranch, title: t.landing.highlights.workflow, description: t.landing.highlights.workflowDescription },
+  { icon: Banknote, title: t.landing.highlights.payroll, description: t.landing.highlights.payrollDescription },
+  { icon: Database, title: t.landing.highlights.schema, description: t.landing.highlights.schemaDescription },
+  { icon: ShieldCheck, title: t.landing.highlights.audit, description: t.landing.highlights.auditDescription },
+  { icon: ClipboardList, title: t.landing.highlights.monolith, description: t.landing.highlights.monolithDescription },
+  { icon: TestTube2, title: t.landing.highlights.testing, description: t.landing.highlights.testingDescription },
+  { icon: Rocket, title: t.landing.highlights.deployment, description: t.landing.highlights.deploymentDescription },
+]
+
+const accountList = (t: Dictionary) => [
+  { role: t.roles.ADMIN, email: "admin@hrflow.demo", description: t.landing.accounts.adminDescription },
+  { role: t.roles.HR, email: "hr@hrflow.demo", description: t.landing.accounts.hrDescription },
+  { role: t.roles.MANAGER, email: "manager@hrflow.demo", description: t.landing.accounts.managerDescription },
+  { role: t.roles.EMPLOYEE, email: "employee@hrflow.demo", description: t.landing.accounts.employeeDescription },
+]
+
+export default async function LandingPage() {
+  const t = await getDictionary()
+  const features = featureList(t)
+  const highlights = highlightList(t)
+  const accounts = accountList(t)
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="flex min-h-screen flex-col">
+      <header className="border-b">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+          <Logo />
+          <LinkButton href="/login">
+            {t.auth.signIn}
+            <ArrowRight className="size-4" />
+          </LinkButton>
+        </div>
+      </header>
+
+      <main className="flex-1">
+        <section className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
+          <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
+            {t.landing.badge}
+          </span>
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
+            {t.landing.headlinePrefix}
+            <span className="text-primary">{t.landing.headlineAccent}</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <p className="mt-5 text-lg text-muted-foreground">{t.app.tagline}</p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <LinkButton href="/login" size="lg">
+              {t.landing.exploreDemo}
+              <ArrowRight className="size-4" />
+            </LinkButton>
+            <LinkButton href="#demo-accounts" variant="outline" size="lg">
+              {t.landing.viewDemoAccounts}
+            </LinkButton>
+          </div>
+        </section>
+
+        <section className="border-t bg-muted/30 py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <h2 className="text-center text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              {t.landing.keyFeatures}
+            </h2>
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {features.map((feature) => (
+                <div key={feature.title} className="rounded-xl border bg-card p-6 shadow-sm">
+                  <span className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <feature.icon className="size-5" />
+                  </span>
+                  <h3 className="mt-4 text-sm font-semibold">{feature.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <h2 className="text-center text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              {t.landing.engineeringHighlights}
+            </h2>
+            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {highlights.map((item) => (
+                <div key={item.title}>
+                  <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <item.icon className="size-4.5" />
+                  </span>
+                  <h3 className="mt-3 text-sm font-semibold">{item.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t bg-muted/30 py-16">
+          <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
+            <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              {t.landing.techStack}
+            </h2>
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              {TECH_STACK.map((tech) => (
+                <span key={tech} className="rounded-full border bg-card px-3 py-1.5 text-sm font-medium">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="demo-accounts" className="py-16">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6">
+            <h2 className="text-center text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              {t.landing.tryEveryRole}
+            </h2>
+            <p className="mt-2 text-center text-sm text-muted-foreground">{t.landing.tryEveryRoleDescription}</p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {accounts.map((account) => (
+                <div key={account.email} className="rounded-xl border bg-card p-5 shadow-sm">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-semibold">{account.role}</h3>
+                    <Link href="/login" className="text-xs text-primary hover:underline">
+                      {t.auth.signIn} →
+                    </Link>
+                  </div>
+                  <p className="mt-1 font-mono text-sm text-muted-foreground">{account.email}</p>
+                  <p className="mt-2 text-xs text-muted-foreground">{account.description}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-center text-xs text-muted-foreground">{t.landing.passwordNote}</p>
+          </div>
+        </section>
       </main>
+
+      <footer className="border-t py-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 text-center text-xs text-muted-foreground sm:px-6">
+          <Logo iconOnly className="opacity-70" />
+          <p>{t.landing.footerNote}</p>
+        </div>
+      </footer>
     </div>
-  );
+  )
 }
