@@ -1,5 +1,5 @@
 /**
- * Payroll calculation engine — pure, DB-free functions so the arithmetic can
+ * Payroll calculation engine, pure, DB-free functions so the arithmetic can
  * be unit tested in isolation. Orchestration (fetching employee/attendance
  * data, writing PayrollItem rows) lives in `payroll.ts`.
  *

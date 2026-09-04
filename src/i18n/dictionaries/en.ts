@@ -1,9 +1,9 @@
-// English is the source of truth for the dictionary shape — `th.ts` is typed
+// English is the source of truth for the dictionary shape, `th.ts` is typed
 // against it, so a missing or renamed key fails the build instead of silently
 // falling back to a key name at runtime.
 export const en = {
   app: {
-    tagline: "A modular HR management platform — employees, attendance, leave, and payroll in one place.",
+    tagline: "A modular HR management platform for employees, attendance, leave, and payroll in one place.",
   },
 
   nav: {
@@ -67,11 +67,11 @@ export const en = {
     email: "Email",
     password: "Password",
     myProfile: "My profile",
-    demoAccounts: "Demo accounts — click to autofill",
+    demoAccounts: "Demo accounts, click to autofill",
     invalidCredentials: "Invalid email or password.",
     invalidInput: "Enter a valid email and password.",
     loginFooter:
-      "Portfolio project — a reference HR management implementation, not connected to real payroll or tax systems.",
+      "A practical HR workspace for managing people, attendance, leave, and payroll in one place.",
     noAccess: "You don't have access to this page",
     noAccessDescription:
       "Your account role doesn't include permission for this section. If you think this is a mistake, contact your HR administrator.",
@@ -97,12 +97,12 @@ export const en = {
     monthlyPayrollCost: "Monthly Payroll Cost",
     teamSize: "Team Size",
     pendingApprovals: "Pending Approvals",
-    attendanceTrend: "Attendance trend — last 14 days",
+    attendanceTrend: "Attendance trend, last 14 days",
     attendanceTrendDescription: "Company-wide check-in status by day.",
-    teamAttendanceTrend: "Team attendance trend — last 14 days",
+    teamAttendanceTrend: "Team attendance trend, last 14 days",
     headcountByDepartment: "Headcount by department",
     headcountDescription: "Active and inactive employees per department.",
-    leaveByType: "Leave days taken — by type (YTD)",
+    leaveByType: "Leave days taken, by type (YTD)",
     leaveByTypeDescription: "Approved leave requests this year.",
     payrollTrend: "Payroll cost trend",
     payrollTrendDescription: "Net payout for approved/paid payroll runs.",
@@ -175,7 +175,7 @@ export const en = {
     saveChanges: "Save changes",
     employmentDetails: "Employment details",
     bankingStatutory: "Banking & statutory",
-    demoPlaceholderNote: "Demo placeholder data — not real financial information.",
+    demoPlaceholderNote: "Demo placeholder data, not real financial information.",
     noAddress: "No address on file.",
     reportsTo: "Reports to {name}",
     joined: "Joined {date}",
@@ -193,8 +193,8 @@ export const en = {
     checkOut: "Check out",
     checkingIn: "Checking in...",
     checkingOut: "Checking out...",
-    checkedIn: "Checked in — have a great day!",
-    checkedOut: "Checked out — see you tomorrow!",
+    checkedIn: "Checked in, have a great day!",
+    checkedOut: "Checked out, see you tomorrow!",
     locationNote: "Location is optional and only used for the attendance record's GPS fields.",
     inLabel: "In:",
     outLabel: "Out:",
@@ -357,7 +357,7 @@ export const en = {
     documentTitle: "Annual Tax Summary",
     taxYear: "Tax year {year}",
     disclaimer:
-      "Demo tax summary inspired by Thailand's 50 Tawi format — not a certified legal or accounting document. Verify against current Thai Revenue Department requirements before any real use.",
+      "Demo tax summary inspired by Thailand's 50 Tawi format, not a certified legal or accounting document. Verify against current Thai Revenue Department requirements before any real use.",
     employerTaxId: "Employer Tax ID: {id}",
     taxId: "Tax ID",
     socialSecurityNo: "Social security number",
@@ -367,7 +367,7 @@ export const en = {
     totalSocialSecurity: "Total social security contributions",
     totalWithholdingTax: "Total withholding tax",
     footer:
-      "Generated from paid payroll runs for tax year {year}. Portfolio/reference build — figures are demo calculations only.",
+      "Generated from paid payroll runs for tax year {year}. Portfolio/reference build, figures are demo calculations only.",
   },
 
   reports: {
@@ -419,7 +419,7 @@ export const en = {
     attendanceRules: "Attendance rules",
     attendanceRulesDescription: "Determines when a check-in counts as late.",
     payrollRules: "Payroll rules",
-    payrollRulesDescription: "Demo formulas for payroll calculation — see README for limitations.",
+    payrollRulesDescription: "Demo formulas for payroll calculation, see README for limitations.",
     workStart: "Work start",
     workEnd: "Work end",
     gracePeriod: "Grace period (minutes)",
@@ -469,19 +469,17 @@ export const en = {
   },
 
   landing: {
-    badge: "Portfolio / reference build",
-    headlinePrefix: "A modern HR platform, built to demonstrate ",
-    headlineAccent: "full-stack engineering.",
-    exploreDemo: "Explore the demo",
-    viewDemoAccounts: "View demo accounts",
-    keyFeatures: "Key features",
-    engineeringHighlights: "Engineering highlights",
-    techStack: "Tech stack",
-    tryEveryRole: "Try every role",
-    tryEveryRoleDescription: "Each demo account has its own dashboard and permissions — sign in and explore.",
-    passwordNote: "Passwords are on the login page's demo cards, and documented in the project README.",
+    badge: "HR workspace for your organisation",
+    headlinePrefix: "Everything your HR team needs,",
+    headlineAccent: "in one clear workspace.",
+    exploreDemo: "Sign in to HRFlow",
+    viewDemoAccounts: "View user roles",
+    keyFeatures: "Built for everyday HR work",
+    tryEveryRole: "A view for every role",
+    tryEveryRoleDescription: "Each role gets the dashboard and permissions that fit their responsibilities.",
+    passwordNote: "Demo account details are available on the sign-in page.",
     footerNote:
-      "HRFlow is a portfolio/reference implementation. Payroll and tax figures are demo calculations — not certified for legal or accounting use.",
+      "HRFlow brings employee records, attendance, leave, and payroll together. Payroll and tax figures are demo calculations, not certified for legal or accounting use.",
     features: {
       employees: "Employee management",
       employeesDescription: "Full employee records, org structure, search/filter/sort, and polished profile pages.",
@@ -496,26 +494,6 @@ export const en = {
       dashboardDescription: "Org-wide metrics for HR/Admin, team views for managers, and a personal view for employees.",
       reports: "Reports & documents",
       reportsDescription: "CSV exports for attendance, leave, payroll, and employees, plus printable payslips.",
-    },
-    highlights: {
-      authorization: "Server-side authorization",
-      authorizationDescription:
-        "Every server action and page re-checks role and ownership — the UI never does the gatekeeping alone.",
-      workflow: "Multi-step approval workflow",
-      workflowDescription: "Leave requests route through manager then HR with a full audit trail per decision.",
-      payroll: "Configurable payroll engine",
-      payrollDescription: "Pure, unit-tested calculation functions kept separate from data-fetching and UI.",
-      schema: "Relational Prisma schema",
-      schemaDescription: "15 models with proper indexes, unique constraints, and cascading relations.",
-      audit: "Audit logging",
-      auditDescription:
-        "Every sensitive mutation — payroll runs, approvals, employee changes — is recorded with an actor and timestamp.",
-      monolith: "Modular monolith",
-      monolithDescription: "Feature-based folders keep business logic out of components without microservice overhead.",
-      testing: "Automated testing",
-      testingDescription: "Vitest for business logic and permissions, Playwright for the critical end-to-end paths.",
-      deployment: "Vercel-ready deployment",
-      deploymentDescription: "Serverless-safe Prisma client, environment-driven config, and a documented deploy path.",
     },
     accounts: {
       adminDescription: "Full system access",

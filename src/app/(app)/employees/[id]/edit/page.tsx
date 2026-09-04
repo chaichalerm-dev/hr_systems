@@ -26,7 +26,7 @@ export default async function EditEmployeePage({ params }: { params: Promise<{ i
   return (
     <>
       <PageHeader
-        title={`${t.employees.editEmployee} — ${employee.firstName} ${employee.lastName}`}
+        title={`${t.employees.editEmployee}, ${employee.firstName} ${employee.lastName}`}
         breadcrumbs={[
           { label: t.employees.title, href: "/employees" },
           { label: `${employee.firstName} ${employee.lastName}`, href: `/employees/${id}` },

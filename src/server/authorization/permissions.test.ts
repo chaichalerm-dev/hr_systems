@@ -72,7 +72,7 @@ describe("canViewEmployeePayroll", () => {
     expect(canViewEmployeePayroll(makeSession(Role.EMPLOYEE, "emp-1"), "emp-2")).toBe(false)
   })
 
-  it("denies a manager viewing their direct report's payroll — payroll access is not automatic for managers", () => {
+  it("denies a manager viewing their direct report's payroll, payroll access is not automatic for managers", () => {
     expect(canViewEmployeePayroll(makeSession(Role.MANAGER, "mgr-1"), "emp-3")).toBe(false)
   })
 })

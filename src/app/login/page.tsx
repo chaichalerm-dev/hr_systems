@@ -16,7 +16,7 @@ export default async function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4 py-12">
       <div className="flex w-full max-w-sm flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-3 text-center">
-          <Logo />
+          <Logo size="lg" />
           <p className="text-sm text-muted-foreground">{t.app.tagline}</p>
         </div>
         <div className="w-full rounded-xl border bg-card p-6 shadow-sm">

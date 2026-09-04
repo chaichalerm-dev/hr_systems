@@ -4,7 +4,7 @@ import type { ComponentProps } from "react"
 import { Button } from "@/components/ui/button"
 
 // Button (Base UI) renders a real <button> by default and warns if `render`
-// points at a non-button element — this wraps that combination so callers
+// points at a non-button element, this wraps that combination so callers
 // don't have to remember `nativeButton={false}` every time they need a
 // button-styled link.
 export function LinkButton({

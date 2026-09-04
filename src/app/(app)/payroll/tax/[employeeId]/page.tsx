@@ -32,7 +32,7 @@ export default async function TaxDocumentPage({
       <div className="no-print">
         <PageHeader
           title={t.tax.title}
-          description={`${data.employeeName} — ${t.tax.taxYear.replace("{year}", String(taxYear))}`}
+          description={`${data.employeeName}, ${t.tax.taxYear.replace("{year}", String(taxYear))}`}
           actions={<PrintButton />}
         />
       </div>

@@ -131,12 +131,12 @@ async function EmployeeDashboard({ employeeId, t }: { employeeId: string; t: Dic
           <div className="flex items-center gap-2 text-sm">
             <LogIn className="size-4 text-status-good" />
             <span className="text-muted-foreground">{t.dashboard.checkInLabel}</span>
-            <span className="font-medium">{data.checkInTime ?? "—"}</span>
+            <span className="font-medium">{data.checkInTime ?? ","}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <LogOutIcon className="size-4 text-muted-foreground" />
             <span className="text-muted-foreground">{t.dashboard.checkOutLabel}</span>
-            <span className="font-medium">{data.checkOutTime ?? "—"}</span>
+            <span className="font-medium">{data.checkOutTime ?? ","}</span>
           </div>
         </div>
       </div>

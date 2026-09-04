@@ -49,11 +49,11 @@ export function TaxDocument({ data, t }: { data: TaxDocumentData; t: Dictionary 
         </div>
         <div>
           <p className="text-xs text-muted-foreground">{t.tax.taxId}</p>
-          <p className="font-medium">{data.taxId ?? "—"}</p>
+          <p className="font-medium">{data.taxId ?? ","}</p>
         </div>
         <div>
           <p className="text-xs text-muted-foreground">{t.tax.socialSecurityNo}</p>
-          <p className="font-medium">{data.socialSecurityNo ?? "—"}</p>
+          <p className="font-medium">{data.socialSecurityNo ?? ","}</p>
         </div>
         <div>
           <p className="text-xs text-muted-foreground">{t.tax.monthsIncluded}</p>

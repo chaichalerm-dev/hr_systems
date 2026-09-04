@@ -51,7 +51,7 @@ export async function requirePageRole(roles: Role[]): Promise<Session> {
   return session
 }
 
-/** Page-level counterpart to requireSession — see requirePageRole for why. */
+/** Page-level counterpart to requireSession, see requirePageRole for why. */
 export async function requirePageSession(): Promise<Session> {
   const session = await auth()
   if (!session?.user) redirect("/login")

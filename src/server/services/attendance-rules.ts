@@ -1,5 +1,5 @@
 /**
- * Attendance status/hours calculation — pure functions, unit tested in
+ * Attendance status/hours calculation, pure functions, unit tested in
  * isolation. DB orchestration (check-in/out server actions) lives in
  * `src/features/attendance/actions.ts`.
  */

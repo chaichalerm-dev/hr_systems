@@ -33,12 +33,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary()
   return {
     title: {
-      default: `${APP_NAME} — Modern HR Management`,
+      default: `${APP_NAME} | HR Management`,
       template: `%s · ${APP_NAME}`,
     },
     description: t.app.tagline,
     openGraph: {
-      title: `${APP_NAME} — Modern HR Management`,
+      title: `${APP_NAME} | HR Management`,
       description: t.app.tagline,
       type: "website",
     },

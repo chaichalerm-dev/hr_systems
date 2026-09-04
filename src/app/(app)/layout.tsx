@@ -30,7 +30,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     // h-dvh (not min-h-screen) pins this to exactly one viewport tall, so the
-    // sidebar and header stay put while only <main> scrolls internally —
+    // sidebar and header stay put while only <main> scrolls internally,
     // otherwise a tall page grows the whole flex row past 100vh and the
     // sidebar scrolls away with the rest of the document.
     <div className="flex h-dvh overflow-hidden">

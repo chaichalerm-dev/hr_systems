@@ -55,7 +55,7 @@ export default async function AuditLogPage({
                     <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
                       {entry.metadata && Object.keys(entry.metadata as object).length > 0
                         ? JSON.stringify(entry.metadata)
-                        : "—"}
+                        : ","}
                     </td>
                   </tr>
                 ))}

@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
       disabled={isPending}
       onClick={() => startTransition(() => setLocaleAction(nextLocale))}
     >
-      {/* Shows the language you'll switch TO, not the current one — the
+      {/* Shows the language you'll switch TO, not the current one, the
           standard convention for a two-way toggle with only two options. */}
       <span className="text-xs font-semibold">{nextLocale.toUpperCase()}</span>
     </Button>

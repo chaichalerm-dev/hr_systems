@@ -23,7 +23,7 @@ export default async function PayslipPage({ params }: { params: Promise<{ runId:
       <div className="no-print">
         <PageHeader
           title={t.payslip.title}
-          description={`${payslip.employeeName} — ${payslip.period}`}
+          description={`${payslip.employeeName}, ${payslip.period}`}
           actions={<PrintButton />}
         />
       </div>

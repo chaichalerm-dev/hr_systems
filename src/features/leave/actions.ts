@@ -9,7 +9,7 @@ import { recordAuditLog } from "@/server/services/audit-log"
 import { calculateLeaveDays } from "@/server/services/leave-rules"
 import { leaveDecisionSchema, leaveRequestFormSchema } from "@/validations/leave"
 
-/** Error codes, not sentences — the client renders them in the viewer's language. */
+/** Error codes, not sentences, the client renders them in the viewer's language. */
 export type LeaveErrorCode =
   | "noEmployeeProfile"
   | "invalidInput"

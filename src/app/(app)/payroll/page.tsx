@@ -49,7 +49,7 @@ export default async function PayrollPage() {
                     <StatusBadge status={run.status} />
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
-                    {run.paidAt ? format(run.paidAt, "d MMM yyyy") : "—"}
+                    {run.paidAt ? format(run.paidAt, "d MMM yyyy") : ","}
                   </td>
                 </tr>
               ))}

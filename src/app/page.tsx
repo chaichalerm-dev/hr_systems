@@ -5,15 +5,8 @@ import {
   CalendarCheck,
   CalendarDays,
   Banknote,
-  ShieldCheck,
   FileBarChart,
   LayoutDashboard,
-  GitBranch,
-  Database,
-  Lock,
-  ClipboardList,
-  TestTube2,
-  Rocket,
   ArrowRight,
 } from "lucide-react"
 
@@ -26,27 +19,10 @@ import type { Dictionary } from "@/i18n/dictionaries/en"
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary()
   return {
-    title: `${APP_NAME} — Modern HR Management`,
+    title: `${APP_NAME} | HR Management`,
     description: t.app.tagline,
   }
 }
-
-const TECH_STACK = [
-  "Next.js",
-  "TypeScript",
-  "React",
-  "Tailwind CSS",
-  "shadcn/ui",
-  "Prisma",
-  "PostgreSQL",
-  "Auth.js",
-  "Zod",
-  "React Hook Form",
-  "TanStack Table",
-  "Recharts",
-  "Vitest",
-  "Playwright",
-]
 
 // Icons stay here; the copy comes from the dictionary so the page follows the
 // viewer's language without duplicating the icon wiring per locale.
@@ -59,17 +35,6 @@ const featureList = (t: Dictionary) => [
   { icon: FileBarChart, title: t.landing.features.reports, description: t.landing.features.reportsDescription },
 ]
 
-const highlightList = (t: Dictionary) => [
-  { icon: Lock, title: t.landing.highlights.authorization, description: t.landing.highlights.authorizationDescription },
-  { icon: GitBranch, title: t.landing.highlights.workflow, description: t.landing.highlights.workflowDescription },
-  { icon: Banknote, title: t.landing.highlights.payroll, description: t.landing.highlights.payrollDescription },
-  { icon: Database, title: t.landing.highlights.schema, description: t.landing.highlights.schemaDescription },
-  { icon: ShieldCheck, title: t.landing.highlights.audit, description: t.landing.highlights.auditDescription },
-  { icon: ClipboardList, title: t.landing.highlights.monolith, description: t.landing.highlights.monolithDescription },
-  { icon: TestTube2, title: t.landing.highlights.testing, description: t.landing.highlights.testingDescription },
-  { icon: Rocket, title: t.landing.highlights.deployment, description: t.landing.highlights.deploymentDescription },
-]
-
 const accountList = (t: Dictionary) => [
   { role: t.roles.ADMIN, email: "admin@hrflow.demo", description: t.landing.accounts.adminDescription },
   { role: t.roles.HR, email: "hr@hrflow.demo", description: t.landing.accounts.hrDescription },
@@ -80,7 +45,6 @@ const accountList = (t: Dictionary) => [
 export default async function LandingPage() {
   const t = await getDictionary()
   const features = featureList(t)
-  const highlights = highlightList(t)
   const accounts = accountList(t)
 
   return (
@@ -130,40 +94,6 @@ export default async function LandingPage() {
                   <h3 className="mt-4 text-sm font-semibold">{feature.title}</h3>
                   <p className="mt-1.5 text-sm text-muted-foreground">{feature.description}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <h2 className="text-center text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-              {t.landing.engineeringHighlights}
-            </h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {highlights.map((item) => (
-                <div key={item.title}>
-                  <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <item.icon className="size-4.5" />
-                  </span>
-                  <h3 className="mt-3 text-sm font-semibold">{item.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t bg-muted/30 py-16">
-          <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-            <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-              {t.landing.techStack}
-            </h2>
-            <div className="mt-6 flex flex-wrap justify-center gap-2">
-              {TECH_STACK.map((tech) => (
-                <span key={tech} className="rounded-full border bg-card px-3 py-1.5 text-sm font-medium">
-                  {tech}
-                </span>
               ))}
             </div>
           </div>

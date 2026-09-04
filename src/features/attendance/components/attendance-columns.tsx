@@ -20,7 +20,7 @@ export function buildAttendanceColumns(t: Dictionary): LegacyColumnDef<Attendanc
       header: t.attendance.checkIn,
       cell: ({ row }) => (
         <span className="text-sm text-muted-foreground">
-          {row.original.checkIn ? format(row.original.checkIn, "HH:mm") : "—"}
+          {row.original.checkIn ? format(row.original.checkIn, "HH:mm") : ","}
         </span>
       ),
     },
@@ -29,7 +29,7 @@ export function buildAttendanceColumns(t: Dictionary): LegacyColumnDef<Attendanc
       header: t.attendance.checkOut,
       cell: ({ row }) => (
         <span className="text-sm text-muted-foreground">
-          {row.original.checkOut ? format(row.original.checkOut, "HH:mm") : "—"}
+          {row.original.checkOut ? format(row.original.checkOut, "HH:mm") : ","}
         </span>
       ),
     },
@@ -38,7 +38,7 @@ export function buildAttendanceColumns(t: Dictionary): LegacyColumnDef<Attendanc
       header: t.attendance.hours,
       cell: ({ row }) => (
         <span className="text-sm tabular-nums text-muted-foreground">
-          {row.original.workingHours ? `${Number(row.original.workingHours).toFixed(1)}h` : "—"}
+          {row.original.workingHours ? `${Number(row.original.workingHours).toFixed(1)}h` : ","}
         </span>
       ),
     },

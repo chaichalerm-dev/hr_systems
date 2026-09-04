@@ -61,7 +61,7 @@ export function buildEmployeeColumns(t: Dictionary): LegacyColumnDef<EmployeeLis
             {row.original.manager.firstName} {row.original.manager.lastName}
           </span>
         ) : (
-          <span className="text-sm text-muted-foreground">—</span>
+          <span className="text-sm text-muted-foreground">,</span>
         ),
     },
     {

@@ -68,8 +68,8 @@ export function CheckInOutWidget({
           <div className="mt-2 flex items-center gap-3">
             <StatusBadge status={status} />
             <span className="text-sm text-muted-foreground">
-              {t.attendance.inLabel} <span className="font-medium text-foreground">{checkInTime ?? "—"}</span> · {t.attendance.outLabel}{" "}
-              <span className="font-medium text-foreground">{checkOutTime ?? "—"}</span>
+              {t.attendance.inLabel} <span className="font-medium text-foreground">{checkInTime ?? ","}</span> · {t.attendance.outLabel}{" "}
+              <span className="font-medium text-foreground">{checkOutTime ?? ","}</span>
             </span>
           </div>
         </div>

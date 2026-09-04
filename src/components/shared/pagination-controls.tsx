@@ -33,7 +33,7 @@ export function PaginationControls({
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
       <p className="text-muted-foreground">
-        {t.common.showing} <span className="font-medium text-foreground">{from}</span>–
+        {t.common.showing} <span className="font-medium text-foreground">{from}</span> to{" "}
         <span className="font-medium text-foreground">{to}</span> {t.common.of}{" "}
         <span className="font-medium text-foreground">{total}</span>
       </p>

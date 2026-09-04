@@ -39,7 +39,7 @@ export const employeeFormSchema = z.object({
 export type EmployeeFormInput = z.infer<typeof employeeFormSchema>
 
 // react-hook-form binds directly to typed field state (a real `number`,
-// a real `Date`), not the raw strings a FormData submission would carry —
+// a real `Date`), not the raw strings a FormData submission would carry,
 // so the client-side resolver uses plain (non-coercing) versions of the
 // coerced fields to keep its input/output types aligned for zodResolver.
 export const employeeFormClientSchema = employeeFormSchema.extend({

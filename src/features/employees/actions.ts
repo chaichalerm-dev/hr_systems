@@ -15,7 +15,7 @@ export interface EmployeeActionState {
 
 function parseEmployeeForm(formData: FormData) {
   // Building the object from formData.entries() means a field the form
-  // never rendered (e.g. profileImageUrl) is simply absent (undefined) —
+  // never rendered (e.g. profileImageUrl) is simply absent (undefined),
   // not present-but-null the way `formData.get(missingKey)` would report
   // it, which `z.optional()` rejects.
   return employeeFormSchema.safeParse(Object.fromEntries(formData.entries()))

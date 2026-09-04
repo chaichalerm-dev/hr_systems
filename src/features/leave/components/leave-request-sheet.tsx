@@ -86,7 +86,7 @@ export function LeaveRequestSheet({
               <StatusBadge status={request.status} />
             </div>
             <p className="text-sm font-medium">
-              {format(request.startDate, "d MMM yyyy")} – {format(request.endDate, "d MMM yyyy")} · {request.days}{" "}
+              {format(request.startDate, "d MMM yyyy")} to {format(request.endDate, "d MMM yyyy")} · {request.days}{" "}
               {t.common.days}
             </p>
             <p className="text-sm text-muted-foreground">{request.reason}</p>

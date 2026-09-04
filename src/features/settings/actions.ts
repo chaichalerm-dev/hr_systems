@@ -9,7 +9,7 @@ import { recordAuditLog } from "@/server/services/audit-log"
 import { attendanceRulesFormSchema } from "@/validations/attendance"
 import { payrollRulesFormSchema } from "@/validations/payroll"
 
-/** Error codes, not sentences — the client renders them in the viewer's language. */
+/** Error codes, not sentences, the client renders them in the viewer's language. */
 export interface SettingsActionState {
   error: "invalidInput" | null
 }

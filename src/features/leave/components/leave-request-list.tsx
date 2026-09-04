@@ -50,7 +50,7 @@ export function LeaveRequestList({
                   {showEmployee && <TableCell className="font-medium">{request.employeeName}</TableCell>}
                   <TableCell>{request.leaveType}</TableCell>
                   <TableCell className="text-muted-foreground">
-                    {format(request.startDate, "d MMM")} – {format(request.endDate, "d MMM yyyy")}
+                    {format(request.startDate, "d MMM")} to {format(request.endDate, "d MMM yyyy")}
                   </TableCell>
                   <TableCell className="text-muted-foreground">{request.days}</TableCell>
                   <TableCell>

@@ -1,6 +1,6 @@
 export const APP_NAME = "HRFlow"
 export const APP_DESCRIPTION =
-  "A modular HR management platform — employees, attendance, leave, and payroll in one place."
+  "A modular HR management platform for employees, attendance, leave, and payroll in one place."
 
 export const ROLE_LABELS: Record<string, string> = {
   ADMIN: "Administrator",
@@ -10,7 +10,7 @@ export const ROLE_LABELS: Record<string, string> = {
 }
 
 // Attendance rules. In a real deployment these would live in CompanySetting
-// and be editable from an admin screen — kept as constants here for the
+// and be editable from an admin screen, kept as constants here for the
 // portfolio build's seed/demo data, with CompanySetting.ATTENDANCE_RULES
 // as the source of truth read at runtime (see src/server/services/attendance).
 export const DEFAULT_ATTENDANCE_RULES = {
@@ -27,7 +27,7 @@ export const LEAVE_TYPE_SEED = [
   { name: "Unpaid Leave", defaultDaysPerYear: 0, isPaid: false },
 ] as const
 
-// Demo-only payroll configuration. NOT verified against real Thai tax law —
+// Demo-only payroll configuration. NOT verified against real Thai tax law,
 // see README "Limitations" before using this for anything but a portfolio
 // demo. Stored in CompanySetting so it's editable without a redeploy.
 export const DEFAULT_PAYROLL_RULES = {

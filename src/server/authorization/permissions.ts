@@ -1,7 +1,7 @@
 import { Role } from "@prisma/client"
 import type { Session } from "next-auth"
 
-// Pure permission predicates — deliberately free of "server-only"/DB imports
+// Pure permission predicates, deliberately free of "server-only"/DB imports
 // so they stay unit-testable without a request/DB context. Session-fetching
 // helpers (requireSession/requireRole) live in ./index.ts instead.
 
@@ -16,7 +16,7 @@ export const canApproveAsHR = (role: Role) => role === Role.HR || role === Role.
 /**
  * Employees may view their own records; HR/Admin may view everyone's;
  * Managers may view their direct reports'. Used for attendance, leave, and
- * profile detail pages/actions — payroll uses the stricter
+ * profile detail pages/actions, payroll uses the stricter
  * `canViewEmployeePayroll` below.
  */
 export function canViewEmployeeRecord(

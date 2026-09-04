@@ -7,7 +7,7 @@ import { loginSchema } from "@/validations/auth"
 
 /**
  * Errors are returned as codes rather than sentences so the client can render
- * them in the viewer's language — a server action has no access to the
+ * them in the viewer's language, a server action has no access to the
  * locale-aware dictionary the client already holds.
  */
 export type LoginErrorCode = "invalidInput" | "invalidCredentials"

@@ -23,7 +23,7 @@ function Field({ label, value }: { label: string; value: string | null | undefin
   return (
     <div>
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="text-sm font-medium">{value || "—"}</p>
+      <p className="text-sm font-medium">{value || ","}</p>
     </div>
   )
 }

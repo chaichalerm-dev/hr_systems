@@ -42,8 +42,8 @@ export function PayslipDocument({ payslip, t }: { payslip: PayslipDetail; t: Dic
         </div>
         <div>
           <p className="text-xs text-muted-foreground">{t.payslip.bank}</p>
-          <p className="font-medium">{payslip.bankName ?? "—"}</p>
-          <p className="text-muted-foreground">{payslip.bankAccountNumber ?? "—"}</p>
+          <p className="font-medium">{payslip.bankName ?? ","}</p>
+          <p className="text-muted-foreground">{payslip.bankAccountNumber ?? ","}</p>
         </div>
         <div>
           <p className="text-xs text-muted-foreground">{t.payslip.payPeriod}</p>

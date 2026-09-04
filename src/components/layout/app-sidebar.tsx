@@ -17,7 +17,7 @@ const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365
 export function AppSidebar({ role, defaultCollapsed }: { role: Role; defaultCollapsed: boolean }) {
   const t = useTranslations()
   // Seeded from a cookie the server already read, so the first paint matches
-  // the stored preference — no flash of the wrong width, no hydration warning.
+  // the stored preference, no flash of the wrong width, no hydration warning.
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
 
   function toggle() {
