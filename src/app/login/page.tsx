@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import type { Metadata } from "next"
 
 import { Logo } from "@/components/shared/logo"
+import { LanguageSwitcher } from "@/components/layout/language-switcher"
 import { LoginForm } from "@/features/auth/components/login-form"
 import { getDictionary } from "@/i18n/server"
 
@@ -13,7 +14,10 @@ export default async function LoginPage() {
   const t = await getDictionary()
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4 py-12">
+    <div className="relative flex min-h-screen items-center justify-center bg-muted/30 px-4 py-12">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <div className="flex w-full max-w-sm flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-3 text-center">
           <Logo size="lg" />

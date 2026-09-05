@@ -12,6 +12,7 @@ import {
 
 import { Logo } from "@/components/shared/logo"
 import { LinkButton } from "@/components/shared/link-button"
+import { LanguageSwitcher } from "@/components/layout/language-switcher"
 import { APP_NAME } from "@/lib/constants"
 import { getDictionary } from "@/i18n/server"
 import type { Dictionary } from "@/i18n/dictionaries/en"
@@ -52,10 +53,13 @@ export default async function LandingPage() {
       <header className="border-b">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <Logo />
-          <LinkButton href="/login">
-            {t.auth.signIn}
-            <ArrowRight className="size-4" />
-          </LinkButton>
+          <div className="flex items-center gap-2">
+            <LanguageSwitcher />
+            <LinkButton href="/login">
+              {t.auth.signIn}
+              <ArrowRight className="size-4" />
+            </LinkButton>
+          </div>
         </div>
       </header>
 
