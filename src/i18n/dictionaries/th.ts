@@ -74,6 +74,10 @@ export const th: Dictionary = {
     noAccessDescription:
       "บทบาทของบัญชีคุณไม่มีสิทธิ์เข้าถึงส่วนนี้ หากคิดว่าเป็นความผิดพลาด กรุณาติดต่อผู้ดูแลระบบฝ่ายบุคคล",
     backToDashboard: "กลับไปแดชบอร์ด",
+    showPassword: "แสดงรหัสผ่าน",
+    hidePassword: "ซ่อนรหัสผ่าน",
+    signOutConfirmTitle: "ออกจากระบบ?",
+    signOutConfirmDescription: "คุณจะต้องเข้าสู่ระบบใหม่อีกครั้งเพื่อใช้งานบัญชีของคุณ",
   },
 
   roles: {

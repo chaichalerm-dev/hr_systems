@@ -11,6 +11,9 @@ export const authConfig = {
   },
   session: {
     strategy: "jwt",
+    // Keep users signed in across browser restarts instead of the
+    // session expiring the moment the tab/browser closes.
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
     jwt({ token, user }) {

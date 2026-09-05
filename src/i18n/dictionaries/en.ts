@@ -76,6 +76,10 @@ export const en = {
     noAccessDescription:
       "Your account role doesn't include permission for this section. If you think this is a mistake, contact your HR administrator.",
     backToDashboard: "Back to dashboard",
+    showPassword: "Show password",
+    hidePassword: "Hide password",
+    signOutConfirmTitle: "Sign out?",
+    signOutConfirmDescription: "You'll need to sign in again to access your account.",
   },
 
   roles: {
