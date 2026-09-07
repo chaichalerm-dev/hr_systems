@@ -9,9 +9,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useTranslations } from "@/i18n/client"
 import { navGroupsForRole, type NavItem } from "./nav-config"
 
-// Icon components can't cross the server->client boundary as props (they're
-// functions), so this resolves the nav list from `role` on the client side
-// instead of receiving the already-built NavItem[] from a server parent.
+// เลือกเมนูและไอคอนจากบทบาทที่หน้าจอ เพราะส่งฟังก์ชันไอคอนเป็น props จากเซิร์ฟเวอร์ไม่ได้
+// Resolve icons on the client from the role; icon functions cannot be passed as server props.
 export function SidebarNav({
   role,
   collapsed = false,
@@ -30,8 +29,8 @@ export function SidebarNav({
       {groups.map((group, index) => (
         <div key={group.key} className="flex flex-col gap-1">
           {collapsed ? (
-            // Collapsed rail: no room for a heading, but a hairline still
-            // marks where one category ends and the next begins.
+            // เมื่อย่อเมนู ใช้เส้นคั่นแบ่งหมวดแทนหัวข้อที่ไม่มีพื้นที่แสดง
+            // Use a divider between groups when the sidebar is too narrow for headings.
             index > 0 && <div className="mx-1 mb-1 border-t border-sidebar-border" />
           ) : (
             <p className="px-3 pb-1 text-xs font-medium text-muted-foreground">

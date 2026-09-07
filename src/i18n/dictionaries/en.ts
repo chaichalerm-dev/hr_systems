@@ -1,6 +1,5 @@
-// English is the source of truth for the dictionary shape, `th.ts` is typed
-// against it, so a missing or renamed key fails the build instead of silently
-// falling back to a key name at runtime.
+// ไฟล์นี้กำหนดชื่อข้อความที่ทุกภาษาต้องมี TypeScript จะเตือนเมื่อ th.ts ขาดคำแปล
+// This file defines the message keys. TypeScript checks that th.ts includes them all.
 export const en = {
   workspace: {
     label: "Workspace",
@@ -37,7 +36,7 @@ export const en = {
     dayComplete: "All done for today. Your working time has been recorded.",
   },
   app: {
-    tagline: "A modular HR management platform for employees, attendance, leave, and payroll in one place.",
+    tagline: "Manage people, attendance, leave, and payroll in one place.",
   },
 
   nav: {
@@ -105,10 +104,10 @@ export const en = {
     invalidCredentials: "Invalid email or password.",
     invalidInput: "Enter a valid email and password.",
     loginFooter:
-      "A practical HR workspace for managing people, attendance, leave, and payroll in one place.",
+      "One place for employee records, attendance, leave, and payroll.",
     noAccess: "You don't have access to this page",
     noAccessDescription:
-      "Your account role doesn't include permission for this section. If you think this is a mistake, contact your HR administrator.",
+      "Your account cannot open this page. Contact HR if you need access.",
     backToDashboard: "Back to dashboard",
     showPassword: "Show password",
     hidePassword: "Hide password",
@@ -125,7 +124,7 @@ export const en = {
 
   dashboard: {
     title: "Dashboard",
-    description: "An overview of what's happening across the company.",
+    description: "See the latest numbers and choose what to work on next.",
     totalEmployees: "Total Employees",
     activeCount: "{count} active",
     presentToday: "Present Today",
@@ -143,7 +142,7 @@ export const en = {
     leaveByType: "Leave days taken, by type (YTD)",
     leaveByTypeDescription: "Approved leave requests this year.",
     payrollTrend: "Payroll cost trend",
-    payrollTrendDescription: "Net payout for approved/paid payroll runs.",
+    payrollTrendDescription: "Total take-home pay for approved or paid runs.",
     noApprovedLeave: "No approved leave yet this year.",
     noPayrollRuns: "No approved payroll runs yet.",
     today: "Today",
@@ -160,8 +159,8 @@ export const en = {
 
   employees: {
     title: "Employees",
-    manageDescription: "Manage the full company roster.",
-    teamDescription: "Your direct reports.",
+    manageDescription: "Find an employee, open their profile, or add someone new.",
+    teamDescription: "Find and view the people who report directly to you.",
     addEmployee: "Add employee",
     editEmployee: "Edit",
     employee: "Employee",
@@ -188,7 +187,7 @@ export const en = {
     employmentSection: "Employment",
     addressSection: "Address",
     emergencyContact: "Emergency contact",
-    bankingSection: "Banking & statutory (demo placeholders)",
+    bankingSection: "Bank and tax details (demo)",
     employeeCode: "Employee code",
     firstName: "First name",
     lastName: "Last name",
@@ -213,7 +212,7 @@ export const en = {
     saveChanges: "Save changes",
     employmentDetails: "Employment details",
     bankingStatutory: "Banking & statutory",
-    demoPlaceholderNote: "Demo placeholder data, not real financial information.",
+    demoPlaceholderNote: "These are sample bank and tax details for the demo.",
     noAddress: "No address on file.",
     reportsTo: "Reports to {name}",
     joined: "Joined {date}",
@@ -225,7 +224,7 @@ export const en = {
 
   attendance: {
     title: "Attendance",
-    description: "Check in, review your history, and see monthly totals.",
+    description: "Check in or out, then review your attendance history.",
     todaysAttendance: "Today's attendance",
     checkIn: "Check in",
     checkOut: "Check out",
@@ -233,7 +232,7 @@ export const en = {
     checkingOut: "Checking out...",
     checkedIn: "Checked in, have a great day!",
     checkedOut: "Checked out, see you tomorrow!",
-    locationNote: "Location is optional and only used for the attendance record's GPS fields.",
+    locationNote: "Location is optional. If allowed, it is saved with this attendance record.",
     inLabel: "In:",
     outLabel: "Out:",
     presentThisMonth: "Present this month",
@@ -255,7 +254,7 @@ export const en = {
 
   leave: {
     title: "Leave",
-    description: "Request time off and track approvals.",
+    description: "Check your remaining leave, send a request, and follow its approval.",
     newRequest: "New request",
     requestLeave: "Request leave",
     leaveType: "Leave type",
@@ -264,7 +263,7 @@ export const en = {
     endDate: "End date",
     reason: "Reason",
     reasonPlaceholder: "Brief reason for the request",
-    weekendNote: "Weekends are excluded automatically when counting days.",
+    weekendNote: "Saturday and Sunday are not counted as leave days.",
     submitRequest: "Submit request",
     submitting: "Submitting...",
     submitted: "Leave request submitted.",
@@ -280,7 +279,7 @@ export const en = {
     cancelRequest: "Cancel request",
     cancelled: "Request cancelled.",
     commentOptional: "Comment (optional)",
-    commentPlaceholder: "Add context for your decision",
+    commentPlaceholder: "Explain why you approve or reject this request",
     approvalTimeline: "Approval timeline",
     submittedBy: "Submitted by {name}",
     awaitingManager: "Awaiting manager review",
@@ -306,7 +305,7 @@ export const en = {
 
   payroll: {
     title: "Payroll",
-    description: "Generate, review, and approve monthly payroll runs.",
+    description: "Prepare monthly pay, check the amounts, and approve the run.",
     generatePayroll: "Generate payroll",
     generatePayrollRun: "Generate payroll run",
     generating: "Generating...",
@@ -315,7 +314,7 @@ export const en = {
     month: "Month",
     year: "Year",
     regenerateNote:
-      "Recalculates every active employee's pay for the selected month. Safe to re-run before it's reviewed.",
+      "Calculate pay for active employees in this month. You can calculate again before the run is reviewed.",
     periodColumn: "Period",
     employeesColumn: "Employees",
     totalNet: "Total net",
@@ -336,7 +335,7 @@ export const en = {
     markedPaid: "Payroll run marked as paid.",
     confirmPaidTitle: "Mark this payroll run as paid?",
     confirmPaidDescription:
-      "This issues a payslip to every employee in the run. This action can't be undone from here.",
+      "This records the payment and issues payslips for everyone in the run. It does not transfer money. You cannot undo this here.",
     adjust: "Adjust",
     adjustmentFor: "Adjustment for {name}",
     adjustmentType: "Type",
@@ -353,16 +352,16 @@ export const en = {
     errors: {
       invalidInput: "Please check the form and try again.",
       notFound: "Payroll run not found.",
-      invalidTransition: "This payroll run is no longer in a state that allows that action.",
+      invalidTransition: "This run has moved to another step. Reload the page to see the available actions.",
     },
   },
 
   payslip: {
     title: "Payslip",
     myPayslips: "My Payslips",
-    myPayslipsDescription: "Payslips issued once a payroll run is marked as paid.",
+    myPayslipsDescription: "View or print the payslips HR has issued for you.",
     noPayslips: "No payslips yet",
-    noPayslipsDescription: "Payslips appear here after HR marks a payroll run as paid.",
+    noPayslipsDescription: "Your payslips will appear here after HR records a payroll run as paid.",
     period: "Period",
     netSalary: "Net salary",
     issued: "Issued",
@@ -376,7 +375,7 @@ export const en = {
     grossIncome: "Gross income",
     totalDeductions: "Total deductions",
     footer:
-      "This is a system-generated payslip from a portfolio reference build. Figures are demo calculations and are not certified for tax or legal use.",
+      "This payslip is from the demo system. Its amounts use sample formulas and are not certified for tax or legal use.",
     baseSalary: "Base salary",
     overtime: "Overtime",
     allowance: "Allowance",
@@ -391,11 +390,11 @@ export const en = {
 
   tax: {
     title: "Tax document",
-    annualTaxDocument: "Annual tax document",
+    annualTaxDocument: "Annual tax summary (demo)",
     documentTitle: "Annual Tax Summary",
     taxYear: "Tax year {year}",
     disclaimer:
-      "Demo tax summary inspired by Thailand's 50 Tawi format, not a certified legal or accounting document. Verify against current Thai Revenue Department requirements before any real use.",
+      "This is a sample annual tax summary inspired by the Thai 50 Tawi form. It is not a certified document for filing.",
     employerTaxId: "Employer Tax ID: {id}",
     taxId: "Tax ID",
     socialSecurityNo: "Social security number",
@@ -405,27 +404,27 @@ export const en = {
     totalSocialSecurity: "Total social security contributions",
     totalWithholdingTax: "Total withholding tax",
     footer:
-      "Generated from paid payroll runs for tax year {year}. Portfolio/reference build, figures are demo calculations only.",
+      "Includes paid payroll runs for {year}. Amounts use demo formulas.",
   },
 
   reports: {
     title: "Reports",
-    description: "Export CSV reports for HR and accounting review.",
+    description: "Choose a report and download a CSV file you can open in Excel.",
     from: "From",
     to: "To",
     attendanceReport: "Attendance report",
-    attendanceReportDescription: "Check-in/out records and status for a date range.",
+    attendanceReportDescription: "Check-in times, check-out times, and attendance status for your chosen dates.",
     leaveReport: "Leave report",
-    leaveReportDescription: "Leave requests and their status for a date range.",
+    leaveReportDescription: "Leave requests and approval status for your chosen dates.",
     employeeReport: "Employee report",
     employeeReportDescription: "The full employee roster with department and status.",
     payrollReport: "Payroll report",
-    payrollReportDescription: "Every payroll item across all runs, most recent first.",
+    payrollReportDescription: "Pay details from all payroll runs, with the latest first.",
   },
 
   auditLog: {
     title: "Audit Log",
-    description: "A record of important actions taken across the system.",
+    description: "See who changed important records and when. Open a row’s details to learn more.",
     when: "When",
     actor: "Actor",
     action: "Action",
@@ -453,11 +452,11 @@ export const en = {
 
   settings: {
     title: "Settings",
-    description: "Company-wide rules used across attendance and payroll.",
+    description: "Choose how the company records attendance and calculates demo payroll.",
     attendanceRules: "Attendance rules",
-    attendanceRulesDescription: "Determines when a check-in counts as late.",
+    attendanceRulesDescription: "Set working times and how many late minutes are allowed before counting someone as late.",
     payrollRules: "Payroll rules",
-    payrollRulesDescription: "Demo formulas for payroll calculation, see README for limitations.",
+    payrollRulesDescription: "Set the rates used by the demo payroll calculation. These are sample formulas for testing.",
     workStart: "Work start",
     workEnd: "Work end",
     gracePeriod: "Grace period (minutes)",
@@ -465,13 +464,13 @@ export const en = {
     saveAttendanceRules: "Save attendance rules",
     attendanceRulesUpdated: "Attendance rules updated.",
     socialSecurityRate: "Social security rate",
-    socialSecurityRateHint: "e.g. 0.05 = 5%",
+    socialSecurityRateHint: "Enter 0.05 for 5%.",
     socialSecurityMaxBase: "Social security max base (THB)",
     withholdingTaxRate: "Withholding tax rate",
-    withholdingTaxRateHint: "Flat demo rate, e.g. 0.03 = 3%",
+    withholdingTaxRateHint: "Demo flat rate: enter 0.03 for 3%.",
     lateDeductionPerMinute: "Late deduction / minute (THB)",
     absenceDeductionDivisor: "Absence deduction divisor",
-    absenceDeductionHint: "Monthly salary ÷ this = one day's pay",
+    absenceDeductionHint: "Monthly salary divided by this number gives one day’s pay.",
     savePayrollRules: "Save payroll rules",
     payrollRulesUpdated: "Payroll rules updated.",
     invalidInput: "Please check the values and try again.",
@@ -514,24 +513,24 @@ export const en = {
     viewDemoAccounts: "View user roles",
     keyFeatures: "Built for everyday HR work",
     tryEveryRole: "A view for every role",
-    tryEveryRoleDescription: "Each role gets the dashboard and permissions that fit their responsibilities.",
+    tryEveryRoleDescription: "Try each role to see the pages and tasks available to that person.",
     passwordNote: "Demo account details are available on the sign-in page.",
     footerNote:
       "HRFlow brings employee records, attendance, leave, and payroll together. Payroll and tax figures are demo calculations, not certified for legal or accounting use.",
     features: {
       employees: "Employee management",
-      employeesDescription: "Full employee records, org structure, search/filter/sort, and polished profile pages.",
+      employeesDescription: "Find employees, view their profiles, and update their details.",
       attendance: "Attendance tracking",
-      attendanceDescription: "Check-in/out with configurable grace periods, late detection, and monthly summaries.",
+      attendanceDescription: "Record working times, check late arrivals, and review monthly totals.",
       leave: "Leave workflow",
-      leaveDescription: "Employee → manager → HR approval chain with a visual timeline and balance tracking.",
+      leaveDescription: "Request leave and follow manager and HR approval, with remaining days shown.",
       payroll: "Payroll engine",
       payrollDescription:
-        "A modular calculation engine with a draft → calculated → reviewed → approved → paid workflow.",
+        "Calculate pay, check adjustments, approve the run, and record payment.",
       dashboard: "Role-aware dashboard",
-      dashboardDescription: "Org-wide metrics for HR/Admin, team views for managers, and a personal view for employees.",
+      dashboardDescription: "See company totals, team attendance, or your own records based on your role.",
       reports: "Reports & documents",
-      reportsDescription: "CSV exports for attendance, leave, payroll, and employees, plus printable payslips.",
+      reportsDescription: "Download reports for Excel and print issued payslips.",
     },
     accounts: {
       adminDescription: "Full system access",
@@ -542,7 +541,9 @@ export const en = {
   },
 } as const
 
-/** Widens the `as const` literal types back to `string` so other locales can supply their own wording. */
+/** ให้แต่ละภาษาใช้ข้อความของตนเองได้ โดยยังต้องมี key เหมือนกัน
+ * Allow each language to supply different strings while keeping the same keys.
+ */
 type Translated<T> = { [K in keyof T]: T[K] extends string ? string : Translated<T[K]> }
 
 export type Dictionary = Translated<typeof en>

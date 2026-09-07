@@ -5,9 +5,9 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // Override default ignores of eslint-config-next.
+  // ระบุไฟล์ที่ไม่ต้องตรวจรูปแบบโค้ด / Choose files ESLint should skip.
   globalIgnores([
-    // Default ignores of eslint-config-next:
+    // ไฟล์ build และชนิดข้อมูลที่ Next.js สร้าง / Next.js build output and generated types.
     ".next/**",
     "out/**",
     "build/**",

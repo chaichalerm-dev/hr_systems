@@ -60,8 +60,9 @@ export default async function MyPayslipsPage() {
                   <td className="px-4 py-3 tabular-nums">{formatCurrency(p.netSalary)}</td>
                   <td className="px-4 py-3 text-muted-foreground">{p.issuedAt.toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-right">
-                    {/* inline-block + min-width keeps this a usable tap target even for
-                        short labels like Thai "ดู", which is only a few pixels wide. */}
+                    {/** เผื่อพื้นที่กดให้คำสั้นอย่าง “ดู” แตะได้สะดวกบนมือถือ
+ * Give short labels such as “ดู” enough space to tap on mobile.
+ */}
                     <Link
                       href={`/payroll/${runIdByItemId.get(p.payrollItemId)}/payslip/${p.payrollItemId}`}
                       className="inline-block min-w-16 rounded-md px-2 py-1 text-center font-medium text-primary hover:bg-accent hover:underline"

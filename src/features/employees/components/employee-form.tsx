@@ -142,9 +142,8 @@ export function EmployeeForm({
     [positions, selectedDepartmentId]
   )
 
-  // Base UI's <Select.Value> only shows the matching label automatically
-  // when the root is given this value->label map; otherwise it renders the
-  // raw stored value (e.g. a department id) instead of its display name.
+  // ส่งคู่รหัสกับชื่อให้ Select เพื่อแสดงชื่อแผนกหรือตำแหน่ง แทนรหัสในฐานข้อมูล
+  // Give Select a value-to-label map so it shows readable names instead of stored IDs.
   const departmentItems = useMemo(() => Object.fromEntries(departments.map((d) => [d.id, d.name])), [departments])
   const positionItems = useMemo(
     () => Object.fromEntries(filteredPositions.map((p) => [p.id, p.title])),
@@ -425,7 +424,7 @@ export function EmployeeForm({
               control={form.control}
               name="emergencyContactRelation"
               label={t.employees.relationship}
-              placeholder="Spouse, Parent..."
+              placeholder="เช่น คู่สมรส ผู้ปกครอง / Spouse, parent..."
             />
           </div>
         </section>

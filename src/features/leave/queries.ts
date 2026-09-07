@@ -122,7 +122,9 @@ export async function listMyLeaveRequests(employeeId: string): Promise<LeaveRequ
   return rows.map(mapLeaveRequest)
 }
 
-/** Requests awaiting the current viewer's decision: their reports' manager-level queue, or the company HR queue. */
+/** ดึงคำขอที่รอคนนี้ตัดสินใจ ตามสิทธิ์หัวหน้าหรือฝ่ายบุคคล
+ * Load requests awaiting this viewer’s decision at the manager or HR step.
+ */
 export async function listPendingApprovals(session: Session): Promise<LeaveRequestDetail[]> {
   const { role, employeeId } = session.user
 

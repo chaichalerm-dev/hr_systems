@@ -14,7 +14,9 @@ import { Role } from "@prisma/client"
 
 import type { Dictionary } from "@/i18n/dictionaries/en"
 
-/** Key into `dictionary.nav`, so the label is translated at render time rather than baked in here. */
+/** ใช้ชื่อข้อความใน dictionary.nav เพื่อแสดงชื่อเมนูตามภาษาที่เลือก
+ * Look up the menu label in dictionary.nav for the selected language.
+ */
 type NavLabelKey = keyof Dictionary["nav"]
 
 export type NavGroupKey = "groupOverview" | "groupWorkforce" | "groupPayroll" | "groupAdmin"
@@ -32,8 +34,8 @@ export interface NavGroup {
   items: NavItem[]
 }
 
-// Order here is display order: Overview first, then day-to-day workforce
-// tasks, then Payroll, then admin/oversight tools last.
+// เรียงเมนูตามการใช้งาน: ภาพรวม งานบุคคล เงินเดือน แล้วจึงเครื่องมือผู้ดูแล
+// Show overview, workforce, payroll, and administration in that order.
 export const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard, roles: [Role.ADMIN, Role.HR, Role.MANAGER, Role.EMPLOYEE], group: "groupOverview" },
 
@@ -51,7 +53,9 @@ export const NAV_ITEMS: NavItem[] = [
 
 const GROUP_ORDER: NavGroupKey[] = ["groupOverview", "groupWorkforce", "groupPayroll", "groupAdmin"]
 
-/** Items for this role, bucketed into groups (in display order); empty groups are omitted. */
+/** จัดกลุ่มเฉพาะเมนูที่บทบาทนี้ใช้ได้ และซ่อนกลุ่มที่ไม่มีรายการ
+ * Group the pages allowed for this role and omit empty groups.
+ */
 export function navGroupsForRole(role: Role): NavGroup[] {
   const visible = NAV_ITEMS.filter((item) => item.roles.includes(role))
   return GROUP_ORDER.map((key) => ({ key, items: visible.filter((item) => item.group === key) })).filter(

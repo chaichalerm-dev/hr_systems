@@ -16,8 +16,8 @@ function makeSession(role: Role, employeeId: string | null): Session {
   } as Session
 }
 
-describe("canManageEmployees / canManagePayroll", () => {
-  it("allows ADMIN and HR, denies MANAGER and EMPLOYEE", () => {
+describe("canManageEmployees / canManagePayroll / สิทธิ์จัดการพนักงานและเงินเดือน", () => {
+  it("allows ADMIN and HR, denies MANAGER and EMPLOYEE / ให้เฉพาะผู้ดูแลและฝ่ายบุคคลจัดการได้", () => {
     expect(canManageEmployees(Role.ADMIN)).toBe(true)
     expect(canManageEmployees(Role.HR)).toBe(true)
     expect(canManageEmployees(Role.MANAGER)).toBe(false)
@@ -30,49 +30,49 @@ describe("canManageEmployees / canManagePayroll", () => {
   })
 })
 
-describe("canViewEmployeeRecord", () => {
-  it("lets ADMIN and HR view any employee", () => {
+describe("canViewEmployeeRecord / สิทธิ์ดูข้อมูลพนักงาน", () => {
+  it("lets ADMIN and HR view any employee / ผู้ดูแลและฝ่ายบุคคลดูพนักงานทุกคนได้", () => {
     const employee = { id: "emp-99", managerId: null }
     expect(canViewEmployeeRecord(makeSession(Role.ADMIN, "someone-else"), employee)).toBe(true)
     expect(canViewEmployeeRecord(makeSession(Role.HR, "someone-else"), employee)).toBe(true)
   })
 
-  it("lets an employee view their own record", () => {
+  it("lets an employee view their own record / พนักงานดูข้อมูลตนเองได้", () => {
     const employee = { id: "emp-1", managerId: "mgr-1" }
     expect(canViewEmployeeRecord(makeSession(Role.EMPLOYEE, "emp-1"), employee)).toBe(true)
   })
 
-  it("denies an employee viewing a colleague's record", () => {
+  it("denies an employee viewing a colleague's record / พนักงานดูข้อมูลเพื่อนไม่ได้", () => {
     const employee = { id: "emp-2", managerId: "mgr-1" }
     expect(canViewEmployeeRecord(makeSession(Role.EMPLOYEE, "emp-1"), employee)).toBe(false)
   })
 
-  it("lets a manager view their direct report", () => {
+  it("lets a manager view their direct report / หัวหน้าดูข้อมูลลูกทีมโดยตรงได้", () => {
     const employee = { id: "emp-3", managerId: "mgr-1" }
     expect(canViewEmployeeRecord(makeSession(Role.MANAGER, "mgr-1"), employee)).toBe(true)
   })
 
-  it("denies a manager viewing an employee outside their team", () => {
+  it("denies a manager viewing an employee outside their team / หัวหน้าดูข้อมูลคนนอกทีมไม่ได้", () => {
     const employee = { id: "emp-4", managerId: "mgr-2" }
     expect(canViewEmployeeRecord(makeSession(Role.MANAGER, "mgr-1"), employee)).toBe(false)
   })
 })
 
-describe("canViewEmployeePayroll", () => {
-  it("lets ADMIN and HR view anyone's payroll", () => {
+describe("canViewEmployeePayroll / สิทธิ์ดูเงินเดือน", () => {
+  it("lets ADMIN and HR view anyone's payroll / ผู้ดูแลและฝ่ายบุคคลดูเงินเดือนทุกคนได้", () => {
     expect(canViewEmployeePayroll(makeSession(Role.ADMIN, "x"), "emp-1")).toBe(true)
     expect(canViewEmployeePayroll(makeSession(Role.HR, "x"), "emp-1")).toBe(true)
   })
 
-  it("lets an employee view their own payroll", () => {
+  it("lets an employee view their own payroll / พนักงานดูเงินเดือนตนเองได้", () => {
     expect(canViewEmployeePayroll(makeSession(Role.EMPLOYEE, "emp-1"), "emp-1")).toBe(true)
   })
 
-  it("denies an employee viewing a colleague's payroll", () => {
+  it("denies an employee viewing a colleague's payroll / พนักงานดูเงินเดือนเพื่อนไม่ได้", () => {
     expect(canViewEmployeePayroll(makeSession(Role.EMPLOYEE, "emp-1"), "emp-2")).toBe(false)
   })
 
-  it("denies a manager viewing their direct report's payroll, payroll access is not automatic for managers", () => {
+  it("denies a manager viewing their direct report's payroll, payroll access is not automatic for managers / หัวหน้าไม่ได้สิทธิ์ดูเงินเดือนลูกทีมโดยอัตโนมัติ", () => {
     expect(canViewEmployeePayroll(makeSession(Role.MANAGER, "mgr-1"), "emp-3")).toBe(false)
   })
 })

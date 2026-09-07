@@ -7,11 +7,8 @@ import { calculateLateMinutes } from "./attendance-rules"
 import { calculatePayroll } from "./payroll-engine"
 import { getAttendanceRules, getPayrollRules } from "./company-settings"
 
-/**
- * Generates (or regenerates) a payroll run for a month: one PayrollItem per
- * active employee, computed from their base salary plus that month's
- * attendance (absences, late minutes). Re-running for the same month
- * recalculates every item in place rather than creating duplicates.
+/** คำนวณเงินเดือนพนักงานที่ทำงานอยู่จากเงินเดือนพื้นฐานและการลงเวลาของเดือนนั้น รอบที่ยังแก้ได้จะคำนวณทับรายการเดิม
+ * Calculate monthly pay for active employees from salary and attendance; eligible reruns update existing items.
  */
 export async function generatePayrollRun(month: number, year: number, createdById: string): Promise<string> {
   const [payrollRules, attendanceRules] = await Promise.all([getPayrollRules(), getAttendanceRules()])
@@ -79,7 +76,9 @@ export async function generatePayrollRun(month: number, year: number, createdByI
   return run.id
 }
 
-/** Adds a manual adjustment line and folds it into the item's stored totals so netSalary stays authoritative. */
+/** เพิ่มรายการรับหรือหัก แล้วปรับยอดรวมที่บันทึกให้ตรงกัน
+ * Add a manual adjustment and update the stored totals.
+ */
 export async function addPayrollAdjustment(
   payrollItemId: string,
   type: AdjustmentType,

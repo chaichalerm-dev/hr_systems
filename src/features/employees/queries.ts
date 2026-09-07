@@ -24,10 +24,8 @@ const EMPLOYEE_LIST_SELECT = {
 
 export type EmployeeListItem = Prisma.EmployeeGetPayload<{ select: typeof EMPLOYEE_LIST_SELECT }>
 
-/**
- * Scopes the employee list to what the viewer is allowed to see: ADMIN/HR
- * see everyone, MANAGER sees their direct reports, EMPLOYEE sees nobody
- * (the employees list page redirects them to their own profile instead).
+/** ผู้ดูแลและ HR เห็นทุกคน หัวหน้าเห็นลูกทีมโดยตรง ส่วนพนักงานใช้หน้าประวัติตนเอง
+ * Admin and HR see everyone, managers see direct reports, and employees use their own profile page.
  */
 function scopeWhere(session: Session): Prisma.EmployeeWhereInput {
   if (session.user.role === Role.ADMIN || session.user.role === Role.HR) return {}

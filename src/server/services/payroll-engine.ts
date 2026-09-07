@@ -1,13 +1,5 @@
-/**
- * Payroll calculation engine, pure, DB-free functions so the arithmetic can
- * be unit tested in isolation. Orchestration (fetching employee/attendance
- * data, writing PayrollItem rows) lives in `payroll.ts`.
- *
- * IMPORTANT (see README "Limitations"): the tax/social-security formulas
- * here are simplified demo approximations of Thai payroll rules, not a
- * certified legal/accounting implementation. `PayrollRules` is intentionally
- * pulled from `CompanySetting` so real formulas can be swapped in later
- * without touching call sites.
+/** คำนวณเงินเดือนโดยไม่อ่านฐานข้อมูล ส่วนอ่านและบันทึกข้อมูลอยู่ใน payroll.ts สูตรภาษีและประกันสังคมเป็นตัวอย่าง ดูข้อจำกัดใน README
+ * Calculate pay without database calls; payroll.ts loads and saves records. Tax and social security formulas are demo examples configured through CompanySetting.
  */
 
 export interface PayrollRules {
@@ -52,7 +44,9 @@ export interface PayrollCalculationResult {
   netSalary: number
 }
 
-/** Rounds to 2 decimal places to avoid floating-point cent drift in currency math. */
+/** ปัดยอดเงินเป็นทศนิยม 2 ตำแหน่งในแต่ละขั้นที่เรียกใช้
+ * Round currency values to two decimal places where this helper is used.
+ */
 function round2(value: number): number {
   return Math.round((value + Number.EPSILON) * 100) / 100
 }

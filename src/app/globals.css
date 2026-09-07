@@ -141,9 +141,9 @@
   }
 }
 
-/* Printer-friendly documents (payslips, tax summaries, payment reports)
-   render their content inside .print-area; everything else in the app
-   shell (sidebar, topbar, buttons) is hidden when the browser prints. */
+/** เวลาพิมพ์ แสดงเฉพาะเนื้อหาใน .print-area และซ่อนเมนูหรือปุ่มรอบเอกสาร
+ * When printing, show .print-area and hide the surrounding navigation and controls.
+ */
 @media print {
   body * {
     visibility: hidden;

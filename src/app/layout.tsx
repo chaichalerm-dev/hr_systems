@@ -9,8 +9,8 @@ import { I18nProvider } from "@/i18n/client"
 import { getDictionary, getLocale } from "@/i18n/server"
 import { APP_NAME } from "@/lib/constants"
 
-// Inter covers Latin script; Noto Sans Thai fills in Thai glyphs that Inter
-// doesn't have, so the browser falls back to it automatically per-character.
+// ใช้ Inter สำหรับอังกฤษ และ Noto Sans Thai สำหรับตัวอักษรไทยในข้อความเดียวกัน
+// Use Inter for Latin text and Noto Sans Thai for Thai characters.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",

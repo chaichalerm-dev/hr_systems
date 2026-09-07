@@ -16,8 +16,8 @@ const ONE_YEAR_SECONDS = 60 * 60 * 24 * 365
 
 export function AppSidebar({ role, defaultCollapsed }: { role: Role; defaultCollapsed: boolean }) {
   const t = useTranslations()
-  // Seeded from a cookie the server already read, so the first paint matches
-  // the stored preference, no flash of the wrong width, no hydration warning.
+  // เริ่มด้วยขนาดเมนูที่เซิร์ฟเวอร์อ่านจากคุกกี้ เพื่อให้ตรงกับตัวเลือกที่บันทึกไว้
+  // Start with the saved sidebar size read by the server.
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
 
   function toggle() {

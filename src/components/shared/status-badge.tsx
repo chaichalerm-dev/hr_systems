@@ -16,25 +16,29 @@ const TONE_CLASSES: Record<StatusTone, string> = {
 }
 
 const STATUS_TONE_MAP: Record<string, StatusTone> = {
-  // Attendance
+  // สถานะลงเวลา
+  // Attendance status.
   PRESENT: "good",
   LATE: "warning",
   ABSENT: "critical",
   LEAVE: "info",
   HOLIDAY: "neutral",
   NOT_CHECKED_IN: "neutral",
-  // Leave requests
+  // สถานะคำขอลา
+  // Leave request status.
   PENDING_MANAGER: "warning",
   PENDING_HR: "warning",
   APPROVED: "good",
   REJECTED: "critical",
   CANCELLED: "neutral",
-  // Payroll
+  // สถานะรอบเงินเดือน
+  // Payroll run status.
   DRAFT: "neutral",
   CALCULATED: "info",
   REVIEWED: "warning",
   PAID: "good",
-  // Employment
+  // สถานะการจ้างงาน
+  // Employment status.
   ACTIVE: "good",
   ON_LEAVE: "info",
   SUSPENDED: "warning",

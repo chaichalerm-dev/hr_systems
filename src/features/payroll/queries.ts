@@ -144,9 +144,8 @@ export async function listEmployeePayslips(employeeId: string): Promise<PayslipL
   }))
 }
 
-/**
- * A payslip line is either a built-in component (translated via labelKey)
- * or a manual adjustment whose label the HR user typed, which is shown as-is.
+/** รายการมาตรฐานใช้คำแปลจาก labelKey ส่วนชื่อรายการที่ HR กรอกเองแสดงตามที่บันทึก
+ * Translate built-in payslip lines by labelKey and keep manual adjustment labels as entered.
  */
 export interface PayslipLine {
   labelKey: PayslipLineKey | null

@@ -1,6 +1,6 @@
 export const APP_NAME = "HRFlow"
 export const APP_DESCRIPTION =
-  "A modular HR management platform for employees, attendance, leave, and payroll in one place."
+  "จัดการข้อมูลพนักงาน ลงเวลา การลา และเงินเดือนในที่เดียว / Manage people, attendance, leave, and payroll in one place."
 
 export const ROLE_LABELS: Record<string, string> = {
   ADMIN: "Administrator",
@@ -9,10 +9,8 @@ export const ROLE_LABELS: Record<string, string> = {
   EMPLOYEE: "Employee",
 }
 
-// Attendance rules. In a real deployment these would live in CompanySetting
-// and be editable from an admin screen, kept as constants here for the
-// portfolio build's seed/demo data, with CompanySetting.ATTENDANCE_RULES
-// as the source of truth read at runtime (see src/server/services/attendance).
+// ค่าลงเวลาเริ่มต้นใช้ตอน seed และเมื่อฐานข้อมูลยังไม่มีค่า อ่านค่าปัจจุบันผ่าน company-settings.ts
+// Use these defaults for seeding and as a fallback when CompanySetting has no attendance rules.
 export const DEFAULT_ATTENDANCE_RULES = {
   workStartTime: "09:00",
   workEndTime: "18:00",
@@ -27,15 +25,14 @@ export const LEAVE_TYPE_SEED = [
   { name: "Unpaid Leave", defaultDaysPerYear: 0, isPaid: false },
 ] as const
 
-// Demo-only payroll configuration. NOT verified against real Thai tax law,
-// see README "Limitations" before using this for anything but a portfolio
-// demo. Stored in CompanySetting so it's editable without a redeploy.
+// ค่าคำนวณเงินเดือนตัวอย่าง ใช้กับ seed และเป็นค่าสำรองเมื่อยังไม่ได้ตั้งค่าในฐานข้อมูล
+// Demo payroll defaults for seeding and fallback. See the README limitations before real use.
 export const DEFAULT_PAYROLL_RULES = {
   socialSecurityRate: 0.05,
   socialSecurityMaxBase: 15000,
   withholdingTaxRate: 0.03,
   lateDeductionPerMinute: 10,
-  absenceDeductionDivisor: 30, // monthly salary / 30 = 1 day's pay
+  absenceDeductionDivisor: 30, // เงินเดือนหาร 30 เป็นค่าจ้างรายวัน / Monthly salary divided by 30 gives daily pay.
 }
 
 export const COMPANY_INFO = {

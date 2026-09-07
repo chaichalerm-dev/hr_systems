@@ -9,7 +9,9 @@ import { recordAuditLog } from "@/server/services/audit-log"
 import { addPayrollAdjustment, generatePayrollRun, markPayrollRunPaid } from "@/server/services/payroll"
 import { generatePayrollRunSchema, payrollAdjustmentFormSchema } from "@/validations/payroll"
 
-/** Error codes, not sentences, the client renders them in the viewer's language. */
+/** ส่งรหัสข้อผิดพลาดให้หน้าจอเลือกคำแปลตามภาษาผู้ใช้
+ * Return an error code so the screen can choose the translated message.
+ */
 export type PayrollErrorCode = "invalidInput" | "notFound" | "invalidTransition"
 
 export interface PayrollActionState {

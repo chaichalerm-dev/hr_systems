@@ -10,8 +10,8 @@ export type GeneratePayrollRunInput = z.infer<typeof generatePayrollRunSchema>
 export const payrollAdjustmentFormSchema = z.object({
   payrollItemId: z.string().min(1),
   type: z.enum(["INCOME", "DEDUCTION"]),
-  label: z.string().min(2, "Give the adjustment a short label.").max(100),
-  amount: z.coerce.number().positive("Amount must be greater than 0."),
+  label: z.string().min(2, "ตั้งชื่อรายการอย่างน้อย 2 ตัวอักษร / Enter an adjustment label of at least 2 characters.").max(100),
+  amount: z.coerce.number().positive("กรอกจำนวนเงินมากกว่า 0 / Enter an amount greater than 0."),
   note: z.string().max(500).optional().or(z.literal("")),
 })
 
@@ -27,7 +27,8 @@ export const payrollRulesFormSchema = z.object({
 
 export type PayrollRulesFormInput = z.infer<typeof payrollRulesFormSchema>
 
-// Client-side (react-hook-form holds real numbers already).
+// ฟอร์มฝั่งหน้าจอเก็บตัวเลขไว้แล้ว จึงใช้ชนิด number ได้โดยตรง
+// Client forms already hold numbers, so no string conversion is needed.
 export const payrollRulesFormClientSchema = z.object({
   socialSecurityRate: z.number().min(0).max(1),
   socialSecurityMaxBase: z.number().min(0),

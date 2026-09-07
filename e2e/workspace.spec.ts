@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test"
 import { loginAs } from "./helpers"
 
-test("page search respects employee permissions and navigates", async ({ page }) => {
+test("page search respects employee permissions and navigates / ค้นหาเมนูตามสิทธิ์และเปิดหน้าที่เลือกได้", async ({ page }) => {
   await loginAs(page, "employee")
   await page.getByRole("button", { name: "Find a page" }).click()
   const dialog = page.getByRole("dialog")
@@ -13,7 +13,7 @@ test("page search respects employee permissions and navigates", async ({ page })
   await expect(page.getByRole("button", { name: "Check in", exact: true })).toBeVisible()
 })
 
-test("admin can reset filters, switch work areas and open leave details with keyboard", async ({ page }) => {
+test("admin can reset filters, switch work areas and open leave details with keyboard / ผู้ดูแลล้างตัวกรอง สลับแท็บ และเปิดรายละเอียดด้วยคีย์บอร์ดได้", async ({ page }) => {
   await loginAs(page, "admin")
   await page.goto("/employees?search=NoSuchEmployeeRedesignCheck")
   await expect(page.getByText("No employees match your filters.")).toBeVisible()
@@ -39,7 +39,7 @@ test("admin can reset filters, switch work areas and open leave details with key
   }
 })
 
-test("Thai mobile navigation, dark theme and reports remain usable", async ({ page }) => {
+test("Thai mobile navigation, dark theme and reports remain usable / เมนูไทยบนมือถือ โหมดมืด และรายงานใช้งานได้", async ({ page }) => {
   test.setTimeout(90_000)
   await loginAs(page, "admin")
   await page.setViewportSize({ width: 390, height: 844 })

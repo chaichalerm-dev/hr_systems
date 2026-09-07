@@ -2,11 +2,12 @@ import { test, expect, type Browser } from "@playwright/test"
 
 import { loginAs } from "./helpers"
 
-test.describe("Leave approval workflow", () => {
-  test("employee submits leave, manager approves, then HR approves", async ({ browser }: { browser: Browser }) => {
+test.describe("Leave approval workflow / ขั้นตอนอนุมัติการลา", () => {
+  test("employee submits leave, manager approves, then HR approves / พนักงานยื่นลา หัวหน้าอนุมัติ แล้วฝ่ายบุคคลยืนยัน", async ({ browser }: { browser: Browser }) => {
     const uniqueReason = `E2E test request ${Date.now()}`
 
-    // --- Employee submits a new leave request ---
+    // พนักงานยื่นคำขอลา
+    // The employee submits a leave request.
     const employeeContext = await browser.newContext()
     const employeePage = await employeeContext.newPage()
     await loginAs(employeePage, "employee")
@@ -20,20 +21,22 @@ test.describe("Leave approval workflow", () => {
     await expect(employeePage.getByText("Leave request submitted.")).toBeVisible()
     await employeeContext.close()
 
-    // --- Manager approves the manager-level step ---
+    // หัวหน้าตรวจและอนุมัติขั้นแรก
+    // The manager approves the first step.
     const managerContext = await browser.newContext()
     const managerPage = await managerContext.newPage()
     await loginAs(managerPage, "manager")
     await managerPage.goto("/leave")
-    // The approvals table doesn't show the reason text, so open the request
-    // by the employee's name (there's one pending request for them here).
+    // ตารางไม่แสดงเหตุผล จึงเปิดรายการผ่านชื่อพนักงาน การทดสอบนี้สมมติว่ารายการแรกเป็นคำขอที่ต้องตรวจ
+    // Open by employee name because the reason is not in the table; this test assumes the first matching row is the target request.
     await managerPage.getByText("Nattaya Suksawat").first().click()
     await expect(managerPage.getByRole("button", { name: "Approve" })).toBeVisible()
     await managerPage.getByRole("button", { name: "Approve" }).click()
     await expect(managerPage.getByText("Request approved.")).toBeVisible()
     await managerContext.close()
 
-    // --- HR gives the final approval ---
+    // ฝ่ายบุคคลอนุมัติขั้นสุดท้าย
+    // HR gives the final approval.
     const hrContext = await browser.newContext()
     const hrPage = await hrContext.newPage()
     await loginAs(hrPage, "hr")

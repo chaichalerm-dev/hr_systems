@@ -8,14 +8,18 @@ import { th } from "./dictionaries/th"
 
 const DICTIONARIES: Record<Locale, Dictionary> = { en, th }
 
-/** Reads the viewer's locale from the cookie the language switcher sets. */
+/** อ่านภาษาจากคุกกี้ที่ปุ่มสลับภาษาบันทึกไว้
+ * Read the language cookie saved by the language switcher.
+ */
 export async function getLocale(): Promise<Locale> {
   const cookieStore = await cookies()
   const value = cookieStore.get(LOCALE_COOKIE)?.value
   return isLocale(value) ? value : DEFAULT_LOCALE
 }
 
-/** Dictionary for the current locale. Use in server components: `const t = await getDictionary()`. */
+/** ใน Server Component ใช้ const t = await getDictionary() เพื่ออ่านคำแปล
+ * Use const t = await getDictionary() in a Server Component.
+ */
 export async function getDictionary(): Promise<Dictionary> {
   return DICTIONARIES[await getLocale()]
 }

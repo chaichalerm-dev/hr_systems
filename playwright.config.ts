@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test"
 
-// Matches NEXTAUTH_URL in .env by default so relative redirects (e.g. after
-// login) resolve to the same origin Playwright is testing against.
+// ใช้พอร์ต 4200 หรือ PLAYWRIGHT_PORT โดยต้องตั้ง NEXTAUTH_URL ให้ตรงด้วย ไม่ได้อ่านค่าจาก .env ที่นี่
+// Use port 4200 or PLAYWRIGHT_PORT. Set NEXTAUTH_URL to match; this file does not load it from .env.
 const PORT = process.env.PLAYWRIGHT_PORT ?? "4200"
 const baseURL = `http://localhost:${PORT}`
 

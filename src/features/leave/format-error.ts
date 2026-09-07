@@ -1,7 +1,9 @@
 import type { Dictionary } from "@/i18n/dictionaries/en"
 import type { LeaveActionState } from "./actions"
 
-/** Turns a leave action's error code (plus any runtime params) into a localised sentence. */
+/** แปลงรหัสข้อผิดพลาดและค่าประกอบเป็นประโยคตามภาษาที่เลือก
+ * Turn a leave error code and its values into a translated message.
+ */
 export function formatLeaveError(t: Dictionary, state: LeaveActionState): string {
   if (!state.error) return ""
 

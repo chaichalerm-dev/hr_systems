@@ -1,9 +1,7 @@
 import type { NextAuthConfig } from "next-auth"
 
-// Edge-safe subset of the NextAuth config: no providers here, since the
-// Credentials provider needs bcrypt + Prisma (Node.js runtime only). This
-// file is imported by both `auth.ts` (full config, Node runtime) and
-// `middleware.ts` (edge runtime, only needs to read/validate the JWT).
+// ใช้ตั้งค่าเซสชันร่วมกันใน server/auth/index.ts และ middleware.ts โดยแยก Prisma กับ bcrypt ไว้ในขั้นล็อกอิน
+// Share session settings with auth/index.ts and middleware.ts; load Prisma and bcrypt only for sign-in.
 export const authConfig = {
   pages: {
     signIn: "/login",
@@ -11,9 +9,9 @@ export const authConfig = {
   },
   session: {
     strategy: "jwt",
-    // Keep users signed in across browser restarts instead of the
-    // session expiring the moment the tab/browser closes.
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    // จำการล็อกอินข้ามการปิด–เปิดเบราว์เซอร์ภายในอายุเซสชัน
+    // Keep users signed in across browser restarts within the session lifetime.
+    maxAge: 30 * 24 * 60 * 60, // 30 วัน / 30 days
   },
   callbacks: {
     jwt({ token, user }) {

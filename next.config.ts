@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Lets the dev server's HMR handshake succeed when accessed via 127.0.0.1
-  // or a LAN IP instead of localhost. Without this, Next 16 silently blocks
-  // the dev client bootstrap and every page just never hydrates.
+  // อนุญาตให้เครื่องมือพัฒนาเชื่อมผ่าน localhost และ 127.0.0.1 หากใช้ชื่อโฮสต์อื่นต้องเพิ่มที่นี่
+  // Allow the development connection through localhost and 127.0.0.1; add other hosts explicitly if needed.
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 };
 

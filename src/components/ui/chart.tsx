@@ -6,7 +6,8 @@ import type { TooltipValueType } from "recharts"
 
 import { cn } from "@/lib/utils"
 
-// Format: { THEME_NAME: CSS_SELECTOR }
+// จับคู่ชื่อธีมกับ CSS selector ที่ใช้เลือกธีมนั้น
+// Map each theme name to its CSS selector.
 const THEMES = { light: "", dark: ".dark" } as const
 
 const INITIAL_DIMENSION = { width: 320, height: 200 } as const
@@ -33,7 +34,7 @@ function useChart() {
   const context = React.useContext(ChartContext)
 
   if (!context) {
-    throw new Error("useChart must be used within a <ChartContainer />")
+    throw new Error("เรียก useChart ภายใน ChartContainer / Use useChart inside ChartContainer.")
   }
 
   return context

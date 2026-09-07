@@ -1,7 +1,5 @@
-// HRFlow Prisma schema
-// Portfolio/reference HR management system. See README for scope notes,
-// especially around payroll and tax calculations (demo formulas, not
-// certified legal/accounting implementations).
+// โครงสร้างข้อมูล HRFlow สำหรับเว็บสาธิต สูตรเงินเดือนและภาษีมีข้อจำกัดตาม README
+// HRFlow demo database schema. See README for payroll and tax limitations.
 
 generator client {
   provider = "prisma-client-js"
@@ -12,9 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ---------------------------------------------------------------------------
-// Enums
-// ---------------------------------------------------------------------------
+// ค่าที่อนุญาตให้เลือก เช่น บทบาทและสถานะ
+// Allowed values for roles, statuses, and other fixed choices.
 
 enum Role {
   ADMIN
@@ -76,9 +73,8 @@ enum AdjustmentType {
   DEDUCTION
 }
 
-// ---------------------------------------------------------------------------
-// Identity & org structure
-// ---------------------------------------------------------------------------
+// บัญชีผู้ใช้และโครงสร้างองค์กร
+// User accounts and organisation structure.
 
 model User {
   id           String   @id @default(cuid())
@@ -146,12 +142,14 @@ model Employee {
 
   profileImageUrl String?
 
-  // Emergency contact
+  // ผู้ติดต่อกรณีฉุกเฉิน
+  // Emergency contact.
   emergencyContactName  String?
   emergencyContactPhone String?
   emergencyContactRelation String?
 
-  // Address
+  // ที่อยู่พนักงาน
+  // Employee address.
   addressLine1 String?
   addressLine2 String?
   city         String?
@@ -159,7 +157,8 @@ model Employee {
   postalCode   String?
   country      String? @default("Thailand")
 
-  // Payroll / statutory info (demo placeholders, see README)
+  // ข้อมูลธนาคาร ภาษี และประกันสังคมสำหรับสาธิต
+  // Bank, tax, and social security details used by the demo.
   bankName          String?
   bankAccountNumber String?
   taxId             String?
@@ -187,9 +186,8 @@ model Employee {
   @@index([employmentStatus])
 }
 
-// ---------------------------------------------------------------------------
-// Attendance
-// ---------------------------------------------------------------------------
+// บันทึกการลงเวลาเข้า–ออกงาน
+// Check-in and check-out records.
 
 model Attendance {
   id         String @id @default(cuid())
@@ -221,9 +219,8 @@ model Attendance {
   @@index([status])
 }
 
-// ---------------------------------------------------------------------------
-// Leave management
-// ---------------------------------------------------------------------------
+// ประเภทลา ยอดคงเหลือ คำขอ และผลอนุมัติ
+// Leave types, balances, requests, and decisions.
 
 model LeaveType {
   id                 String  @id @default(cuid())
@@ -294,9 +291,8 @@ model LeaveApproval {
   @@index([leaveRequestId])
 }
 
-// ---------------------------------------------------------------------------
-// Payroll
-// ---------------------------------------------------------------------------
+// รอบเงินเดือน รายการคำนวณ รายการปรับ และสลิป
+// Payroll runs, calculated items, adjustments, and payslips.
 
 model PayrollRun {
   id     String @id @default(cuid())
@@ -377,9 +373,8 @@ model Payslip {
   payrollItem PayrollItem @relation(fields: [payrollItemId], references: [id])
 }
 
-// ---------------------------------------------------------------------------
-// Audit log & company settings
-// ---------------------------------------------------------------------------
+// ประวัติการเปลี่ยนแปลงและค่าตั้งบริษัท
+// Change history and company settings.
 
 model AuditLog {
   id        String   @id @default(cuid())

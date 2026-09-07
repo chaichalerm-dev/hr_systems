@@ -1,9 +1,5 @@
-/**
- * Leave-days calculation, pure function, unit tested in isolation.
- * Counts business days (Mon-Fri) inclusive of both endpoints. Company
- * holidays are not modeled as a separate calendar in this portfolio build
- * (see README "Limitations"); a real deployment would subtract a holiday
- * calendar here too.
+/** นับวันจันทร์–ศุกร์ รวมวันเริ่มและสิ้นสุด ยังไม่หักวันหยุดบริษัทเพราะไม่มีปฏิทินวันหยุด
+ * Count weekdays including both endpoints. Company holidays are not deducted because no holiday calendar exists.
  */
 export function calculateLeaveDays(startDate: Date, endDate: Date): number {
   if (endDate < startDate) return 0

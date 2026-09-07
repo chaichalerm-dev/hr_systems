@@ -12,7 +12,9 @@ import { recordAuditLog } from "@/server/services/audit-log"
 import { AttendanceStatus } from "@prisma/client"
 import { checkInSchema, checkOutSchema } from "@/validations/attendance"
 
-/** Error codes, not sentences, the client renders them in the viewer's language. */
+/** ส่งรหัสข้อผิดพลาดให้หน้าจอเลือกคำแปลตามภาษาผู้ใช้
+ * Return an error code so the screen can choose the translated message.
+ */
 export type AttendanceErrorCode =
   | "noEmployeeProfile"
   | "invalidInput"

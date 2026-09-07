@@ -9,7 +9,9 @@ import { recordAuditLog } from "@/server/services/audit-log"
 import { calculateLeaveDays } from "@/server/services/leave-rules"
 import { leaveDecisionSchema, leaveRequestFormSchema } from "@/validations/leave"
 
-/** Error codes, not sentences, the client renders them in the viewer's language. */
+/** ส่งรหัสข้อผิดพลาดให้หน้าจอเลือกคำแปลตามภาษาผู้ใช้
+ * Return an error code so the screen can choose the translated message.
+ */
 export type LeaveErrorCode =
   | "noEmployeeProfile"
   | "invalidInput"
@@ -25,7 +27,9 @@ export type LeaveErrorCode =
 
 export interface LeaveActionState {
   error: LeaveErrorCode | null
-  /** Filled in for errors whose message needs runtime values (e.g. remaining balance). */
+  /** แนบค่าที่ต้องใช้ในข้อความ เช่น จำนวนวันลาคงเหลือ
+ * Include values needed by the message, such as remaining leave days.
+ */
   params?: Record<string, string>
 }
 

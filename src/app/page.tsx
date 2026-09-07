@@ -25,8 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-// Icons stay here; the copy comes from the dictionary so the page follows the
-// viewer's language without duplicating the icon wiring per locale.
+// กำหนดไอคอนที่นี่ แล้วอ่านข้อความจากคำแปลตามภาษาที่ผู้ใช้เลือก
+// Keep icons here and read the text from the selected language dictionary.
 const featureList = (t: Dictionary) => [
   { icon: Users, title: t.landing.features.employees, description: t.landing.features.employeesDescription },
   { icon: CalendarCheck, title: t.landing.features.attendance, description: t.landing.features.attendanceDescription },

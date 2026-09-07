@@ -9,40 +9,41 @@ import { auth } from "@/server/auth"
 export * from "./permissions"
 
 export class ForbiddenError extends Error {
-  constructor(message = "You do not have permission to perform this action.") {
+  constructor(message = "บัญชีนี้ไม่มีสิทธิ์ทำรายการนี้ / Your account cannot perform this action.") {
     super(message)
     this.name = "ForbiddenError"
   }
 }
 
 export class UnauthenticatedError extends Error {
-  constructor(message = "You must be signed in.") {
+  constructor(message = "กรุณาเข้าสู่ระบบก่อน / Please sign in first.") {
     super(message)
     this.name = "UnauthenticatedError"
   }
 }
 
-/** Fetches the current session, or throws if there isn't one. Use in server actions/route handlers. */
+/** อ่านผู้ใช้ที่ล็อกอินอยู่ หากไม่มีให้ส่งข้อผิดพลาด ใช้ใน action และ API
+ * Read the session or throw an error; use this in actions and route handlers.
+ */
 export async function requireSession(): Promise<Session> {
   const session = await auth()
   if (!session?.user) throw new UnauthenticatedError()
   return session
 }
 
-/** Fetches the current session and asserts the user's role is in `roles`. */
+/** อ่านเซสชันแล้วตรวจว่าบทบาทอยู่ในรายการที่อนุญาต
+ * Read the session and check that its role is allowed.
+ */
 export async function requireRole(roles: Role[]): Promise<Session> {
   const session = await requireSession()
   if (!roles.includes(session.user.role)) {
-    throw new ForbiddenError(`This action requires one of the following roles: ${roles.join(", ")}.`)
+    throw new ForbiddenError(`รายการนี้ให้เฉพาะบทบาทต่อไปนี้ใช้งาน / Allowed roles: ${roles.join(", ")}.`)
   }
   return session
 }
 
-/**
- * Page-level counterpart to requireRole: redirects instead of throwing, so a
- * denied page shows /login or /unauthorized instead of an error boundary.
- * Use this in `page.tsx`/`layout.tsx` files; use `requireRole` in server
- * actions and route handlers, where a thrown error is the right response.
+/** สำหรับหน้าเว็บ ให้พาไปล็อกอินหรือหน้าไม่มีสิทธิ์ ส่วน action และ API ใช้ requireRole เพื่อส่งข้อผิดพลาด
+ * Pages redirect to login or unauthorized. Actions and API handlers use requireRole to report an error.
  */
 export async function requirePageRole(roles: Role[]): Promise<Session> {
   const session = await auth()
@@ -51,7 +52,9 @@ export async function requirePageRole(roles: Role[]): Promise<Session> {
   return session
 }
 
-/** Page-level counterpart to requireSession, see requirePageRole for why. */
+/** ตรวจการล็อกอินสำหรับหน้าเว็บ และพาไปล็อกอินหากยังไม่มีเซสชัน
+ * Require a session for a page and redirect to login when it is missing.
+ */
 export async function requirePageSession(): Promise<Session> {
   const session = await auth()
   if (!session?.user) redirect("/login")

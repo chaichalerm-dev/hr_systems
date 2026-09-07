@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client"
 
-// Reuse a single PrismaClient instance across hot reloads in dev and across
-// invocations in a serverless runtime, instead of exhausting connections.
+// ใช้ PrismaClient ตัวเดิมเมื่อโหลดโค้ดใหม่หรือรับคำขอซ้ำ เพื่อลดการเปิดฐานข้อมูลหลายการเชื่อมต่อ
+// Reuse PrismaClient across reloads and requests to avoid opening too many connections.
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }

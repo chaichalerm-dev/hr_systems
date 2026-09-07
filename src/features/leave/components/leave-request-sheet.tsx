@@ -26,7 +26,9 @@ export function LeaveRequestSheet({
   request: LeaveRequestDetail
   canDecide: boolean
   canCancel: boolean
-  /** Render-prop so the trigger can be arbitrary content (e.g. a table row) without needing SheetTrigger's context. */
+  /** ส่งฟังก์ชันเปิดรายละเอียดให้ปุ่มหรือแถวตารางเรียกได้
+ * Pass an open function so either a button or a table row can show the details.
+ */
   children: (open: () => void) => React.ReactNode
 }) {
   const t = useTranslations()

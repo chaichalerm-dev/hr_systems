@@ -7,7 +7,9 @@ import { StatusBadge } from "@/components/shared/status-badge"
 import type { Dictionary } from "@/i18n/dictionaries/en"
 import type { AttendanceHistoryItem } from "../queries"
 
-/** Built per-render from the dictionary so column headers follow the active locale. */
+/** สร้างหัวตารางจากคำแปลใหม่เมื่อแสดงผล เพื่อให้เปลี่ยนตามภาษา
+ * Build table headers from the current dictionary so they follow language changes.
+ */
 export function buildAttendanceColumns(t: Dictionary): LegacyColumnDef<AttendanceHistoryItem, unknown>[] {
   return [
     {

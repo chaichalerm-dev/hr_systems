@@ -14,10 +14,8 @@ export interface EmployeeActionState {
 }
 
 function parseEmployeeForm(formData: FormData) {
-  // Building the object from formData.entries() means a field the form
-  // never rendered (e.g. profileImageUrl) is simply absent (undefined),
-  // not present-but-null the way `formData.get(missingKey)` would report
-  // it, which `z.optional()` rejects.
+  // อ่านเฉพาะช่องที่ส่งมา ช่องที่ไม่มีจึงเป็น undefined ซึ่งใช้กับฟิลด์ optional ของ Zod ได้
+  // Read submitted entries so omitted optional fields stay undefined instead of becoming null.
   return employeeFormSchema.safeParse(Object.fromEntries(formData.entries()))
 }
 
@@ -28,7 +26,7 @@ export async function createEmployeeAction(
   const session = await requireRole([Role.ADMIN, Role.HR])
   const parsed = parseEmployeeForm(formData)
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Invalid input.", success: false }
+    return { error: parsed.error.issues[0]?.message ?? "ตรวจข้อมูลที่กรอกแล้วลองใหม่ / Check the form and try again.", success: false }
   }
 
   const data = parsed.data
@@ -36,7 +34,7 @@ export async function createEmployeeAction(
     where: { OR: [{ email: data.email }, { employeeCode: data.employeeCode }] },
   })
   if (existing) {
-    return { error: "An employee with this email or employee code already exists.", success: false }
+    return { error: "มีพนักงานใช้อีเมลหรือรหัสนี้แล้ว / This email or employee code is already in use.", success: false }
   }
 
   const employee = await prisma.employee.create({
@@ -90,7 +88,7 @@ export async function updateEmployeeAction(
   const session = await requireRole([Role.ADMIN, Role.HR])
   const parsed = parseEmployeeForm(formData)
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Invalid input.", success: false }
+    return { error: parsed.error.issues[0]?.message ?? "ตรวจข้อมูลที่กรอกแล้วลองใหม่ / Check the form and try again.", success: false }
   }
 
   const data = parsed.data
@@ -101,7 +99,7 @@ export async function updateEmployeeAction(
     },
   })
   if (conflict) {
-    return { error: "Another employee already uses this email or employee code.", success: false }
+    return { error: "มีพนักงานคนอื่นใช้อีเมลหรือรหัสนี้แล้ว / Another employee uses this email or code.", success: false }
   }
 
   await prisma.employee.update({

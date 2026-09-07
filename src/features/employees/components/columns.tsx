@@ -14,7 +14,9 @@ function initials(first: string, last: string) {
   return `${first[0] ?? ""}${last[0] ?? ""}`.toUpperCase()
 }
 
-/** Built per-render from the dictionary so column headers follow the active locale. */
+/** สร้างหัวตารางจากคำแปลใหม่เมื่อแสดงผล เพื่อให้เปลี่ยนตามภาษา
+ * Build table headers from the current dictionary so they follow language changes.
+ */
 export function buildEmployeeColumns(t: Dictionary): LegacyColumnDef<EmployeeListItem, unknown>[] {
   return [
     {

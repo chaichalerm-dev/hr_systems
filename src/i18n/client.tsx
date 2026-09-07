@@ -12,10 +12,8 @@ interface I18nValue {
 
 const I18nContext = createContext<I18nValue | null>(null)
 
-/**
- * The dictionary is resolved on the server and handed down as a plain object,
- * so client components read translations without shipping every locale's
- * strings to the browser.
+/** เซิร์ฟเวอร์ส่งเฉพาะคำแปลภาษาที่เลือกให้หน้าจอ เพื่อไม่ต้องโหลดทุกภาษา
+ * Send only the selected dictionary from the server to client components.
  */
 export function I18nProvider({
   locale,
@@ -31,11 +29,13 @@ export function I18nProvider({
 
 export function useI18n(): I18nValue {
   const context = useContext(I18nContext)
-  if (!context) throw new Error("useI18n must be used within <I18nProvider>")
+  if (!context) throw new Error("เรียก useI18n ภายใน I18nProvider / Use useI18n inside I18nProvider.")
   return context
 }
 
-/** Shorthand for the common case: `const t = useTranslations()`. */
+/** เรียก useTranslations() เมื่อต้องการอ่านข้อความที่แปลแล้ว
+ * Use useTranslations() to access the current translated messages.
+ */
 export function useTranslations(): Dictionary {
   return useI18n().t
 }

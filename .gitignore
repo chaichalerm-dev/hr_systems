@@ -1,6 +1,6 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ไฟล์ที่สร้างใหม่ได้หรือมีค่าเฉพาะเครื่อง ไม่ต้องเก็บใน Git / Ignore generated and machine-specific files.
 
-# dependencies
+# แพ็กเกจที่ติดตั้งใหม่ได้ / Installed dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -10,33 +10,34 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# ผลทดสอบและภาพตรวจหน้าจอ / Test coverage and review screenshots
 /coverage
 /test-results/ui-review/
 
-# next.js
+# ไฟล์ที่ Next.js สร้าง / Next.js output
 /.next/
 /out/
 
-# production
+# ผล build สำหรับเปิดใช้งาน / Production build output
 /build
 
-# misc
+# ไฟล์ระบบและกุญแจส่วนตัว / OS files and private keys
 .DS_Store
 *.pem
 
-# debug
+# บันทึกข้อผิดพลาดของเครื่องมือ / Tool debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# เก็บเฉพาะแบบกรอกตัวอย่าง ไม่เก็บค่าจริงของเครื่อง / Track the example, not real environment values.
 .env*
+!.env.example
 
-# vercel
+# ค่าผูกโปรเจกต์ Vercel ในเครื่อง / Local Vercel project settings
 .vercel
 
-# typescript
+# แคชและชนิดข้อมูลที่เครื่องมือสร้าง / Generated types and TypeScript cache
 *.tsbuildinfo
 next-env.d.ts

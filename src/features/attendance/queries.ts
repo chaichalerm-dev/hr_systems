@@ -21,8 +21,8 @@ export interface AttendanceHistoryItem {
 }
 
 export async function listAttendanceHistory(employeeId: string, take = 30): Promise<AttendanceHistoryItem[]> {
-  // Select + map away from Prisma's Decimal instances: they can't cross the
-  // Server->Client boundary as props (only plain objects/numbers can).
+  // แปลง Decimal ของ Prisma เป็นตัวเลขก่อนส่งให้หน้าจอ เพราะ props ต้องเป็นค่าที่ React ส่งต่อได้
+  // Convert Prisma Decimal values to numbers before passing them to client components.
   const rows = await prisma.attendance.findMany({
     where: { employeeId },
     orderBy: { date: "desc" },

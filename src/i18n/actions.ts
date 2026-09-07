@@ -17,6 +17,7 @@ export async function setLocaleAction(locale: string) {
     sameSite: "lax",
   })
 
-  // Every page renders translated text, so the whole tree needs re-rendering.
+  // โหลดข้อความของทุกหน้าใหม่เมื่อเปลี่ยนภาษา
+  // Refresh the page tree so all text uses the newly selected language.
   revalidatePath("/", "layout")
 }

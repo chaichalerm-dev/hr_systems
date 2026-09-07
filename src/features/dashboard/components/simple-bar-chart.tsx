@@ -10,9 +10,8 @@ export interface SimpleBarDatum {
   value: number
 }
 
-// `format` is a string, not a function prop, plain functions can't cross
-// the server->client boundary, so the formatter is resolved here instead of
-// being passed in from a server-component caller.
+// รับชื่อรูปแบบเป็นข้อความ แล้วเลือกฟังก์ชันจัดตัวเลขที่หน้าจอ
+// Pass a format name and select the formatter on the client; plain functions cannot cross as server props.
 export function SimpleBarChart({
   data,
   valueLabel,

@@ -3,10 +3,8 @@ import type { ComponentProps } from "react"
 
 import { Button } from "@/components/ui/button"
 
-// Button (Base UI) renders a real <button> by default and warns if `render`
-// points at a non-button element, this wraps that combination so callers
-// don't have to remember `nativeButton={false}` every time they need a
-// button-styled link.
+// รวมการตั้งค่าลิงก์ที่หน้าตาเหมือนปุ่มไว้ที่เดียว โดยบอก Base UI ว่าไม่ได้ใช้แท็ก button
+// Set nativeButton=false here so callers can use a button-styled link.
 export function LinkButton({
   href,
   children,

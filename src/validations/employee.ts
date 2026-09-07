@@ -2,18 +2,18 @@ import { z } from "zod"
 import { EmploymentStatus, EmploymentType } from "@prisma/client"
 
 export const employeeFormSchema = z.object({
-  employeeCode: z.string().min(2, "Employee code is required.").max(20),
-  firstName: z.string().min(1, "First name is required.").max(100),
-  lastName: z.string().min(1, "Last name is required.").max(100),
-  email: z.email("Enter a valid email address."),
+  employeeCode: z.string().min(2, "กรอกรหัสพนักงานอย่างน้อย 2 ตัวอักษร / Enter an employee code of at least 2 characters.").max(20),
+  firstName: z.string().min(1, "กรอกชื่อ / Enter a first name.").max(100),
+  lastName: z.string().min(1, "กรอกนามสกุล / Enter a last name.").max(100),
+  email: z.email("กรอกอีเมลให้ถูกต้อง / Enter a valid email address."),
   phone: z.string().max(30).optional().or(z.literal("")),
 
-  departmentId: z.string().min(1, "Select a department."),
-  positionId: z.string().min(1, "Select a position."),
+  departmentId: z.string().min(1, "เลือกแผนก / Select a department."),
+  positionId: z.string().min(1, "เลือกตำแหน่ง / Select a position."),
   employmentType: z.enum(EmploymentType),
   employmentStatus: z.enum(EmploymentStatus),
 
-  salary: z.coerce.number().positive("Salary must be greater than 0."),
+  salary: z.coerce.number().positive("กรอกเงินเดือนมากกว่า 0 / Enter a salary greater than 0."),
   startDate: z.coerce.date(),
   managerId: z.string().optional().or(z.literal("")),
 
@@ -38,12 +38,10 @@ export const employeeFormSchema = z.object({
 
 export type EmployeeFormInput = z.infer<typeof employeeFormSchema>
 
-// react-hook-form binds directly to typed field state (a real `number`,
-// a real `Date`), not the raw strings a FormData submission would carry,
-// so the client-side resolver uses plain (non-coercing) versions of the
-// coerced fields to keep its input/output types aligned for zodResolver.
+// ฟอร์มฝั่งหน้าจอเก็บ number และ Date อยู่แล้ว จึงไม่ต้องแปลงจากข้อความเหมือนข้อมูล FormData
+// Client form values already contain numbers and dates; only server FormData values need conversion.
 export const employeeFormClientSchema = employeeFormSchema.extend({
-  salary: z.number().positive("Salary must be greater than 0."),
+  salary: z.number().positive("กรอกเงินเดือนมากกว่า 0 / Enter a salary greater than 0."),
   startDate: z.date(),
 })
 

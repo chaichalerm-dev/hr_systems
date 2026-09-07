@@ -22,8 +22,9 @@ export function LanguageSwitcher() {
       disabled={isPending}
       onClick={() => startTransition(() => setLocaleAction(nextLocale))}
     >
-      {/* Shows the language you'll switch TO, not the current one, the
-          standard convention for a two-way toggle with only two options. */}
+      {/** ปุ่มแสดงภาษาที่จะเปลี่ยนไปเมื่อกด เช่น TH หมายถึงเปลี่ยนเป็นไทย
+ * The button shows the language it will switch to; TH means switch to Thai.
+ */}
       <span className="text-xs font-semibold">{nextLocale.toUpperCase()}</span>
     </Button>
   )

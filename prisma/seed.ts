@@ -1,13 +1,5 @@
-/**
- * HRFlow demo seed data.
- *
- * Builds a full org: 1 admin, 2 HR, 3 managers, 20 employees across 4
- * departments, plus ~30 days of attendance, leave balances/requests with
- * approval trails, and two payroll runs (one paid, one in progress).
- *
- * All seeded users share their role's demo password (see .env.example /
- * README) so any account can be used to explore that role's permissions,
- * not just the four flagship demo logins.
+/** เติมข้อมูลทดลอง 26 บัญชีใน 4 แผนก พร้อมลงเวลา การลา และเงินเดือน 2 รอบ บทบาทเดียวกันใช้รหัสผ่านตั้งต้นเดียวกัน การรันซ้ำอาจเพิ่มหรือปรับข้อมูล
+ * Seed 26 accounts across four departments, attendance, leave, and two payroll runs. Accounts share their role password; rerunning may add or update data.
  */
 import {
   AdjustmentType,
@@ -56,7 +48,7 @@ interface EmployeeSeed {
   key: string
   firstName: string
   lastName: string
-  email?: string // override for the four flagship demo accounts
+  email?: string // อีเมลเฉพาะของ 4 บัญชีหลัก / Email override for the four main demo accounts.
   role: Role
   departmentKey: string
   positionTitle: string
@@ -101,7 +93,8 @@ const EMPLOYEES: EmployeeSeed[] = [
   { key: "salManager", firstName: "Kittipong", lastName: "Wongsawat", role: Role.MANAGER, departmentKey: "SAL", positionTitle: "Sales Manager", salary: 78000, startDate: "2019-05-20" },
   { key: "finManager", firstName: "Areeya", lastName: "Phromsri", role: Role.MANAGER, departmentKey: "FIN", positionTitle: "Finance Manager", salary: 80000, startDate: "2019-04-15" },
 
-  // Engineering
+  // ทีมพัฒนาระบบ
+  // Engineering team.
   { key: "e1", firstName: "Nattaya", lastName: "Suksawat", email: "employee@hrflow.demo", role: Role.EMPLOYEE, departmentKey: "ENG", positionTitle: "Senior Software Engineer", managerKey: "engManager", salary: 55000, startDate: "2020-08-10" },
   { key: "e2", firstName: "Anucha", lastName: "Thongdee", role: Role.EMPLOYEE, departmentKey: "ENG", positionTitle: "Software Engineer", managerKey: "engManager", salary: 38000, startDate: "2022-01-17" },
   { key: "e3", firstName: "Piyanuch", lastName: "Rattanakul", role: Role.EMPLOYEE, departmentKey: "ENG", positionTitle: "Software Engineer", managerKey: "engManager", salary: 39000, startDate: "2021-11-02" },
@@ -110,7 +103,8 @@ const EMPLOYEES: EmployeeSeed[] = [
   { key: "e6", firstName: "Sarawut", lastName: "Meesuk", role: Role.EMPLOYEE, departmentKey: "ENG", positionTitle: "Software Engineer", managerKey: "engManager", salary: 38500, startDate: "2023-06-12" },
   { key: "e7", firstName: "David", lastName: "Kim", role: Role.EMPLOYEE, departmentKey: "ENG", positionTitle: "Senior Software Engineer", managerKey: "engManager", salary: 58000, startDate: "2021-03-29" },
 
-  // Sales & Marketing
+  // ทีมขายและการตลาด
+  // Sales and marketing team.
   { key: "e8", firstName: "Thanapon", lastName: "Ruangrit", role: Role.EMPLOYEE, departmentKey: "SAL", positionTitle: "Sales Executive", managerKey: "salManager", salary: 28000, startDate: "2021-07-05", commissionEligible: true },
   { key: "e9", firstName: "Kanokwan", lastName: "Sirisak", role: Role.EMPLOYEE, departmentKey: "SAL", positionTitle: "Sales Executive", managerKey: "salManager", salary: 28000, startDate: "2022-04-11", commissionEligible: true },
   { key: "e10", firstName: "Prasert", lastName: "Kulwong", role: Role.EMPLOYEE, departmentKey: "SAL", positionTitle: "Sales Executive", managerKey: "salManager", salary: 29000, startDate: "2023-01-23", commissionEligible: true },
@@ -118,20 +112,22 @@ const EMPLOYEES: EmployeeSeed[] = [
   { key: "e12", firstName: "James", lastName: "Anderson", role: Role.EMPLOYEE, departmentKey: "SAL", positionTitle: "Sales Executive", managerKey: "salManager", salary: 30000, startDate: "2020-11-09", commissionEligible: true },
   { key: "e13", firstName: "Emily", lastName: "Carter", role: Role.EMPLOYEE, departmentKey: "SAL", positionTitle: "Marketing Specialist", managerKey: "salManager", salary: 33000, startDate: "2021-10-04" },
 
-  // Finance & Accounting
+  // ทีมการเงินและบัญชี
+  // Finance and accounting team.
   { key: "e14", firstName: "Nirut", lastName: "Chaisri", role: Role.EMPLOYEE, departmentKey: "FIN", positionTitle: "Accountant", managerKey: "finManager", salary: 33000, startDate: "2020-06-22" },
   { key: "e15", firstName: "Sirinya", lastName: "Panyawong", role: Role.EMPLOYEE, departmentKey: "FIN", positionTitle: "Accountant", managerKey: "finManager", salary: 33500, startDate: "2022-02-14" },
   { key: "e16", firstName: "Malee", lastName: "Rojjanasukchai", role: Role.EMPLOYEE, departmentKey: "FIN", positionTitle: "Payroll Specialist", managerKey: "finManager", salary: 35000, startDate: "2021-09-27" },
   { key: "e17", firstName: "Ekachai", lastName: "Boonyarit", role: Role.EMPLOYEE, departmentKey: "FIN", positionTitle: "Accountant", managerKey: "finManager", salary: 32500, startDate: "2023-05-08" },
 
-  // HR
+  // ทีมทรัพยากรบุคคล
+  // Human resources team.
   { key: "e18", firstName: "Duangjai", lastName: "Wattana", role: Role.EMPLOYEE, departmentKey: "HR", positionTitle: "Recruiter", managerKey: "hrManager", salary: 29000, startDate: "2022-06-20" },
   { key: "e19", firstName: "Pichit", lastName: "Sangthong", role: Role.EMPLOYEE, departmentKey: "HR", positionTitle: "HR Officer", managerKey: "hrManager", salary: 30000, startDate: "2023-03-13" },
   { key: "e20", firstName: "Ratree", lastName: "Kaewmanee", role: Role.EMPLOYEE, departmentKey: "HR", positionTitle: "Recruiter", managerKey: "hrManager", salary: 29500, startDate: "2021-12-01" },
 ]
 
 async function main() {
-  console.log(`Seeding ${COMPANY_INFO.name} demo data...`)
+  console.log(`กำลังเติมข้อมูลทดลอง / Seeding ${COMPANY_INFO.name} demo data...`)
 
   await prisma.companySetting.upsert({
     where: { key: "ATTENDANCE_RULES" },
@@ -234,9 +230,10 @@ async function main() {
     employeeIdByKey.set(emp.key, employee.id)
     userIdByKey.set(emp.key, user.id)
   }
-  console.log(`Created ${EMPLOYEES.length} employees/users.`)
+  console.log(`เตรียมพนักงานและบัญชี / Prepared ${EMPLOYEES.length} employees and accounts.`)
 
-  // ---- Leave balances (current year, every employee x every leave type) ----
+  // สร้างยอดวันลาปีปัจจุบันให้พนักงานทุกคนและทุกประเภทลา
+  // Create current-year balances for each employee and leave type.
   const currentYear = new Date().getFullYear()
   for (const emp of EMPLOYEES) {
     const employeeId = employeeIdByKey.get(emp.key)!
@@ -257,7 +254,8 @@ async function main() {
     }
   }
 
-  // ---- Sample leave requests with an approval trail ----
+  // สร้างตัวอย่างคำขอลาพร้อมประวัติการอนุมัติ
+  // Create sample leave requests and approval history.
   const today = new Date()
   const annualLeaveId = leaveTypeByName.get("Annual Leave")!
   const sickLeaveId = leaveTypeByName.get("Sick Leave")!
@@ -356,9 +354,10 @@ async function main() {
       })
     }
   }
-  console.log(`Created ${leaveScenarios.length} sample leave requests.`)
+  console.log(`เตรียมคำขอลาตัวอย่าง / Prepared ${leaveScenarios.length} sample leave requests.`)
 
-  // ---- Attendance for the last ~30 calendar days (weekdays only) ----
+  // สร้างการลงเวลาย้อนหลังประมาณ 30 วัน โดยเลือกเฉพาะวันทำงาน
+  // Create roughly 30 days of attendance, on weekdays only.
   const rules = DEFAULT_ATTENDANCE_RULES
   const attendanceRows: Array<{
     employeeId: string
@@ -394,14 +393,15 @@ async function main() {
       const date = new Date(today)
       date.setDate(date.getDate() - daysAgo)
       const dayOfWeek = date.getDay()
-      if (dayOfWeek === 0 || dayOfWeek === 6) continue // weekends: no record
+      if (dayOfWeek === 0 || dayOfWeek === 6) continue // ไม่สร้างรายการเสาร์–อาทิตย์ / Skip weekends.
 
       const roll = seededRandom()
       const dateOnly = new Date(date)
       dateOnly.setHours(0, 0, 0, 0)
 
       if (roll < 0.04) {
-        // Absent
+        // ตัวอย่างวันที่ขาดงาน
+        // Sample absence.
         attendanceRows.push({
           employeeId,
           date: dateOnly,
@@ -422,7 +422,8 @@ async function main() {
       }
 
       if (roll < 0.06) {
-        // On approved leave that day
+        // ตัวอย่างวันที่มีการลาอนุมัติแล้ว
+        // Sample day covered by approved leave.
         attendanceRows.push({
           employeeId,
           date: dateOnly,
@@ -442,12 +443,12 @@ async function main() {
         continue
       }
 
-      const checkInOffsetMinutes = Math.floor(seededRandom() * 45) - 10 // -10..+34 minutes from 09:00
+      const checkInOffsetMinutes = Math.floor(seededRandom() * 45) - 10 // ก่อน 09:00 สิบนาที ถึงหลัง 34 นาที / -10 to +34 minutes from 09:00.
       const checkIn = new Date(dateOnly)
       checkIn.setHours(9, 0, 0, 0)
       checkIn.setMinutes(checkIn.getMinutes() + checkInOffsetMinutes)
 
-      const checkOutOffsetMinutes = Math.floor(seededRandom() * 60) - 10 // -10..+49 minutes from 18:00
+      const checkOutOffsetMinutes = Math.floor(seededRandom() * 60) - 10 // ก่อน 18:00 สิบนาที ถึงหลัง 49 นาที / -10 to +49 minutes from 18:00.
       const checkOut = new Date(dateOnly)
       checkOut.setHours(18, 0, 0, 0)
       checkOut.setMinutes(checkOut.getMinutes() + checkOutOffsetMinutes)
@@ -476,9 +477,10 @@ async function main() {
   }
 
   await prisma.attendance.createMany({ data: attendanceRows, skipDuplicates: true })
-  console.log(`Created ${attendanceRows.length} attendance records.`)
+  console.log(`เตรียมรายการลงเวลาโดยข้ามรายการซ้ำ / Prepared ${attendanceRows.length} attendance rows; duplicates are skipped.`)
 
-  // ---- Payroll: previous month (PAID) and current month (CALCULATED) ----
+  // สร้างรอบเดือนก่อนที่จ่ายแล้ว และเดือนปัจจุบันที่คำนวณไว้
+  // Create a paid previous-month run and a calculated current-month run.
   const payrollRules = DEFAULT_PAYROLL_RULES
   const now = new Date()
   const previousMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
@@ -511,7 +513,7 @@ async function main() {
         .filter((a) => a.status === AttendanceStatus.LATE && a.checkIn)
         .reduce((sum, a) => sum + calculateLateMinutes(a.checkIn!, rules), 0)
 
-      const allowance = 1500 // standard transport/meal allowance
+      const allowance = 1500 // ค่าเดินทางและอาหารตัวอย่าง / Sample transport and meal allowance.
       const bonus = emp.key === "engManager" || emp.key === "salManager" || emp.key === "finManager" ? 5000 : 0
       const commission = emp.commissionEligible ? 3200 : 0
 
@@ -561,9 +563,10 @@ async function main() {
 
   await buildPayrollRun(previousMonthDate.getMonth() + 1, previousMonthDate.getFullYear(), PayrollStatus.PAID, true)
   await buildPayrollRun(now.getMonth() + 1, now.getFullYear(), PayrollStatus.CALCULATED, false)
-  console.log("Created payroll runs for the previous (paid) and current (calculated) month.")
+  console.log("เตรียมเงินเดือนเดือนก่อนที่จ่ายแล้ว และเดือนนี้ที่คำนวณไว้ / Prepared previous (paid) and current (calculated) payroll runs.")
 
-  // ---- A couple of payroll adjustments on the paid run, for the UI to show ----
+  // เพิ่มรายการปรับในรอบตัวอย่าง เพื่อให้หน้าจอมีรายละเอียดให้ดู
+  // Add adjustments to the sample run so the interface has examples to display.
   const paidRun = await prisma.payrollRun.findUnique({
     where: { month_year: { month: previousMonthDate.getMonth() + 1, year: previousMonthDate.getFullYear() } },
   })
@@ -584,7 +587,8 @@ async function main() {
     }
   }
 
-  // ---- Audit log entries for demo visibility ----
+  // สร้างประวัติการทำรายการตัวอย่างสำหรับหน้าบันทึกการใช้งาน
+  // Create sample entries for the audit log page.
   await prisma.auditLog.createMany({
     data: [
       {
@@ -618,9 +622,9 @@ async function main() {
     ],
   })
 
-  console.log("Seed complete.")
+  console.log("เติมข้อมูลทดลองเสร็จแล้ว / Demo seed complete.")
   console.log("")
-  console.log("Demo logins (see README for the full roster):")
+  console.log("บัญชีทดลอง: ดูวิธีใช้ใน README / Demo accounts: see README for usage.")
   console.log(`  Admin:    admin@hrflow.demo    / ${DEMO_PASSWORDS.ADMIN}`)
   console.log(`  HR:       hr@hrflow.demo       / ${DEMO_PASSWORDS.HR}`)
   console.log(`  Manager:  manager@hrflow.demo  / ${DEMO_PASSWORDS.MANAGER}`)

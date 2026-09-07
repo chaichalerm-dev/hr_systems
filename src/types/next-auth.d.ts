@@ -1,9 +1,8 @@
 import type { Role } from "@prisma/client"
 import type { DefaultSession } from "next-auth"
 
-// `next-auth`'s own `.d.ts` only re-exports these types from "@auth/core",
-// it doesn't declare the interfaces itself, so augmentation has to target
-// the module that actually declares them, or TS won't merge it in.
+// ขยายชนิดข้อมูลที่ @auth/core ซึ่งเป็นผู้ประกาศจริง เพื่อให้ TypeScript รวมฟิลด์ที่เพิ่มได้
+// Extend the interfaces in @auth/core, where they are declared, so TypeScript merges the added fields.
 declare module "@auth/core/types" {
   interface Session {
     user: {

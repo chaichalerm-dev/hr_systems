@@ -11,7 +11,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ run
   const { runId } = await params
 
   const run = await getPayrollRunDetail(runId)
-  if (!run) return NextResponse.json({ error: "Payroll run not found." }, { status: 404 })
+  if (!run) return NextResponse.json({ error: "ไม่พบรอบเงินเดือนนี้ / Payroll run not found." }, { status: 404 })
 
   const header = [
     "Employee Code",

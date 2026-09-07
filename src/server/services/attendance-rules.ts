@@ -1,12 +1,10 @@
-/**
- * Attendance status/hours calculation, pure functions, unit tested in
- * isolation. DB orchestration (check-in/out server actions) lives in
- * `src/features/attendance/actions.ts`.
+/** คำนวณสถานะและเวลาทำงานโดยไม่เรียกฐานข้อมูล ขั้นบันทึกเวลาอยู่ใน features/attendance/actions.ts
+ * Calculate attendance without database calls. Attendance actions handle saving records.
  */
 
 export interface AttendanceRules {
-  workStartTime: string // "HH:mm"
-  workEndTime: string // "HH:mm"
+  workStartTime: string // ชั่วโมง:นาที เช่น 09:00 / Hours:minutes, e.g. 09:00
+  workEndTime: string // ชั่วโมง:นาที เช่น 09:00 / Hours:minutes, e.g. 09:00
   gracePeriodMinutes: number
   standardWorkingHours: number
 }
@@ -16,7 +14,9 @@ function timeStringToMinutes(time: string): number {
   return hours * 60 + minutes
 }
 
-/** Minutes past the work start time, counting only from the grace-period cutoff. Never negative. */
+/** นับนาทีสายหลังสิ้นสุดช่วงผ่อนผัน ถ้าไม่สายให้คืน 0
+ * Count late minutes after the grace period; return zero when not late.
+ */
 export function calculateLateMinutes(checkIn: Date, rules: AttendanceRules): number {
   const checkInMinutes = checkIn.getHours() * 60 + checkIn.getMinutes()
   const cutoffMinutes = timeStringToMinutes(rules.workStartTime) + rules.gracePeriodMinutes
@@ -27,7 +27,9 @@ export function isLateCheckIn(checkIn: Date, rules: AttendanceRules): boolean {
   return calculateLateMinutes(checkIn, rules) > 0
 }
 
-/** Working hours between check-in and check-out, rounded to 2 decimal places. */
+/** คำนวณชั่วโมงระหว่างเวลาเข้าและออก ปัดทศนิยม 2 ตำแหน่ง
+ * Calculate hours between check-in and check-out, rounded to two decimal places.
+ */
 export function calculateWorkingHours(checkIn: Date, checkOut: Date): number {
   const diffMs = checkOut.getTime() - checkIn.getTime()
   const hours = diffMs / (1000 * 60 * 60)

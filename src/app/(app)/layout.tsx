@@ -32,10 +32,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const t = await getDictionary()
 
   return (
-    // h-dvh (not min-h-screen) pins this to exactly one viewport tall, so the
-    // sidebar and header stay put while only <main> scrolls internally,
-    // otherwise a tall page grows the whole flex row past 100vh and the
-    // sidebar scrolls away with the rest of the document.
+    // จำกัดโครงหน้าให้สูงเท่าจอ เพื่อให้เมนูและแถบบนอยู่กับที่ขณะเลื่อนเนื้อหา
+    // Keep the shell one viewport tall so only the main content scrolls.
     <div className="flex h-dvh overflow-hidden">
       <a href="#main-content" className="sr-only fixed top-2 left-2 z-50 rounded-lg bg-primary px-4 py-3 text-primary-foreground focus:not-sr-only">{t.workspace.skipToContent}</a>
       <AppSidebar role={session.user.role} defaultCollapsed={sidebarCollapsed} />

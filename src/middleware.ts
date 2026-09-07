@@ -3,8 +3,8 @@ import { NextResponse } from "next/server"
 
 import { authConfig } from "@/server/auth/config"
 
-// Edge-safe: only reads/validates the session JWT, no Credentials provider
-// (which needs bcrypt + Prisma) is loaded here.
+// อ่านและตรวจเซสชันเท่านั้น การตรวจรหัสผ่านที่ใช้ Prisma กับ bcrypt อยู่ฝั่ง Node.js
+// Only read the session here. Password checks using Prisma and bcrypt run in Node.js.
 const { auth } = NextAuth(authConfig)
 
 const PUBLIC_PREFIXES = ["/login", "/unauthorized"]

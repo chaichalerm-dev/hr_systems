@@ -41,10 +41,10 @@ function useFormField() {
   const { getFieldState, formState } = useFormContext()
 
   if (!fieldContext) {
-    throw new Error("useFormField should be used within <FormField>")
+    throw new Error("เรียก useFormField ภายใน FormField / Use useFormField inside FormField.")
   }
   if (!itemContext) {
-    throw new Error("useFormField should be used within <FormItem>")
+    throw new Error("เรียก useFormField ภายใน FormItem / Use useFormField inside FormItem.")
   }
 
   const fieldState = getFieldState(fieldContext.name, formState)
@@ -88,8 +88,8 @@ function FormLabel({ className, ...props }: React.ComponentProps<"label">) {
   )
 }
 
-// Base UI's primitives don't ship a Radix-style Slot, so FormControl merges
-// the accessibility attributes directly onto its single child element.
+// ส่งแอตทริบิวต์ช่วยการเข้าถึงไปยังช่องกรอกโดยตรง เพราะ Base UI ไม่มี Slot แบบ Radix
+// Apply accessibility attributes directly to the child input; Base UI has no Radix-style Slot.
 function FormControl({ children, ...props }: { children: React.ReactElement<Record<string, unknown>> } & Record<string, unknown>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
   return React.cloneElement(children, {
