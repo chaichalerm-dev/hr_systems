@@ -60,9 +60,16 @@ export default async function LandingPage() {
           {/* A smaller logo on mobile keeps the top row from crowding the sign-in button. */}
           <Logo size="sm" className="sm:hidden" />
           <Logo size="lg" className="hidden sm:flex" />
-          {/* ซ่อนลิงก์นำทางบนจอมือถือ เดิมตกลงมาเป็นแถวที่สองจน header สูงเทอะทะ ผู้ใช้เลื่อนดูเนื้อหาแทนได้อยู่แล้ว */}
-          {/* Hidden on phones — it used to wrap into a bulky second row; users can still just scroll to each section. */}
-          <nav aria-label={t.landing.pageNavigation} className="order-last mt-4 hidden w-full items-center justify-center gap-6 border-t pt-3 text-sm sm:flex lg:order-none lg:mt-0 lg:w-auto lg:border-0 lg:pt-0">
+          {/* ซ่อนลิงก์นำทางไว้จนจอกว้างพอ (lg) ให้รวมแถวเดียวกับโลโก้และปุ่มขวาได้จริง
+              ต่ำกว่านั้นพื้นที่ไม่พอ เคยลองเปิดตั้งแต่ sm แล้วมันล้นจนตกไปเป็นอีกแถว
+              แยกออกมาเป็น bar ต่างหาก เลยกลับมาซ่อนจนถึง lg เหมือนเดิม ผู้ใช้เลื่อนดู
+              แต่ละ section แทนได้อยู่แล้วบนจอที่แคบกว่านี้ */}
+          {/* Hidden until the viewport is wide enough (lg) to actually fit on one row
+              with the logo and right-side buttons. Showing it from sm caused it to
+              overflow and wrap into its own bordered row — a separate-looking bar —
+              so it's hidden again below lg; users can still just scroll to each
+              section on narrower screens. */}
+          <nav aria-label={t.landing.pageNavigation} className="order-last mt-4 hidden w-full items-center justify-center gap-6 border-t pt-3 text-sm lg:order-none lg:mt-0 lg:flex lg:w-auto lg:border-0 lg:pt-0">
             {navigation.map((item) => <Link key={item.href} href={item.href} className="rounded-md py-2 text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{item.label}</Link>)}
           </nav>
           <div className="flex items-center gap-1.5 sm:gap-2">
