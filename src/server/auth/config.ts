@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from "next-auth"
 
-// ใช้ตั้งค่าเซสชันร่วมกันใน server/auth/index.ts และ middleware.ts โดยแยก Prisma กับ bcrypt ไว้ในขั้นล็อกอิน
-// Share session settings with auth/index.ts and middleware.ts; load Prisma and bcrypt only for sign-in.
+// ใช้ตั้งค่าเซสชันร่วมกันใน server/auth/index.ts และ proxy.ts โดยแยก Prisma กับ bcrypt ไว้ในขั้นล็อกอิน
+// Share session settings with auth/index.ts and proxy.ts; load Prisma and bcrypt only for sign-in.
 export const authConfig = {
   pages: {
     signIn: "/login",

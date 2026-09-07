@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, Noto_Sans_Thai, Geist_Mono } from "next/font/google"
+import { headers } from "next/headers"
 import "./globals.css"
 
 import { ThemeProvider } from "@/components/shared/theme-provider"
@@ -46,7 +47,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const [locale, dictionary] = await Promise.all([getLocale(), getDictionary()])
+  const [locale, dictionary, headersList] = await Promise.all([getLocale(), getDictionary(), headers()])
+  const nonce = headersList.get("x-nonce") ?? undefined
 
   return (
     <html
@@ -56,7 +58,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <I18nProvider locale={locale} dictionary={dictionary}>
-          <ThemeProvider>
+          <ThemeProvider nonce={nonce}>
             <TooltipProvider delay={200}>
               {children}
               <Toaster position="top-right" richColors />
