@@ -28,9 +28,11 @@ export function WorkspaceTools({ role }: { role: Role }) {
         <span className="font-medium">{current ? t.nav[current.labelKey] : t.auth.myProfile}</span>
       </div>
       <Dialog open={open} onOpenChange={(value) => { setOpen(value); if (!value) setQuery("") }}>
-        <DialogTrigger render={<Button variant="outline" className="gap-2 text-muted-foreground" aria-label={t.workspace.findPage} />}>
-          <Search className="size-4" />
-          <span className="hidden sm:inline">{t.workspace.findPage}</span>
+        {/* กว้างพอดีไอคอนบนมือถือ แล้วค่อยขยายพร้อมข้อความตอนจอกว้างขึ้น กันปุ่มนี้แย่งพื้นที่ตอนจอแคบ */}
+        {/* Icon-only on mobile, widening to show the label from md up so it doesn't crowd the header on narrow screens. */}
+        <DialogTrigger render={<Button variant="outline" size="icon" className="gap-2 text-muted-foreground md:w-auto md:px-3" aria-label={t.workspace.findPage} />}>
+          <Search className="size-4 shrink-0" />
+          <span className="hidden md:inline">{t.workspace.findPage}</span>
         </DialogTrigger>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>

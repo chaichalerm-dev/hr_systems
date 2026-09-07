@@ -8,7 +8,7 @@ import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { LanguageSwitcher } from "@/components/layout/language-switcher"
 import { UserMenu } from "@/components/layout/user-menu"
 import { SIDEBAR_COOKIE } from "@/components/layout/sidebar-cookie"
-import { APP_NAME } from "@/lib/constants"
+import { Logo } from "@/components/shared/logo"
 import { prisma } from "@/db/client"
 import { WorkspaceTools } from "@/components/layout/workspace-tools"
 import { getDictionary } from "@/i18n/server"
@@ -39,13 +39,16 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       <AppSidebar role={session.user.role} defaultCollapsed={sidebarCollapsed} />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-18 shrink-0 items-center justify-between gap-2 border-b bg-card px-4 md:px-8">
-          <div className="flex items-center gap-2">
+        <header className="flex h-18 shrink-0 items-center justify-between gap-3 border-b bg-card px-3 sm:px-4 md:px-8">
+          <div className="flex min-w-0 items-center gap-1 sm:gap-2">
             <MobileNav role={session.user.role} />
-            <span className="text-sm font-medium md:hidden">{APP_NAME}</span>
+            {/* ใช้โลโก้แบบมีไอคอนแทนตัวอักษรเปล่า ให้ตรงกับแบรนด์เหมือนฝั่งเดสก์ท็อป */}
+            {/* An icon-mark logo instead of bare text, matching the brand on desktop. */}
+            <Logo size="sm" iconOnly className="shrink-0 md:hidden" />
+            <div className="mx-1 h-6 w-px shrink-0 bg-border md:hidden" aria-hidden="true" />
             <WorkspaceTools role={session.user.role} />
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex shrink-0 items-center gap-2">
             <LanguageSwitcher />
             <ThemeToggle />
             <UserMenu name={displayName} email={session.user.email ?? ""} role={session.user.role} />

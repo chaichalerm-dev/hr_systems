@@ -49,6 +49,14 @@ Use **Find a page** to jump to a task. Employee forms have section links and a s
 
 The top bar changes language and theme. The app remembers those choices and the sidebar size. Names, departments, and user-entered text keep their stored wording.
 
+หน้าเข้าสู่ระบบแบ่งเป็นส่วนแนะนำและฟอร์มบนจอใหญ่ ส่วนมือถือจะแสดงฟอร์มเป็นหลัก ช่องรหัสผ่านมีปุ่มแสดง–ซ่อน หากต้องการทดลอง ให้กด “ลองใช้ด้วยบัญชีตัวอย่าง” เลือกบทบาท แล้วกดเข้าสู่ระบบ เปลี่ยนภาษาและธีมได้ที่มุมบน
+
+The login page pairs a workspace introduction with the form on desktop and focuses on the form on mobile. You can show or hide the password. To try the demo, open “Explore with a demo account,” choose a role, then select Sign in. Language and theme controls are at the top.
+
+หน้าเว็บแนะนำ `/` แบ่งเป็นฟีเจอร์ วิธีเริ่มใช้งาน และบทบาทผู้ใช้ มีเมนูข้ามไปแต่ละส่วนและปุ่มเปลี่ยนภาษา–ธีม ทางลัดลงเวลา การลา และสลิปจะพาไปเข้าสู่ระบบก่อนเปิดหน้าที่เลือก บัญชีทดลองทั้งสี่บทบาทเลือกได้ในหน้าเข้าสู่ระบบ
+
+The public homepage `/` introduces features, getting started, and user roles. Its navigation jumps to each section, with language and theme controls at the top. Attendance, leave, and payslip shortcuts take you through sign-in before opening the chosen page. All four demo roles are available on the sign-in page.
+
 <a id="everyday-use"></a>
 ## วิธีใช้งานแต่ละวัน · Everyday use
 
