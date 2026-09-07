@@ -14,6 +14,47 @@ import { updateAttendanceRulesAction } from "../actions"
 import type { AttendanceRules } from "@/server/services/attendance-rules"
 import { useTranslations } from "@/i18n/client"
 
+type NumberFieldName = "gracePeriodMinutes" | "standardWorkingHours"
+
+function NumberField({
+  control,
+  name,
+  label,
+  min,
+  max,
+}: {
+  control: ReturnType<typeof useForm<AttendanceRulesFormInput>>["control"]
+  name: NumberFieldName
+  label: string
+  min?: number
+  max?: number
+}) {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>{label}</FormLabel>
+          <FormControl>
+            <Input
+              name={field.name}
+              ref={field.ref}
+              onBlur={field.onBlur}
+              value={field.value}
+              onChange={(e) => field.onChange(e.target.valueAsNumber)}
+              type="number"
+              min={min}
+              max={max}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
 export function AttendanceRulesForm({ initial }: { initial: AttendanceRules }) {
   const t = useTranslations()
   const router = useRouter()
@@ -70,48 +111,13 @@ export function AttendanceRulesForm({ initial }: { initial: AttendanceRules }) {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="gracePeriodMinutes"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t.settings.gracePeriod}</FormLabel>
-                <FormControl>
-                  <Input
-                    name={field.name}
-                    ref={field.ref}
-                    onBlur={field.onBlur}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    type="number"
-                    min={0}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
+          <NumberField control={form.control} name="gracePeriodMinutes" label={t.settings.gracePeriod} min={0} />
+          <NumberField
             control={form.control}
             name="standardWorkingHours"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t.settings.standardWorkingHours}</FormLabel>
-                <FormControl>
-                  <Input
-                    name={field.name}
-                    ref={field.ref}
-                    onBlur={field.onBlur}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                    type="number"
-                    min={1}
-                    max={24}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+            label={t.settings.standardWorkingHours}
+            min={1}
+            max={24}
           />
         </div>
         <Button type="submit" disabled={isPending}>

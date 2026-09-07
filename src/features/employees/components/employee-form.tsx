@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
+import { useForm, type Control } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { format } from "date-fns"
@@ -31,6 +31,56 @@ interface ManagerOption {
   firstName: string
   lastName: string
   employeeCode: string
+}
+
+type StringFieldName =
+  | "employeeCode"
+  | "firstName"
+  | "lastName"
+  | "email"
+  | "phone"
+  | "city"
+  | "province"
+  | "postalCode"
+  | "country"
+  | "emergencyContactName"
+  | "emergencyContactPhone"
+  | "emergencyContactRelation"
+  | "bankName"
+  | "bankAccountNumber"
+  | "taxId"
+  | "socialSecurityNo"
+
+function TextField({
+  control,
+  name,
+  label,
+  placeholder,
+  type = "text",
+  className,
+}: {
+  control: Control<EmployeeFormInput>
+  name: StringFieldName
+  label: string
+  placeholder?: string
+  type?: string
+  className?: string
+}) {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className={className}>
+          <FormLabel>{label}</FormLabel>
+          <FormControl>
+            <Input {...field} type={type} placeholder={placeholder} />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
 }
 
 function toFormData(values: EmployeeFormInput): FormData {
@@ -145,71 +195,11 @@ export function EmployeeForm({
         <section className="space-y-4">
           <h2 className="text-sm font-semibold">{t.employees.basicInformation}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="employeeCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.employeeCode}</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="EMP0001" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.auth.email}</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="email" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.firstName}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.lastName}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.phone}</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="081-234-5678" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <TextField control={form.control} name="employeeCode" label={t.employees.employeeCode} placeholder="EMP0001" />
+            <TextField control={form.control} name="email" label={t.auth.email} type="email" />
+            <TextField control={form.control} name="firstName" label={t.employees.firstName} />
+            <TextField control={form.control} name="lastName" label={t.employees.lastName} />
+            <TextField control={form.control} name="phone" label={t.employees.phone} placeholder="081-234-5678" />
           </div>
         </section>
 
@@ -411,102 +401,23 @@ export function EmployeeForm({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.city}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="province"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.province}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="postalCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.postalCode}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="country"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.country}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <TextField control={form.control} name="city" label={t.employees.city} />
+            <TextField control={form.control} name="province" label={t.employees.province} />
+            <TextField control={form.control} name="postalCode" label={t.employees.postalCode} />
+            <TextField control={form.control} name="country" label={t.employees.country} />
           </div>
         </section>
 
         <section className="space-y-4">
           <h2 className="text-sm font-semibold">{t.employees.emergencyContact}</h2>
           <div className="grid gap-4 sm:grid-cols-3">
-            <FormField
-              control={form.control}
-              name="emergencyContactName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.name}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="emergencyContactPhone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.phone}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
+            <TextField control={form.control} name="emergencyContactName" label={t.employees.name} />
+            <TextField control={form.control} name="emergencyContactPhone" label={t.employees.phone} />
+            <TextField
               control={form.control}
               name="emergencyContactRelation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.relationship}</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Spouse, Parent..." />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label={t.employees.relationship}
+              placeholder="Spouse, Parent..."
             />
           </div>
         </section>
@@ -514,58 +425,10 @@ export function EmployeeForm({
         <section className="space-y-4">
           <h2 className="text-sm font-semibold">{t.employees.bankingSection}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="bankName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.bankName}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="bankAccountNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.bankAccountNumber}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="taxId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.taxId}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="socialSecurityNo"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t.employees.socialSecurityNo}</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <TextField control={form.control} name="bankName" label={t.employees.bankName} />
+            <TextField control={form.control} name="bankAccountNumber" label={t.employees.bankAccountNumber} />
+            <TextField control={form.control} name="taxId" label={t.employees.taxId} />
+            <TextField control={form.control} name="socialSecurityNo" label={t.employees.socialSecurityNo} />
           </div>
         </section>
 
