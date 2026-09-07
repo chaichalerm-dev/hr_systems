@@ -1,4 +1,4 @@
-// HRFlow — Prisma schema
+// HRFlow Prisma schema
 // Portfolio/reference HR management system. See README for scope notes,
 // especially around payroll and tax calculations (demo formulas, not
 // certified legal/accounting implementations).
@@ -159,7 +159,7 @@ model Employee {
   postalCode   String?
   country      String? @default("Thailand")
 
-  // Payroll / statutory info (demo placeholders — see README)
+  // Payroll / statutory info (demo placeholders, see README)
   bankName          String?
   bankAccountNumber String?
   taxId             String?

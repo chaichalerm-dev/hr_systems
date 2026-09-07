@@ -316,7 +316,7 @@ async function main() {
           approverId: approverUserId,
           level: ApprovalLevel.MANAGER,
           decision: ApprovalDecision.APPROVED,
-          comment: "Approved — team coverage confirmed.",
+          comment: "Approved, team coverage confirmed.",
         },
       })
     }
