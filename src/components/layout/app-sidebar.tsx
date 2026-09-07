@@ -35,11 +35,11 @@ export function AppSidebar({ role, defaultCollapsed }: { role: Role; defaultColl
         collapsed ? "w-16" : "w-64"
       )}
     >
-      <div className={cn("flex h-16 items-center border-b", collapsed ? "justify-center px-2" : "px-5")}>
+      <div className={cn("flex h-18 items-center border-b", collapsed ? "justify-center px-2" : "px-5")}>
         <Logo iconOnly={collapsed} />
       </div>
 
-      <div className="flex-1 overflow-y-auto overflow-x-hidden py-4">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden py-6">
         <SidebarNav role={role} collapsed={collapsed} />
       </div>
 

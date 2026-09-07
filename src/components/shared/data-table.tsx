@@ -22,7 +22,7 @@ export function DataTable<TData extends RowData>({
   })
 
   return (
-    <div className="overflow-x-auto rounded-xl border">
+    <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

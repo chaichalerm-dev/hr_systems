@@ -34,7 +34,7 @@ export function SidebarNav({
             // marks where one category ends and the next begins.
             index > 0 && <div className="mx-1 mb-1 border-t border-sidebar-border" />
           ) : (
-            <p className="px-3 pb-1 text-[11px] font-semibold tracking-wider text-sidebar-foreground/40 uppercase">
+            <p className="px-3 pb-1 text-xs font-medium text-muted-foreground">
               {t.nav[group.key]}
             </p>
           )}
@@ -74,11 +74,12 @@ function NavLink({
       href={item.href}
       onClick={onNavigate}
       aria-label={collapsed ? label : undefined}
+      aria-current={isActive ? "page" : undefined}
       className={cn(
-        "flex items-center rounded-lg text-sm font-medium transition-colors",
-        collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2",
+        "flex min-h-11 items-center rounded-xl text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-ring",
+        collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5",
         isActive
-          ? "bg-sidebar-primary/10 text-sidebar-primary"
+          ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
           : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
       )}
     >

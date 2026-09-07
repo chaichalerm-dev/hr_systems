@@ -7,6 +7,7 @@ import { StatusBadge } from "@/components/shared/status-badge"
 import { EmptyState } from "@/components/shared/empty-state"
 import { CalendarX } from "lucide-react"
 import { useTranslations } from "@/i18n/client"
+import { Button } from "@/components/ui/button"
 import { LeaveRequestSheet } from "./leave-request-sheet"
 import type { LeaveRequestDetail } from "../queries"
 
@@ -31,7 +32,7 @@ export function LeaveRequestList({
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border">
+    <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
       <Table>
         <TableHeader>
           <TableRow>
@@ -40,6 +41,7 @@ export function LeaveRequestList({
             <TableHead>{t.leave.dates}</TableHead>
             <TableHead>{t.common.days}</TableHead>
             <TableHead>{t.common.status}</TableHead>
+            <TableHead><span className="sr-only">{t.common.actions}</span></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -50,12 +52,13 @@ export function LeaveRequestList({
                   {showEmployee && <TableCell className="font-medium">{request.employeeName}</TableCell>}
                   <TableCell>{request.leaveType}</TableCell>
                   <TableCell className="text-muted-foreground">
-                    {format(request.startDate, "d MMM")} to {format(request.endDate, "d MMM yyyy")}
+                    {format(request.startDate, "d MMM")} – {format(request.endDate, "d MMM yyyy")}
                   </TableCell>
                   <TableCell className="text-muted-foreground">{request.days}</TableCell>
                   <TableCell>
                     <StatusBadge status={request.status} />
                   </TableCell>
+                  <TableCell className="text-right"><Button variant="outline" size="sm" onClick={(event) => { event.stopPropagation(); open() }}>{t.common.view}</Button></TableCell>
                 </TableRow>
               )}
             </LeaveRequestSheet>

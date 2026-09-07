@@ -32,7 +32,7 @@ export default async function AuditLogPage({
         <EmptyState icon={ShieldCheck} title={t.auditLog.noEntries} />
       ) : (
         <div className="space-y-4">
-          <div className="overflow-x-auto rounded-xl border">
+          <div className="overflow-x-auto rounded-xl border bg-card">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
                 <tr>
@@ -52,10 +52,10 @@ export default async function AuditLogPage({
                     <td className="px-4 py-3 font-medium">{entry.actorName}</td>
                     <td className="px-4 py-3">{t.auditLog.actions[entry.action as keyof Dictionary["auditLog"]["actions"]] ?? entry.action}</td>
                     <td className="px-4 py-3 text-muted-foreground">{entry.entity}</td>
-                    <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
+                    <td className="px-4 py-3 text-xs text-muted-foreground">
                       {entry.metadata && Object.keys(entry.metadata as object).length > 0
-                        ? JSON.stringify(entry.metadata)
-                        : ","}
+                        ? <details><summary className="cursor-pointer whitespace-nowrap py-2 font-medium text-primary">{t.common.view}</summary><pre className="mt-2 max-w-xs overflow-x-auto rounded-lg bg-muted p-3 font-mono">{JSON.stringify(entry.metadata, null, 2)}</pre></details>
+                        : "—"}
                     </td>
                   </tr>
                 ))}

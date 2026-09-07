@@ -18,12 +18,12 @@ export default async function LoginPage() {
       <div className="absolute top-4 right-4">
         <LanguageSwitcher />
       </div>
-      <div className="flex w-full max-w-sm flex-col items-center gap-8">
+      <div className="flex w-full max-w-md flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-3 text-center">
           <Logo size="lg" />
           <p className="text-sm text-muted-foreground">{t.app.tagline}</p>
         </div>
-        <div className="w-full rounded-xl border bg-card p-6 shadow-sm">
+        <div className="w-full rounded-2xl border bg-card p-6 shadow-xl shadow-primary/5 sm:p-8">
           <Suspense>
             <LoginForm />
           </Suspense>

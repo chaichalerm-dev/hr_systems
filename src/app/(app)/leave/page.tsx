@@ -9,6 +9,7 @@ import { LeaveBalanceCards } from "@/features/leave/components/leave-balance-car
 import { LeaveRequestList } from "@/features/leave/components/leave-request-list"
 import { NewLeaveRequestDialog } from "@/features/leave/components/new-leave-request-dialog"
 import { getDictionary } from "@/i18n/server"
+import { WorkflowGuide } from "@/components/shared/workflow-guide"
 
 export const metadata: Metadata = { title: "Leave" }
 
@@ -50,6 +51,7 @@ export default async function LeavePage() {
         actions={session.user.employeeId ? <NewLeaveRequestDialog leaveTypes={leaveTypes} /> : undefined}
       />
 
+      <WorkflowGuide title={t.workspace.leaveGuide} steps={[t.workspace.leaveStep1, t.workspace.leaveStep2, t.workspace.leaveStep3]} />
       {canApprove ? (
         <Tabs defaultValue="approvals">
           <TabsList>

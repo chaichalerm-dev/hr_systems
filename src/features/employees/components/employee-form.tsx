@@ -2,7 +2,7 @@
 
 import { useMemo, useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { useForm, type Control } from "react-hook-form"
+import { useForm, useWatch, type Control } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 import { format } from "date-fns"
@@ -136,7 +136,7 @@ export function EmployeeForm({
     },
   })
 
-  const selectedDepartmentId = form.watch("departmentId")
+  const selectedDepartmentId = useWatch({ control: form.control, name: "departmentId" })
   const filteredPositions = useMemo(
     () => positions.filter((p) => p.departmentId === selectedDepartmentId),
     [positions, selectedDepartmentId]
@@ -191,9 +191,17 @@ export function EmployeeForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <section className="space-y-4">
-          <h2 className="text-sm font-semibold">{t.employees.basicInformation}</h2>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="employee-form space-y-5">
+        <div className="rounded-xl border border-primary/15 bg-primary/5 p-4">
+          <p className="text-sm leading-relaxed text-muted-foreground">{t.workspace.formHint}</p>
+          <nav aria-label={t.workspace.onThisPage} className="mt-3 flex flex-wrap gap-2">
+            {[t.employees.basicInformation, t.employees.employmentSection, t.employees.addressSection, t.employees.emergencyContact, t.employees.bankingSection].map((label, index) => (
+              <a key={label} href={`#employee-section-${index}`} className="rounded-lg border bg-card px-3 py-2 text-xs font-medium hover:border-primary hover:text-primary">{index + 1}. {label}</a>
+            ))}
+          </nav>
+        </div>
+        <section id="employee-section-0" className="scroll-mt-6 space-y-5 rounded-2xl border bg-card p-5 sm:p-6">
+          <h2 className="flex items-center gap-3 font-semibold"><span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-sm text-primary">01</span>{t.employees.basicInformation}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <TextField control={form.control} name="employeeCode" label={t.employees.employeeCode} placeholder="EMP0001" />
             <TextField control={form.control} name="email" label={t.auth.email} type="email" />
@@ -203,8 +211,8 @@ export function EmployeeForm({
           </div>
         </section>
 
-        <section className="space-y-4">
-          <h2 className="text-sm font-semibold">{t.employees.employmentSection}</h2>
+        <section id="employee-section-1" className="scroll-mt-6 space-y-5 rounded-2xl border bg-card p-5 sm:p-6">
+          <h2 className="flex items-center gap-3 font-semibold"><span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-sm text-primary">02</span>{t.employees.employmentSection}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField
               control={form.control}
@@ -385,8 +393,8 @@ export function EmployeeForm({
           </div>
         </section>
 
-        <section className="space-y-4">
-          <h2 className="text-sm font-semibold">{t.employees.addressSection}</h2>
+        <section id="employee-section-2" className="scroll-mt-6 space-y-5 rounded-2xl border bg-card p-5 sm:p-6">
+          <h2 className="flex items-center gap-3 font-semibold"><span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-sm text-primary">03</span>{t.employees.addressSection}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField
               control={form.control}
@@ -408,8 +416,8 @@ export function EmployeeForm({
           </div>
         </section>
 
-        <section className="space-y-4">
-          <h2 className="text-sm font-semibold">{t.employees.emergencyContact}</h2>
+        <section id="employee-section-3" className="scroll-mt-6 space-y-5 rounded-2xl border bg-card p-5 sm:p-6">
+          <h2 className="flex items-center gap-3 font-semibold"><span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-sm text-primary">04</span>{t.employees.emergencyContact}</h2>
           <div className="grid gap-4 sm:grid-cols-3">
             <TextField control={form.control} name="emergencyContactName" label={t.employees.name} />
             <TextField control={form.control} name="emergencyContactPhone" label={t.employees.phone} />
@@ -422,8 +430,8 @@ export function EmployeeForm({
           </div>
         </section>
 
-        <section className="space-y-4">
-          <h2 className="text-sm font-semibold">{t.employees.bankingSection}</h2>
+        <section id="employee-section-4" className="scroll-mt-6 space-y-5 rounded-2xl border bg-card p-5 sm:p-6">
+          <h2 className="flex items-center gap-3 font-semibold"><span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-sm text-primary">05</span>{t.employees.bankingSection}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <TextField control={form.control} name="bankName" label={t.employees.bankName} />
             <TextField control={form.control} name="bankAccountNumber" label={t.employees.bankAccountNumber} />
@@ -434,9 +442,9 @@ export function EmployeeForm({
 
         {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
-        <div className="flex items-center gap-2 border-t pt-6">
+        <div className="sticky bottom-0 z-10 flex flex-wrap items-center justify-end gap-3 rounded-xl border bg-card/95 p-4 shadow-lg backdrop-blur-sm">
           <Button type="submit" disabled={isPending}>
-            {mode === "create" ? t.employees.createEmployee : t.employees.saveChanges}
+            {isPending ? t.common.saving : mode === "create" ? t.employees.createEmployee : t.employees.saveChanges}
           </Button>
           <Button type="button" variant="outline" onClick={() => router.back()}>
             {t.common.cancel}

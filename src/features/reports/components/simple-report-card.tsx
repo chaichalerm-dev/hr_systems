@@ -1,6 +1,6 @@
 "use client"
 
-import { Download } from "lucide-react"
+import { Download, FileBarChart } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { useTranslations } from "@/i18n/client"
@@ -9,9 +9,10 @@ export function SimpleReportCard({ title, description, endpoint }: { title: stri
   const t = useTranslations()
 
   return (
-    <div className="rounded-xl border bg-card p-5 shadow-sm">
-      <h3 className="text-sm font-semibold">{title}</h3>
-      <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+    <div className="flex flex-col items-start rounded-2xl border bg-card p-6 shadow-sm">
+      <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary"><FileBarChart className="size-5" /></div>
+      <h2 className="text-base font-semibold">{title}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
       <Button className="mt-4 w-full" nativeButton={false} render={<a href={endpoint} />}>
         <Download className="size-4" />
         {t.common.export}

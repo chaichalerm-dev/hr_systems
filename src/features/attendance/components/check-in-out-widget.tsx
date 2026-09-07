@@ -61,15 +61,16 @@ export function CheckInOutWidget({
   const hasCheckedOut = Boolean(checkOutTime)
 
   return (
-    <div className="rounded-xl border bg-card p-5 shadow-sm">
+    <div className="rounded-2xl border border-primary/20 bg-card p-5 shadow-sm sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-sm font-semibold">{t.attendance.todaysAttendance}</h2>
-          <div className="mt-2 flex items-center gap-3">
+          <p className="mt-2 text-sm text-muted-foreground">{hasCheckedOut ? t.workspace.dayComplete : hasCheckedIn ? t.workspace.workingNow : t.workspace.readyToCheckIn}</p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
             <StatusBadge status={status} />
             <span className="text-sm text-muted-foreground">
-              {t.attendance.inLabel} <span className="font-medium text-foreground">{checkInTime ?? ","}</span> · {t.attendance.outLabel}{" "}
-              <span className="font-medium text-foreground">{checkOutTime ?? ","}</span>
+              {t.attendance.inLabel} <span className="font-medium text-foreground">{checkInTime ?? "—"}</span> · {t.attendance.outLabel}{" "}
+              <span className="font-medium text-foreground">{checkOutTime ?? "—"}</span>
             </span>
           </div>
         </div>
@@ -78,7 +79,7 @@ export function CheckInOutWidget({
             <LogIn className="size-4" />
             {isPending && action === "in" ? t.attendance.checkingIn : t.attendance.checkIn}
           </Button>
-          <Button variant="outline" onClick={handleCheckOut} disabled={!hasCheckedIn || hasCheckedOut || isPending}>
+          <Button variant={hasCheckedIn && !hasCheckedOut ? "default" : "outline"} onClick={handleCheckOut} disabled={!hasCheckedIn || hasCheckedOut || isPending}>
             <LogOut className="size-4" />
             {isPending && action === "out" ? t.attendance.checkingOut : t.attendance.checkOut}
           </Button>

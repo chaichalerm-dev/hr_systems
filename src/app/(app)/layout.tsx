@@ -10,6 +10,8 @@ import { UserMenu } from "@/components/layout/user-menu"
 import { SIDEBAR_COOKIE } from "@/components/layout/sidebar-cookie"
 import { APP_NAME } from "@/lib/constants"
 import { prisma } from "@/db/client"
+import { WorkspaceTools } from "@/components/layout/workspace-tools"
+import { getDictionary } from "@/i18n/server"
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const session = await auth()
@@ -27,6 +29,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   const displayName = employee ? `${employee.firstName} ${employee.lastName}` : session.user.email ?? "User"
   const sidebarCollapsed = cookieStore.get(SIDEBAR_COOKIE)?.value === "collapsed"
+  const t = await getDictionary()
 
   return (
     // h-dvh (not min-h-screen) pins this to exactly one viewport tall, so the
@@ -34,13 +37,15 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     // otherwise a tall page grows the whole flex row past 100vh and the
     // sidebar scrolls away with the rest of the document.
     <div className="flex h-dvh overflow-hidden">
+      <a href="#main-content" className="sr-only fixed top-2 left-2 z-50 rounded-lg bg-primary px-4 py-3 text-primary-foreground focus:not-sr-only">{t.workspace.skipToContent}</a>
       <AppSidebar role={session.user.role} defaultCollapsed={sidebarCollapsed} />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-4 md:px-6">
+        <header className="flex h-18 shrink-0 items-center justify-between gap-2 border-b bg-card px-4 md:px-8">
           <div className="flex items-center gap-2">
             <MobileNav role={session.user.role} />
             <span className="text-sm font-medium md:hidden">{APP_NAME}</span>
+            <WorkspaceTools role={session.user.role} />
           </div>
           <div className="flex items-center gap-1.5">
             <LanguageSwitcher />
@@ -48,8 +53,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <UserMenu name={displayName} email={session.user.email ?? ""} role={session.user.role} />
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">{children}</div>
+        <main id="main-content" tabIndex={-1} className="workspace-main flex-1 overflow-y-auto p-4 pb-8 outline-none md:p-8">
+          <div className="mx-auto flex w-full max-w-7xl flex-col gap-6">{children}</div>
         </main>
       </div>
     </div>

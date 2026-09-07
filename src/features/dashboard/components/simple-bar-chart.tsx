@@ -28,7 +28,7 @@ export function SimpleBarChart({
   } satisfies ChartConfig
 
   return (
-    <ChartContainer config={chartConfig} className="h-64 w-full">
+    <ChartContainer config={chartConfig} className="h-64 min-w-0 w-full aspect-auto">
       <BarChart data={data} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
         <CartesianGrid vertical={false} strokeDasharray="3 3" />
         <XAxis
@@ -43,7 +43,7 @@ export function SimpleBarChart({
           height={data.length > 5 ? 40 : 24}
         />
         <ChartTooltip content={<ChartTooltipContent formatter={(value) => formatValue(Number(value))} />} />
-        <Bar dataKey="value" fill="var(--color-value)" radius={[4, 4, 0, 0]} />
+        <Bar isAnimationActive={false} dataKey="value" fill="var(--color-value)" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ChartContainer>
   )

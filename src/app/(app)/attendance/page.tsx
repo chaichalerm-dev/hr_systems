@@ -17,6 +17,7 @@ import { CheckInOutWidget } from "@/features/attendance/components/check-in-out-
 import { AttendanceTable } from "@/features/attendance/components/attendance-table"
 import { TeamTodayCard } from "@/features/attendance/components/team-today-card"
 import { getDictionary } from "@/i18n/server"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export const metadata: Metadata = { title: "Attendance" }
 
@@ -68,33 +69,37 @@ export default async function AttendancePage() {
     <>
       <PageHeader title={t.attendance.title} description={t.attendance.description} />
 
-      <div className="space-y-6">
-        {employeeId && today !== null && (
-          <CheckInOutWidget
-            status={today?.status ?? "ABSENT"}
-            checkInTime={today?.checkIn ? format(today.checkIn, "HH:mm") : null}
-            checkOutTime={today?.checkOut ? format(today.checkOut, "HH:mm") : null}
-          />
+      <Tabs defaultValue={employeeId ? "personal" : "team"}>
+        {isManagerOrAbove && employeeId && (
+          <TabsList>
+            <TabsTrigger value="personal">{t.workspace.personal}</TabsTrigger>
+            <TabsTrigger value="team">{t.workspace.team}</TabsTrigger>
+          </TabsList>
         )}
-
-        {summary && (
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            <StatTile label={t.attendance.presentThisMonth} value={String(summary.present)} icon={CalendarCheck} tone="good" />
-            <StatTile label={t.attendance.lateThisMonth} value={String(summary.late)} icon={Clock} tone="warning" />
-            <StatTile label={t.attendance.absentThisMonth} value={String(summary.absent)} icon={UserX} tone="critical" />
-            <StatTile label={t.attendance.leaveThisMonth} value={String(summary.leave)} icon={CalendarOff} />
-          </div>
-        )}
-
         {employeeId && (
-          <div>
-            <h2 className="mb-3 text-sm font-semibold">{t.attendance.myHistory}</h2>
-            <AttendanceTable data={history} />
-          </div>
+          <TabsContent value="personal" className="space-y-6">
+            <CheckInOutWidget
+              status={today?.status ?? "NOT_CHECKED_IN"}
+              checkInTime={today?.checkIn ? format(today.checkIn, "HH:mm") : null}
+              checkOutTime={today?.checkOut ? format(today.checkOut, "HH:mm") : null}
+            />
+            {summary && (
+              <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+                <StatTile label={t.attendance.presentThisMonth} value={String(summary.present)} icon={CalendarCheck} tone="good" />
+                <StatTile label={t.attendance.lateThisMonth} value={String(summary.late)} icon={Clock} tone="warning" />
+                <StatTile label={t.attendance.absentThisMonth} value={String(summary.absent)} icon={UserX} tone="critical" />
+                <StatTile label={t.attendance.leaveThisMonth} value={String(summary.leave)} icon={CalendarOff} />
+              </div>
+            )}
+            <div>
+              <h2 className="mb-3 text-sm font-semibold">{t.attendance.myHistory}</h2>
+              <AttendanceTable data={history} />
+            </div>
+          </TabsContent>
         )}
-
-        {teamSection}
-      </div>
+        {isManagerOrAbove && <TabsContent value="team">{teamSection}</TabsContent>}
+        {!employeeId && !isManagerOrAbove && <p className="text-sm text-muted-foreground">{t.attendance.noEmployeeProfile}</p>}
+      </Tabs>
     </>
   )
 }

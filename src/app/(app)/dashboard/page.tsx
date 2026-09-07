@@ -15,6 +15,7 @@ import { SimpleBarChart } from "@/features/dashboard/components/simple-bar-chart
 import { formatCurrency, formatNumber } from "@/lib/format"
 import { getDictionary } from "@/i18n/server"
 import type { Dictionary } from "@/i18n/dictionaries/en"
+import { QuickActions } from "@/features/dashboard/components/quick-actions"
 
 export const metadata: Metadata = { title: "Dashboard" }
 
@@ -23,7 +24,7 @@ async function OrgDashboard({ t }: { t: Dictionary }) {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <StatTile
           label={t.dashboard.totalEmployees}
           value={formatNumber(metrics.totalEmployees)}
@@ -131,12 +132,12 @@ async function EmployeeDashboard({ employeeId, t }: { employeeId: string; t: Dic
           <div className="flex items-center gap-2 text-sm">
             <LogIn className="size-4 text-status-good" />
             <span className="text-muted-foreground">{t.dashboard.checkInLabel}</span>
-            <span className="font-medium">{data.checkInTime ?? ","}</span>
+            <span className="font-medium">{data.checkInTime ?? "—"}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <LogOutIcon className="size-4 text-muted-foreground" />
             <span className="text-muted-foreground">{t.dashboard.checkOutLabel}</span>
-            <span className="font-medium">{data.checkOutTime ?? ","}</span>
+            <span className="font-medium">{data.checkOutTime ?? "—"}</span>
           </div>
         </div>
       </div>
@@ -174,6 +175,7 @@ export default async function DashboardPage() {
   return (
     <>
       <PageHeader title={t.dashboard.title} description={t.dashboard.description} />
+      <QuickActions role={session.user.role} t={t} />
       {session.user.role === Role.ADMIN || session.user.role === Role.HR ? (
         <OrgDashboard t={t} />
       ) : session.user.role === Role.MANAGER && session.user.employeeId ? (

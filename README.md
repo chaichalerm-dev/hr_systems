@@ -35,6 +35,7 @@ A modular HR management platform covering employees, attendance, leave, and payr
 - **Bilingual (Thai / English)**: every screen, form, toast, and document is translated; the choice persists in a cookie and is applied server-side, so pages render in the right language on first paint. Inter covers Latin text and Noto Sans Thai fills in Thai glyphs, so mixed content stays legible.
 - **Light / dark theme**: light by default, toggled from the topbar and remembered per browser.
 - **Collapsible sidebar**: collapses to an icon rail with tooltips; the state persists across reloads via a cookie the server reads, so there's no flash of the wrong width.
+- **Task-focused workspace**: role-aware page search and dashboard shortcuts, separate personal/team attendance tabs, grouped employee forms with section links and a persistent save bar, labeled filters with a reset action, and short guides for leave, payroll, and reports. Settings are split into attendance/payroll tabs. Shared controls have larger touch targets, tables scroll within their cards on mobile, and all new copy supports Thai and English.
 
 ## Architecture
 

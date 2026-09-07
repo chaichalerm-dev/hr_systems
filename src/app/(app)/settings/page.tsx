@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/shared/page-header"
 import { AttendanceRulesForm } from "@/features/settings/components/attendance-rules-form"
 import { PayrollRulesForm } from "@/features/settings/components/payroll-rules-form"
 import { getDictionary } from "@/i18n/server"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export const metadata: Metadata = { title: "Settings" }
 
@@ -21,24 +22,30 @@ export default async function SettingsPage() {
   return (
     <>
       <PageHeader title={t.settings.title} description={t.settings.description} />
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border bg-card p-6 shadow-sm">
-          <h2 className="text-sm font-semibold">{t.settings.attendanceRules}</h2>
-          <p className="mt-1 text-xs text-muted-foreground">{t.settings.attendanceRulesDescription}</p>
-          <div className="mt-4">
-            <AttendanceRulesForm initial={attendanceRules} />
+      <Tabs defaultValue="attendance">
+        <TabsList>
+          <TabsTrigger value="attendance">{t.settings.attendanceRules}</TabsTrigger>
+          <TabsTrigger value="payroll">{t.settings.payrollRules}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="attendance" className="mt-4 max-w-3xl">
+          <div className="rounded-xl border bg-card p-6 shadow-sm">
+            <h2 className="text-base font-semibold">{t.settings.attendanceRules}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{t.settings.attendanceRulesDescription}</p>
+            <div className="mt-6">
+              <AttendanceRulesForm initial={attendanceRules} />
+            </div>
           </div>
-        </div>
-        <div className="rounded-xl border bg-card p-6 shadow-sm">
-          <h2 className="text-sm font-semibold">{t.settings.payrollRules}</h2>
-          <p className="mt-1 text-xs text-muted-foreground">
-            {t.settings.payrollRulesDescription}
-          </p>
-          <div className="mt-4">
-            <PayrollRulesForm initial={payrollRules} />
+        </TabsContent>
+        <TabsContent value="payroll" className="mt-4 max-w-3xl">
+          <div className="rounded-xl border bg-card p-6 shadow-sm">
+            <h2 className="text-base font-semibold">{t.settings.payrollRules}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{t.settings.payrollRulesDescription}</p>
+            <div className="mt-6">
+              <PayrollRulesForm initial={payrollRules} />
+            </div>
           </div>
-        </div>
-      </div>
+        </TabsContent>
+      </Tabs>
     </>
   )
 }

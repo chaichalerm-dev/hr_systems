@@ -43,8 +43,8 @@ export default async function MyPayslipsPage() {
       {payslips.length === 0 ? (
         <EmptyState icon={ReceiptText} title={t.payslip.noPayslips} description={t.payslip.noPayslipsDescription} />
       ) : (
-        <div className="overflow-hidden rounded-xl border">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-xl border bg-card">
+          <table className="w-full min-w-[520px] text-sm">
             <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 font-medium">{t.payslip.period}</th>

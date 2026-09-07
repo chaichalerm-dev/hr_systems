@@ -12,6 +12,7 @@ import { formatCurrency } from "@/lib/format"
 import { GeneratePayrollDialog } from "@/features/payroll/components/generate-payroll-dialog"
 import { Banknote } from "lucide-react"
 import { getDictionary } from "@/i18n/server"
+import { WorkflowGuide } from "@/components/shared/workflow-guide"
 
 export const metadata: Metadata = { title: "Payroll" }
 
@@ -21,11 +22,12 @@ export default async function PayrollPage() {
   return (
     <>
       <PageHeader title={t.payroll.title} description={t.payroll.description} actions={<GeneratePayrollDialog />} />
+      <WorkflowGuide title={t.workspace.payrollGuide} steps={[t.workspace.payrollStep1, t.workspace.payrollStep2, t.workspace.payrollStep3]} />
       {runs.length === 0 ? (
         <EmptyState icon={Banknote} title={t.payroll.noRuns} description={t.payroll.noRunsDescription} />
       ) : (
-        <div className="overflow-hidden rounded-xl border">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-xl border bg-card">
+          <table className="w-full min-w-[640px] text-sm">
             <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 font-medium">{t.payroll.periodColumn}</th>
@@ -39,7 +41,7 @@ export default async function PayrollPage() {
               {runs.map((run) => (
                 <tr key={run.id} className="hover:bg-muted/30">
                   <td className="px-4 py-3 font-medium">
-                    <Link href={`/payroll/${run.id}`} className="hover:underline">
+                    <Link href={`/payroll/${run.id}`} className="inline-flex min-h-10 items-center gap-2 text-primary underline-offset-4 hover:underline">
                       {format(new Date(run.year, run.month - 1, 1), "MMMM yyyy")}
                     </Link>
                   </td>
@@ -49,7 +51,7 @@ export default async function PayrollPage() {
                     <StatusBadge status={run.status} />
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
-                    {run.paidAt ? format(run.paidAt, "d MMM yyyy") : ","}
+                    {run.paidAt ? format(run.paidAt, "d MMM yyyy") : "—"}
                   </td>
                 </tr>
               ))}

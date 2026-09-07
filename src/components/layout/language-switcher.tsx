@@ -16,7 +16,7 @@ export function LanguageSwitcher() {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       aria-label={`${t.common.language}: ${LOCALE_LABELS[nextLocale]}`}
       disabled={isPending}

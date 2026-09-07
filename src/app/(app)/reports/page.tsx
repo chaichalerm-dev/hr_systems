@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/shared/page-header"
 import { DateRangeReportCard } from "@/features/reports/components/date-range-report-card"
 import { SimpleReportCard } from "@/features/reports/components/simple-report-card"
 import { getDictionary } from "@/i18n/server"
+import { WorkflowGuide } from "@/components/shared/workflow-guide"
 
 export const metadata: Metadata = { title: "Reports" }
 
@@ -15,6 +16,7 @@ export default async function ReportsPage() {
   return (
     <>
       <PageHeader title={t.reports.title} description={t.reports.description} />
+      <WorkflowGuide title={t.workspace.reportGuide} steps={[t.workspace.reportStep1, t.workspace.reportStep2, t.workspace.reportStep3]} />
       <div className="grid gap-4 sm:grid-cols-2">
         <DateRangeReportCard
           title={t.reports.attendanceReport}
