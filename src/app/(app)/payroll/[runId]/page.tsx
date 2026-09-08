@@ -50,7 +50,9 @@ export default async function PayrollRunPage({ params }: { params: Promise<{ run
       />
 
       <div className="space-y-6">
-        <div className="flex flex-wrap items-center gap-6 rounded-xl border bg-card p-4 shadow-sm">
+        {/* จัดเป็นกริด 2 คอลัมน์บนมือถือแทน flex-wrap เดิม ที่ห่อบรรทัดแบบไม่แน่นอนตามความยาวข้อความ */}
+        {/* A 2-column grid on mobile instead of the old flex-wrap, which wrapped unpredictably based on text length. */}
+        <div className="grid grid-cols-2 gap-4 rounded-xl border bg-card p-4 shadow-sm sm:flex sm:flex-wrap sm:items-center sm:gap-6">
           <div>
             <p className="text-xs text-muted-foreground">{t.common.status}</p>
             <div className="mt-1">

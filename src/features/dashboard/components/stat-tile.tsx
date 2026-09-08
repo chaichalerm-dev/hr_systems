@@ -23,15 +23,20 @@ export function StatTile({
   }
 
   return (
-    <div className="min-w-0 rounded-2xl border bg-card p-5 shadow-sm">
-      <div className="flex flex-col-reverse items-start justify-between gap-3 sm:flex-row sm:items-center">
-        <div>
-          <p className="text-sm font-medium text-muted-foreground">{label}</p>
-          <p className="mt-2 break-words text-2xl font-semibold tabular-nums tracking-tight">{value}</p>
-          {hint && <p className="mt-1 text-xs text-muted-foreground">{hint}</p>}
+    // ไอคอนอยู่คู่กับตัวเลขเสมอ ไม่ซ้อนไว้บนสุดแบบก่อนหน้านี้ (เดิมมือถือจะกองไอคอน
+    // ใหญ่ไว้บนแล้วค่อยเป็นตัวเลข ทำให้การ์ดสูงและว่างเกินความจำเป็น)
+    // The icon always sits beside the number instead of stacked above it on
+    // mobile (the old layout put a large icon on top, then the number below,
+    // making each tile tall with a lot of wasted space).
+    <div className="min-w-0 rounded-2xl border bg-card p-3.5 shadow-sm sm:p-5">
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="truncate text-xs font-medium text-muted-foreground sm:text-sm">{label}</p>
+          <p className="mt-1 break-words text-xl font-semibold tabular-nums tracking-tight sm:mt-2 sm:text-2xl">{value}</p>
+          {hint && <p className="mt-1 truncate text-[11px] text-muted-foreground sm:text-xs">{hint}</p>}
         </div>
-        <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-xl", toneClasses[tone])}>
-          <Icon className="size-4.5" aria-hidden />
+        <span className={cn("flex size-9 shrink-0 items-center justify-center rounded-xl sm:size-11", toneClasses[tone])}>
+          <Icon className="size-4 sm:size-4.5" aria-hidden />
         </span>
       </div>
     </div>

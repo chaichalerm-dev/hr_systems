@@ -60,7 +60,7 @@ export default async function EmployeeProfilePage({ params }: { params: Promise<
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-1">
-          <div className="rounded-xl border bg-card p-6 text-center shadow-sm">
+          <div className="rounded-xl border bg-card p-4 text-center shadow-sm sm:p-6">
             <Avatar className="mx-auto size-20">
               <AvatarImage src={employee.profileImageUrl ?? undefined} alt="" />
               <AvatarFallback className="bg-primary/10 text-xl font-semibold text-primary">
@@ -118,9 +118,9 @@ export default async function EmployeeProfilePage({ params }: { params: Promise<
         </div>
 
         <div className="space-y-6 lg:col-span-2">
-          <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-6">
             <h3 className="text-sm font-semibold">{t.employees.employmentDetails}</h3>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="mt-4 grid grid-cols-2 gap-4">
               <Field label={t.employees.employeeCode} value={employee.employeeCode} />
               <Field label={t.employees.employmentType} value={t.employmentType[employee.employmentType]} />
               <Field label={t.employees.department} value={employee.department.name} />
@@ -131,7 +131,7 @@ export default async function EmployeeProfilePage({ params }: { params: Promise<
             </div>
           </div>
 
-          <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-6">
             <h3 className="text-sm font-semibold">{t.employees.addressSection}</h3>
             <div className="mt-4 flex items-start gap-2">
               <MapPin className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
@@ -143,9 +143,9 @@ export default async function EmployeeProfilePage({ params }: { params: Promise<
             </div>
           </div>
 
-          <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-6">
             <h3 className="text-sm font-semibold">{t.employees.emergencyContact}</h3>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
               <Field label={t.employees.name} value={employee.emergencyContactName} />
               <Field label={t.employees.phone} value={employee.emergencyContactPhone} />
               <Field label={t.employees.relationship} value={employee.emergencyContactRelation} />
@@ -153,10 +153,10 @@ export default async function EmployeeProfilePage({ params }: { params: Promise<
           </div>
 
           {canSeeStatutory && (
-            <div className="rounded-xl border bg-card p-6 shadow-sm">
+            <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-6">
               <h3 className="text-sm font-semibold">{t.employees.bankingStatutory}</h3>
               <p className="text-xs text-muted-foreground">{t.employees.demoPlaceholderNote}</p>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div className="mt-4 grid grid-cols-2 gap-4">
                 <Field label={t.employees.bank} value={employee.bankName} />
                 <Field label={t.employees.accountNumber} value={employee.bankAccountNumber} />
                 <Field label={t.employees.taxId} value={employee.taxId} />

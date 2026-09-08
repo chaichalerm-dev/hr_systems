@@ -17,12 +17,14 @@ export function QuickActions({ role, t }: { role: Role; t: Dictionary }) {
         <h2 id="quick-actions-title" className="font-semibold">{t.workspace.quickActions}</h2>
         <p className="text-sm text-muted-foreground">{t.workspace.quickActionsHint}</p>
       </div>
-      <div className={`grid gap-3 sm:grid-cols-2 ${actions.length === 3 ? "xl:grid-cols-3" : "xl:grid-cols-4"}`}>
+      {/* 2 คอลัมน์ตั้งแต่จอมือถือ เดิมคอลัมน์เดียวเหลือพื้นที่ว่างครึ่งจอทุกการ์ด */}
+      {/* Two columns from mobile up — a single column wasted half the width on every card. */}
+      <div className={`grid grid-cols-2 gap-2.5 sm:gap-3 ${actions.length === 3 ? "xl:grid-cols-3" : "xl:grid-cols-4"}`}>
         {actions.map(({ href, label, hint, icon: Icon }) => (
-          <Link key={href} href={href} className="group flex items-center gap-3 rounded-xl border bg-card p-4 transition-colors hover:border-primary/40 hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"><Icon className="size-5" /></span>
-            <span className="min-w-0"><span className="block text-sm font-semibold">{label}</span><span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{hint}</span></span>
-            <ArrowUpRight className="ml-auto size-4 shrink-0 text-muted-foreground group-hover:text-primary" />
+          <Link key={href} href={href} className="group flex flex-col gap-2.5 rounded-xl border bg-card p-3 transition-colors hover:border-primary/40 hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring sm:flex-row sm:items-center sm:gap-3 sm:p-4">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary sm:size-10"><Icon className="size-4.5 sm:size-5" /></span>
+            <span className="min-w-0 flex-1"><span className="block text-sm font-semibold">{label}</span><span className="mt-1 hidden text-xs leading-relaxed text-muted-foreground sm:block">{hint}</span></span>
+            <ArrowUpRight className="hidden size-4 shrink-0 text-muted-foreground group-hover:text-primary sm:ml-auto sm:block" />
           </Link>
         ))}
       </div>

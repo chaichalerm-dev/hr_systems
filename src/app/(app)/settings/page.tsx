@@ -28,7 +28,7 @@ export default async function SettingsPage() {
           <TabsTrigger value="payroll">{t.settings.payrollRules}</TabsTrigger>
         </TabsList>
         <TabsContent value="attendance" className="mt-4 max-w-3xl">
-          <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-6">
             <h2 className="text-base font-semibold">{t.settings.attendanceRules}</h2>
             <p className="mt-2 text-sm text-muted-foreground">{t.settings.attendanceRulesDescription}</p>
             <div className="mt-6">
@@ -37,7 +37,7 @@ export default async function SettingsPage() {
           </div>
         </TabsContent>
         <TabsContent value="payroll" className="mt-4 max-w-3xl">
-          <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <div className="rounded-xl border bg-card p-4 shadow-sm sm:p-6">
             <h2 className="text-base font-semibold">{t.settings.payrollRules}</h2>
             <p className="mt-2 text-sm text-muted-foreground">{t.settings.payrollRulesDescription}</p>
             <div className="mt-6">

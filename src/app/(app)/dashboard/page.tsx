@@ -26,7 +26,9 @@ async function OrgDashboard({ t }: { t: Dictionary }) {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {/* 2 คอลัมน์ตั้งแต่จอมือถือ เดิมคอลัมน์เดียวทำให้ตัวเลขแต่ละตัวโดดเดี่ยวเต็มจอ */}
+      {/* Two columns from mobile up — a single column left each number stranded alone across the full width. */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
         <StatTile
           label={t.dashboard.totalEmployees}
           value={formatNumber(metrics.totalEmployees)}
