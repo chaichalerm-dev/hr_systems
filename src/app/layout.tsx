@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${inter.variable} ${notoSansThai.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${notoSansThai.variable} ${geistMono.variable} h-full antialiased motion-safe:scroll-smooth`}
     >
       <body className="min-h-full flex flex-col">
         <I18nProvider locale={locale} dictionary={dictionary}>

@@ -8,6 +8,7 @@ import {
 
 import { BrandMark, Logo } from "@/components/shared/logo"
 import { LinkButton } from "@/components/shared/link-button"
+import { LandingNav } from "@/components/shared/landing-nav"
 import { BackToTopButton } from "@/components/shared/back-to-top-button"
 import { LanguageSwitcher } from "@/components/layout/language-switcher"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
@@ -69,9 +70,7 @@ export default async function LandingPage() {
               overflow and wrap into its own bordered row — a separate-looking bar —
               so it's hidden again below lg; users can still just scroll to each
               section on narrower screens. */}
-          <nav aria-label={t.landing.pageNavigation} className="order-last mt-4 hidden w-full items-center justify-center gap-6 border-t pt-3 text-sm lg:order-none lg:mt-0 lg:flex lg:w-auto lg:border-0 lg:pt-0">
-            {navigation.map((item) => <Link key={item.href} href={item.href} className="rounded-md py-2 text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{item.label}</Link>)}
-          </nav>
+          <LandingNav items={navigation} ariaLabel={t.landing.pageNavigation} />
           <div className="flex items-center gap-1.5 sm:gap-2">
             <LanguageSwitcher /><ThemeToggle />
             {/* คงปุ่มเข้าสู่ระบบไว้ทุกขนาดจอ เดิมซ่อนหมดบนจอเล็กจนไม่มีทางกดจาก header เลย */}
