@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
@@ -26,7 +25,6 @@ interface LeaveTypeOption {
 
 export function NewLeaveRequestDialog({ leaveTypes }: { leaveTypes: LeaveTypeOption[] }) {
   const t = useTranslations()
-  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isPending, setIsPending] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -63,7 +61,6 @@ export function NewLeaveRequestDialog({ leaveTypes }: { leaveTypes: LeaveTypeOpt
     toast.success(t.leave.submitted)
     setOpen(false)
     form.reset()
-    router.refresh()
   }
 
   return (

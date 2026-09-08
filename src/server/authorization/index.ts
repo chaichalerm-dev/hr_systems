@@ -1,6 +1,7 @@
 import "server-only"
 
 import { redirect } from "next/navigation"
+import { cache } from "react"
 import type { Role } from "@prisma/client"
 import type { Session } from "next-auth"
 
@@ -46,8 +47,7 @@ export async function requireRole(roles: Role[]): Promise<Session> {
  * Pages redirect to login or unauthorized. Actions and API handlers use requireRole to report an error.
  */
 export async function requirePageRole(roles: Role[]): Promise<Session> {
-  const session = await auth()
-  if (!session?.user) redirect("/login")
+  const session = await requirePageSession()
   if (!roles.includes(session.user.role)) redirect("/unauthorized")
   return session
 }
@@ -55,8 +55,10 @@ export async function requirePageRole(roles: Role[]): Promise<Session> {
 /** ตรวจการล็อกอินสำหรับหน้าเว็บ และพาไปล็อกอินหากยังไม่มีเซสชัน
  * Require a session for a page and redirect to login when it is missing.
  */
-export async function requirePageSession(): Promise<Session> {
+// ใช้ผลตรวจเซสชันร่วมกันเฉพาะคำขอเดียว ไม่เก็บข้อมูลผู้ใช้ข้ามคำขอ
+// Deduplicate session checks within one render request, never across users or requests.
+export const requirePageSession = cache(async (): Promise<Session> => {
   const session = await auth()
   if (!session?.user) redirect("/login")
   return session
-}
+})

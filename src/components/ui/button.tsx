@@ -17,6 +17,12 @@ const buttonVariants = cva(
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+        // สำหรับการกระทำเชิงบวกที่ตรงข้ามกับ destructive เช่น อนุมัติ, ลงเวลาเข้า
+        // ใช้สีเดียวกับ StatusBadge โทน "good" เพื่อให้ตรงกับความหมายเดียวกันในที่อื่น
+        // For positive actions that mirror destructive, like approve or check-in;
+        // reuses the same "good" status color shown elsewhere for consistency.
+        success:
+          "bg-status-good/10 text-status-good hover:bg-status-good/20 focus-visible:border-status-good/40 focus-visible:ring-status-good/20 dark:bg-status-good/20 dark:hover:bg-status-good/30 dark:focus-visible:ring-status-good/40",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

@@ -184,7 +184,6 @@ export function EmployeeForm({
 
       toast.success(mode === "create" ? t.employees.created : t.employees.updated)
       router.push(mode === "create" ? "/employees" : `/employees/${employeeId}`)
-      router.refresh()
     })
   }
 
@@ -442,7 +441,9 @@ export function EmployeeForm({
         {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
         <div className="sticky bottom-0 z-10 flex flex-wrap items-center justify-end gap-3 rounded-xl border bg-card/95 p-4 shadow-lg backdrop-blur-sm">
-          <Button type="submit" disabled={isPending}>
+          {/* โหมดแก้ไขเท่านั้นที่กันปุ่มไว้จนกว่าจะแก้จริง โหมดสร้างใหม่ไม่มี "ข้อมูลเดิม" ให้เทียบ */}
+          {/* Only the edit mode gates on changes — create mode has no "original data" to compare against. */}
+          <Button type="submit" disabled={isPending || (mode === "edit" && !form.formState.isDirty)}>
             {isPending ? t.common.saving : mode === "create" ? t.employees.createEmployee : t.employees.saveChanges}
           </Button>
           <Button type="button" variant="outline" onClick={() => router.back()}>

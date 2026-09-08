@@ -1,4 +1,7 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import type { Dictionary } from "@/i18n/dictionaries/en"
+import { PageLoading } from "@/components/shared/page-loading"
 import { format } from "date-fns"
 import { CalendarCheck, Clock, UserX, CalendarOff } from "lucide-react"
 import { Role } from "@prisma/client"
@@ -21,49 +24,66 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export const metadata: Metadata = { title: "Attendance" }
 
+async function PersonalAttendance({ employeeId, t }: { employeeId: string; t: Dictionary }) {
+  const now = new Date()
+  const [today, history, summary] = await Promise.all([
+    getTodayAttendance(employeeId),
+    listAttendanceHistory(employeeId),
+    getMonthlySummary(employeeId, now.getMonth() + 1, now.getFullYear()),
+  ])
+  return (
+    <div className="space-y-6">
+      <CheckInOutWidget
+        status={today?.status ?? "NOT_CHECKED_IN"}
+        checkInTime={today?.checkIn ? format(today.checkIn, "HH:mm") : null}
+        checkOutTime={today?.checkOut ? format(today.checkOut, "HH:mm") : null}
+      />
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <StatTile label={t.attendance.presentThisMonth} value={String(summary.present)} icon={CalendarCheck} tone="good" />
+        <StatTile label={t.attendance.lateThisMonth} value={String(summary.late)} icon={Clock} tone="warning" />
+        <StatTile label={t.attendance.absentThisMonth} value={String(summary.absent)} icon={UserX} tone="critical" />
+        <StatTile label={t.attendance.leaveThisMonth} value={String(summary.leave)} icon={CalendarOff} />
+      </div>
+      <div>
+        <h2 className="mb-3 text-sm font-semibold">{t.attendance.myHistory}</h2>
+        <AttendanceTable data={history} />
+      </div>
+    </div>
+  )
+}
+
+async function TeamAttendance({ role, employeeId, t }: { role: Role; employeeId: string | null; t: Dictionary }) {
+  const members =
+    role === Role.MANAGER
+      ? await prisma.employee.findMany({
+          where: { managerId: employeeId ?? "__none__" },
+          select: { id: true, firstName: true, lastName: true, employeeCode: true },
+          orderBy: { firstName: "asc" },
+        })
+      : await prisma.employee.findMany({
+          select: { id: true, firstName: true, lastName: true, employeeCode: true },
+          orderBy: { firstName: "asc" },
+          take: 20,
+        })
+
+  const todayRecords = await listTodayTeamAttendance(members.map((m) => m.id))
+  const statusByEmployeeId = new Map(todayRecords.map((r) => [r.employeeId, r.status]))
+
+  return (
+    <TeamTodayCard
+      members={members}
+      statusByEmployeeId={statusByEmployeeId}
+      title={role === Role.MANAGER ? t.attendance.teamStatusToday : t.attendance.companyStatusToday}
+      emptyMessage={t.attendance.noTeamMembers}
+    />
+  )
+}
+
 export default async function AttendancePage() {
   const [session, t] = await Promise.all([requirePageSession(), getDictionary()])
-  const now = new Date()
-
   const employeeId = session.user.employeeId
-  const [today, history, summary] = employeeId
-    ? await Promise.all([
-        getTodayAttendance(employeeId),
-        listAttendanceHistory(employeeId),
-        getMonthlySummary(employeeId, now.getMonth() + 1, now.getFullYear()),
-      ])
-    : [null, [], null]
-
   const isManagerOrAbove =
     session.user.role === Role.MANAGER || session.user.role === Role.ADMIN || session.user.role === Role.HR
-
-  let teamSection = null
-  if (isManagerOrAbove) {
-    const members =
-      session.user.role === Role.MANAGER
-        ? await prisma.employee.findMany({
-            where: { managerId: employeeId ?? "__none__" },
-            select: { id: true, firstName: true, lastName: true, employeeCode: true },
-            orderBy: { firstName: "asc" },
-          })
-        : await prisma.employee.findMany({
-            select: { id: true, firstName: true, lastName: true, employeeCode: true },
-            orderBy: { firstName: "asc" },
-            take: 20,
-          })
-
-    const todayRecords = await listTodayTeamAttendance(members.map((m) => m.id))
-    const statusByEmployeeId = new Map(todayRecords.map((r) => [r.employeeId, r.status]))
-
-    teamSection = (
-      <TeamTodayCard
-        members={members}
-        statusByEmployeeId={statusByEmployeeId}
-        title={session.user.role === Role.MANAGER ? t.attendance.teamStatusToday : t.attendance.companyStatusToday}
-        emptyMessage={t.attendance.noTeamMembers}
-      />
-    )
-  }
 
   return (
     <>
@@ -78,26 +98,18 @@ export default async function AttendancePage() {
         )}
         {employeeId && (
           <TabsContent value="personal" className="space-y-6">
-            <CheckInOutWidget
-              status={today?.status ?? "NOT_CHECKED_IN"}
-              checkInTime={today?.checkIn ? format(today.checkIn, "HH:mm") : null}
-              checkOutTime={today?.checkOut ? format(today.checkOut, "HH:mm") : null}
-            />
-            {summary && (
-              <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                <StatTile label={t.attendance.presentThisMonth} value={String(summary.present)} icon={CalendarCheck} tone="good" />
-                <StatTile label={t.attendance.lateThisMonth} value={String(summary.late)} icon={Clock} tone="warning" />
-                <StatTile label={t.attendance.absentThisMonth} value={String(summary.absent)} icon={UserX} tone="critical" />
-                <StatTile label={t.attendance.leaveThisMonth} value={String(summary.leave)} icon={CalendarOff} />
-              </div>
-            )}
-            <div>
-              <h2 className="mb-3 text-sm font-semibold">{t.attendance.myHistory}</h2>
-              <AttendanceTable data={history} />
-            </div>
+            <Suspense fallback={<PageLoading />}>
+              <PersonalAttendance employeeId={employeeId} t={t} />
+            </Suspense>
           </TabsContent>
         )}
-        {isManagerOrAbove && <TabsContent value="team">{teamSection}</TabsContent>}
+        {isManagerOrAbove && (
+          <TabsContent value="team">
+            <Suspense fallback={<PageLoading />}>
+              <TeamAttendance role={session.user.role} employeeId={employeeId} t={t} />
+            </Suspense>
+          </TabsContent>
+        )}
         {!employeeId && !isManagerOrAbove && <p className="text-sm text-muted-foreground">{t.attendance.noEmployeeProfile}</p>}
       </Tabs>
     </>

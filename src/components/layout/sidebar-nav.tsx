@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useTranslations } from "@/i18n/client"
 import { navGroupsForRole, type NavItem } from "./nav-config"
+import { LinkPending } from "@/components/shared/link-pending"
 
 // เลือกเมนูและไอคอนจากบทบาทที่หน้าจอ เพราะส่งฟังก์ชันไอคอนเป็น props จากเซิร์ฟเวอร์ไม่ได้
 // Resolve icons on the client from the role; icon functions cannot be passed as server props.
@@ -75,7 +76,7 @@ function NavLink({
       aria-label={collapsed ? label : undefined}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        "flex min-h-11 items-center rounded-xl text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-ring",
+        "relative flex min-h-11 items-center rounded-xl text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-ring",
         collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2.5",
         isActive
           ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
@@ -84,6 +85,7 @@ function NavLink({
     >
       <Icon className="size-4 shrink-0" aria-hidden />
       {!collapsed && label}
+      <LinkPending />
     </Link>
   )
 

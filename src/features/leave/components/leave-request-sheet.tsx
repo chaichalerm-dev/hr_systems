@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { format } from "date-fns"
 import { CalendarDays } from "lucide-react"
@@ -32,7 +31,6 @@ export function LeaveRequestSheet({
   children: (open: () => void) => React.ReactNode
 }) {
   const t = useTranslations()
-  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [comment, setComment] = useState("")
   const [isPending, setIsPending] = useState(false)
@@ -53,7 +51,6 @@ export function LeaveRequestSheet({
     }
     toast.success(decision === "APPROVED" ? t.leave.approved : t.leave.rejected)
     setOpen(false)
-    router.refresh()
   }
 
   async function cancel() {
@@ -66,7 +63,6 @@ export function LeaveRequestSheet({
     }
     toast.success(t.leave.cancelled)
     setOpen(false)
-    router.refresh()
   }
 
   return (
@@ -115,12 +111,14 @@ export function LeaveRequestSheet({
           )}
         </div>
 
+        {/* สีเดียวกับ StatusBadge ของสถานะ APPROVED/REJECTED ด้านบน ให้เห็นชัดว่าเป็นการตัดสินใจตรงข้ามกัน */}
+        {/* Matches the APPROVED/REJECTED StatusBadge colors above, so the two opposite decisions read clearly apart. */}
         {canDecide && (
           <SheetFooter className="flex-row gap-2">
-            <Button variant="outline" className="flex-1" disabled={isPending} onClick={() => decide("REJECTED")}>
+            <Button variant="destructive" className="flex-1" disabled={isPending} onClick={() => decide("REJECTED")}>
               {t.leave.reject}
             </Button>
-            <Button className="flex-1" disabled={isPending} onClick={() => decide("APPROVED")}>
+            <Button variant="success" className="flex-1" disabled={isPending} onClick={() => decide("APPROVED")}>
               {t.leave.approve}
             </Button>
           </SheetFooter>

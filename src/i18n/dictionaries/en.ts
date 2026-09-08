@@ -1,6 +1,38 @@
 // ไฟล์นี้กำหนดชื่อข้อความที่ทุกภาษาต้องมี TypeScript จะเตือนเมื่อ th.ts ขาดคำแปล
 // This file defines the message keys. TypeScript checks that th.ts includes them all.
 export const en = {
+  guide: {
+    title: "User guide",
+    subtitle: "Learn at your own pace. Choose a task, follow the steps, then open the work page when you are ready.",
+    forRole: "Your guide for {role}",
+    roleHint: "Topics match your account permissions. Personal tasks also require a linked employee profile.",
+    search: "Search the guide",
+    searchPlaceholder: "Try leave, check in, payslip…",
+    category: "Choose a category",
+    allCategories: "All topics",
+    categories: { basics: "Getting started", personal: "My everyday tasks", team: "Managing my team", management: "HR and payroll", admin: "System settings" },
+    roles: { ADMIN: "Administrator", HR: "HR staff", MANAGER: "Manager", EMPLOYEE: "Employee" },
+    topicCount: "{count} topics",
+    contents: "Choose a topic",
+    noResults: "No matching topics. Try a shorter word or choose all topics.",
+    clear: "Clear search and filters",
+    before: "Before you start",
+    steps: "Follow the steps",
+    mode: "How would you like to read?",
+    guided: "One step at a time",
+    overview: "Show all steps",
+    modeHint: "New here? Start with one step at a time. Already familiar? Show all steps for a quick reference.",
+    step: "Step {current} of {total}",
+    previous: "Previous step",
+    next: "Next step",
+    restart: "Read from the start",
+    finished: "You have reached the last step. Check the expected result below.",
+    result: "What you should see",
+    tips: "Tips and help",
+    openPage: "Open work page",
+    readingOnly: "These buttons only help you read the guide. Complete the actual task on its work page.",
+    missingProfile: "Your account has no linked employee profile. You can read these instructions, but ask HR to link your profile before doing personal tasks.",
+  },
   workspace: {
     label: "Workspace",
     findPage: "Find a page",
@@ -40,6 +72,7 @@ export const en = {
   },
 
   nav: {
+    guide: "User guide",
     dashboard: "Dashboard",
     employees: "Employees",
     attendance: "Attendance",

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { CheckCircle2, ClipboardCheck, Wallet } from "lucide-react"
 
@@ -22,7 +21,6 @@ import { approvePayrollRunAction, markPayrollPaidAction, reviewPayrollRunAction,
 
 export function PayrollWorkflowActions({ runId, status }: { runId: string; status: string }) {
   const t = useTranslations()
-  const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [confirmPaidOpen, setConfirmPaidOpen] = useState(false)
 
@@ -34,7 +32,6 @@ export function PayrollWorkflowActions({ runId, status }: { runId: string; statu
         return
       }
       toast.success(successMessage)
-      router.refresh()
     })
   }
 

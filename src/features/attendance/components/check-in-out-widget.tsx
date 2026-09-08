@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation"
 import { useState, useTransition } from "react"
 import { toast } from "sonner"
 import { LogIn, LogOut, MapPin } from "lucide-react"
@@ -31,7 +30,6 @@ export function CheckInOutWidget({
   checkOutTime: string | null
 }) {
   const t = useTranslations()
-  const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [action, setAction] = useState<"in" | "out" | null>(null)
 
@@ -42,7 +40,6 @@ export function CheckInOutWidget({
       const result = await checkInAction(location)
       if (result.error) toast.error(t.attendance[result.error])
       else toast.success(t.attendance.checkedIn)
-      router.refresh()
     })
   }
 
@@ -53,7 +50,6 @@ export function CheckInOutWidget({
       const result = await checkOutAction(location)
       if (result.error) toast.error(t.attendance[result.error])
       else toast.success(t.attendance.checkedOut)
-      router.refresh()
     })
   }
 
@@ -74,8 +70,12 @@ export function CheckInOutWidget({
             </span>
           </div>
         </div>
+        {/* เข้า-ออกใช้สีต่างกันตั้งใจ (เขียว/น้ำเงิน) ไม่ใช่แค่ไอคอนกับข้อความ
+            กันกดผิดเพราะไอคอนลูกศรเข้า-ออกมองคล้ายกันตอนรีบ ๆ */}
+        {/* Check-in and check-out are intentionally different colors (green/blue),
+            not just icon and label — the two arrow icons look similar at a glance. */}
         <div className="flex items-center gap-2">
-          <Button onClick={handleCheckIn} disabled={hasCheckedIn || isPending}>
+          <Button variant={hasCheckedIn ? "outline" : "success"} onClick={handleCheckIn} disabled={hasCheckedIn || isPending}>
             <LogIn className="size-4" />
             {isPending && action === "in" ? t.attendance.checkingIn : t.attendance.checkIn}
           </Button>

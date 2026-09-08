@@ -1,8 +1,8 @@
 "use client"
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
-import { useMemo, useState, useTransition } from "react"
-import { Search, X } from "lucide-react"
+import { useEffect, useMemo, useRef, useState, useTransition } from "react"
+import { Loader2, Search, X } from "lucide-react"
 import { EmploymentStatus } from "@prisma/client"
 
 import { Input } from "@/components/ui/input"
@@ -21,13 +21,50 @@ export function EmployeesToolbar({
   const searchParams = useSearchParams()
   const [search, setSearch] = useState(searchParams.get("search") ?? "")
   const [isPending, startTransition] = useTransition()
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const latestSearch = useRef<string | null>(null)
+  const urlSearch = searchParams.get("search") ?? ""
+
+  function cancelSearch() {
+    if (searchTimer.current) clearTimeout(searchTimer.current)
+    searchTimer.current = null
+  }
+
+  useEffect(() => () => {
+    if (searchTimer.current) clearTimeout(searchTimer.current)
+  }, [])
+
+  useEffect(() => {
+    // ซิงก์ข้อความกับ URL โดยไม่ให้ผลค้นหาเก่าทับข้อความที่กำลังพิมพ์ใหม่
+    // Sync browser navigation without letting an older response overwrite newer typing.
+    if (latestSearch.current === null || latestSearch.current === urlSearch) {
+      latestSearch.current = null
+      setSearch(urlSearch)
+    }
+  }, [urlSearch])
+
+  useEffect(() => {
+    function restoreSearch() {
+      if (searchTimer.current) clearTimeout(searchTimer.current)
+      searchTimer.current = null
+      latestSearch.current = null
+      setSearch(new URLSearchParams(window.location.search).get("search") ?? "")
+    }
+    window.addEventListener("popstate", restoreSearch)
+    return () => window.removeEventListener("popstate", restoreSearch)
+  }, [])
 
   function updateParam(key: string, value: string | null) {
+    cancelSearch()
     const params = new URLSearchParams(searchParams.toString())
+    const nextSearch = key === "search" ? value ?? "" : search
+    latestSearch.current = nextSearch
+    if (nextSearch) params.set("search", nextSearch)
+    else params.delete("search")
     if (value) params.set(key, value)
     else params.delete(key)
     params.set("page", "1")
-    startTransition(() => router.push(`${pathname}?${params.toString()}`))
+    startTransition(() => router.replace(`${pathname}?${params.toString()}`, { scroll: false }))
   }
 
   const statusLabels = useMemo(
@@ -49,13 +86,21 @@ export function EmployeesToolbar({
       <div className="w-full min-w-0 sm:w-auto sm:flex-1">
         <label htmlFor="employee-search" className="mb-2 block text-xs font-medium text-muted-foreground">{t.common.search}</label>
         <div className="relative">
-        <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+        {isPending ? <Loader2 aria-hidden="true" className="absolute top-1/2 left-3 size-4 -translate-y-1/2 motion-safe:animate-spin text-muted-foreground" /> : <Search aria-hidden="true" className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />}
         <Input
           id="employee-search"
           value={search}
           onChange={(e) => {
-            setSearch(e.target.value)
-            updateParam("search", e.target.value || null)
+            const value = e.target.value
+            setSearch(value)
+            latestSearch.current = value
+            cancelSearch()
+            // รอให้หยุดพิมพ์สั้น ๆ แล้วค่อยค้นหา ลดคำขอซ้ำทุกตัวอักษร
+            // Search after a short typing pause instead of requesting on every keystroke.
+            searchTimer.current = setTimeout(() => updateParam("search", value || null), 350)
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && !event.nativeEvent.isComposing) updateParam("search", search || null)
           }}
           placeholder={t.employees.searchPlaceholder}
           className="pl-10"
@@ -105,7 +150,7 @@ export function EmployeesToolbar({
       </Select>
       </div>
       {(search || searchParams.get("departmentId") || searchParams.get("employmentStatus")) && (
-        <Button variant="ghost" onClick={() => { setSearch(""); startTransition(() => router.push(pathname)) }}>
+        <Button variant="ghost" onClick={() => { cancelSearch(); latestSearch.current = null; setSearch(""); startTransition(() => router.replace(pathname, { scroll: false })) }}>
           <X className="size-4" />{t.workspace.clearFilters}
         </Button>
       )}

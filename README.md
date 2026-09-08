@@ -12,12 +12,14 @@ This is a demo and a starting point for development. Payroll and tax calculation
 
 - [ระบบทำอะไรได้บ้าง / Features](#features)
 - [วิธีใช้งานแต่ละวัน / Everyday use](#everyday-use)
+- [คู่มือในระบบ / In-app user guide](#user-guide)
 - [สิทธิ์แต่ละบทบาท / Role permissions](#role-permissions)
 - [บัญชีทดลอง / Demo credentials](#demo-credentials)
 - [เปิดระบบในเครื่อง / Local installation](#local-installation)
 - [ตั้งค่าการเชื่อมต่อ / Environment configuration](#environment-configuration)
 - [เตรียมฐานข้อมูลและข้อมูลตัวอย่าง / Migration & seed](#migration--seed)
 - [ตรวจงานก่อนส่ง / Testing](#testing)
+- [การเปลี่ยนหน้าและความเร็ว / Navigation performance](#performance)
 - [โครงสร้างโค้ด / Architecture](#architecture)
 - [เครื่องมือที่ใช้ / Tech stack](#tech-stack)
 - [โครงสร้างข้อมูล / Database design](#database-design)
@@ -49,6 +51,10 @@ Use **Find a page** to jump to a task. Employee forms have section links and a s
 
 The top bar changes language and theme. The app remembers those choices and the sidebar size. Names, departments, and user-entered text keep their stored wording.
 
+ตัวเลือกในฟอร์ม ตัวกรอง คู่มือ และเมนูบัญชีหรือเมนูคำสั่ง ใช้พื้นการ์ด มุมโค้ง และไฮไลต์สีน้ำเงินชุดเดียวกัน รายการที่เลือกมีเครื่องหมายถูก เลือกด้วยแป้นลูกศรและ Enter ได้ และกด Escape เพื่อปิด แถบเลื่อนแนวตั้ง–แนวนอนใช้สีตามธีม รูปร่างหรือการซ่อนอัตโนมัติอาจต่างกันตามเบราว์เซอร์และการตั้งค่าเครื่อง
+
+Form selects, filters, the guide, and account/action menus share card surfaces, rounded corners, and blue highlights. Selected options have a checkmark. Use arrow keys and Enter to choose, and Escape to dismiss. Vertical and horizontal scrollbars follow the theme; their shape or automatic visibility can vary with the browser and system settings.
+
 หน้าเข้าสู่ระบบแบ่งเป็นส่วนแนะนำและฟอร์มบนจอใหญ่ ส่วนมือถือจะแสดงฟอร์มเป็นหลัก ช่องรหัสผ่านมีปุ่มแสดง–ซ่อน หากต้องการทดลอง ให้กด “ลองใช้ด้วยบัญชีตัวอย่าง” เลือกบทบาท แล้วกดเข้าสู่ระบบ เปลี่ยนภาษาและธีมได้ที่มุมบน
 
 The login page pairs a workspace introduction with the form on desktop and focuses on the form on mobile. You can show or hide the password. To try the demo, open “Explore with a demo account,” choose a role, then select Sign in. Language and theme controls are at the top.
@@ -56,6 +62,26 @@ The login page pairs a workspace introduction with the form on desktop and focus
 หน้าเว็บแนะนำ `/` แบ่งเป็นฟีเจอร์ วิธีเริ่มใช้งาน และบทบาทผู้ใช้ มีเมนูข้ามไปแต่ละส่วนและปุ่มเปลี่ยนภาษา–ธีม ทางลัดลงเวลา การลา และสลิปจะพาไปเข้าสู่ระบบก่อนเปิดหน้าที่เลือก บัญชีทดลองทั้งสี่บทบาทเลือกได้ในหน้าเข้าสู่ระบบ
 
 The public homepage `/` introduces features, getting started, and user roles. Its navigation jumps to each section, with language and theme controls at the top. Attendance, leave, and payslip shortcuts take you through sign-in before opening the chosen page. All four demo roles are available on the sign-in page.
+
+<a id="user-guide"></a>
+## คู่มือในระบบ · In-app user guide
+
+เข้าสู่ระบบแล้วเลือก **คู่มือใช้งาน** จากเมนู หรือเปิด `/guide` บนมือถือให้เปิดเมนูนำทางก่อน คู่มือมี 23 หัวข้อ แสดงตามบทบาท: พนักงาน 11 หัวข้อ หัวหน้า 14 ฝ่ายบุคคล 21 และผู้ดูแล 23 หัวข้อ ครอบคลุมเริ่มใช้งาน งานส่วนตัว งานทีม พนักงาน เงินเดือน รายงาน และตั้งค่า
+
+After signing in, choose **User guide** in navigation or open `/guide`. On mobile, open the navigation menu first. The guide has 23 topics: employees see 11, managers 14, HR staff 21, and administrators all 23. Topics cover getting started, personal tasks, team work, employees, payroll, reports, and settings.
+
+1. ค้นหาด้วยคำที่คุ้นเคย เช่น “ลางาน” หรือเลือกหมวดและหัวข้อ / Search with familiar words, or choose a category and topic.
+2. อ่านสิ่งที่ต้องเตรียม แล้วเลือก **อ่านทีละขั้น** สำหรับมือใหม่ หรือ **ดูทุกขั้นตอน** เพื่อทบทวน / Read the prerequisites, then choose **One step at a time** or **Show all steps**.
+3. กดขั้นถัดไปเพื่ออ่านต่อ คู่มือไม่ได้ทำรายการแทน ให้ใช้ **เปิดหน้าทำงาน** เมื่อต้องการลงมือจริง / Move through the instructions; guide controls do not submit real tasks. Select **Open work page** to do the task.
+4. เทียบผลกับ **ผลที่ควรเห็น** และอ่านวิธีแก้ปัญหา เปลี่ยนไทย–อังกฤษจากแถบบนได้ / Compare the expected result and read the tips. Change Thai or English in the top bar.
+
+ลิงก์เช่น `/guide?topic=leaveRequest` เปิดหัวข้อเดิมได้ หากบัญชีไม่มีสิทธิ์อ่านหัวข้อนั้นจะแสดงหัวข้อเริ่มต้นแทน บัญชีที่ยังไม่เชื่อมประวัติพนักงานอ่านคู่มือได้ และจะเห็นคำแนะนำให้ติดต่อ HR ก่อนทำงานส่วนตัว
+
+Links such as `/guide?topic=leaveRequest` reopen a topic. A topic outside your role falls back to getting started. Accounts without an employee profile can still read the guide and see instructions to contact HR before performing personal tasks.
+
+เนื้อหาอยู่ใน `src/features/guide/content/th.ts` และ `en.ts` ส่วนหัวข้อและบทบาทอยู่ใน `src/features/guide/topics.ts` โหลดเฉพาะภาษาและหัวข้อที่ใช้เมื่อเปิดคู่มือ การค้นหาและเปลี่ยนหัวข้อทำในเบราว์เซอร์ จึงไม่ต้องเรียกฐานข้อมูลเพิ่มทุกครั้งที่กด เมื่อแก้ขั้นตอนของระบบให้แก้คู่มือทั้งสองภาษาด้วย โดยอธิบายข้อจำกัดตามจริง เช่น ยังไม่มีหน้าสมัครบัญชี รีเซ็ตรหัสผ่าน หรือแก้เวลาย้อนหลัง
+
+Content lives in `src/features/guide/content/th.ts` and `en.ts`; topic permissions live in `src/features/guide/topics.ts`. Only the selected language and allowed topics are sent when opening the guide. Search and topic changes run locally without additional database queries. Keep both languages aligned with workflow changes and current limitations, including the absence of account registration, password reset, and retrospective attendance editing screens.
 
 <a id="everyday-use"></a>
 ## วิธีใช้งานแต่ละวัน · Everyday use
@@ -203,6 +229,34 @@ Seed เติมพนักงาน ประวัติลงเวลา�
 
 The seed adds employees, roughly 30 days of attendance, leave requests and balances, and two payroll runs. Running it again can add records or update existing data, so use a separate demo database.
 
+<a id="performance"></a>
+## การเปลี่ยนหน้าและความเร็ว · Navigation performance
+
+เมื่อเลือกเมนู ระบบแสดงหน้าใหม่พร้อมโครงรอโหลดก่อน แล้วเติมข้อมูลเมื่อพร้อม เมนูยังใช้เปลี่ยนไปหน้าอื่นได้ หน้าลงเวลาโหลดข้อมูลส่วนตัวกับข้อมูลทีมแยกกัน ส่วนแดชบอร์ดและหน้าลาแสดงทางลัดหรือปุ่มที่พร้อมใช้ก่อนรายการข้อมูลทั้งหมด
+
+Navigation shows the next page with a loading shell while data arrives. Menus remain usable. Attendance loads personal and team sections independently; dashboard shortcuts and leave controls can appear before the full data lists.
+
+- ค้นหาพนักงานหลังหยุดพิมพ์ 350 มิลลิวินาที หรือกด Enter เพื่อค้นหาทันที จึงไม่เรียกฐานข้อมูลทุกตัวอักษร / Employee search waits for a 350 ms typing pause, or searches immediately on Enter.
+- งานลงเวลา การลา บันทึกพนักงาน ตั้งค่า สร้างรอบเงินเดือน และเปลี่ยนสถานะรอบ ใช้ผลอัปเดตจาก Server Action ที่เรียก `revalidatePath` ไม่สั่ง `router.refresh()` ซ้ำอีกครั้ง / These actions use the refreshed UI returned by `revalidatePath` instead of requesting it again with `router.refresh()`.
+- รายการรอบเงินเดือนให้ฐานข้อมูลนับคนและรวมยอด ไม่ดึงรายการเงินเดือนทุกคนมารวมในเว็บ / Payroll run lists aggregate counts and totals in the database instead of transferring every pay item.
+- ตรวจเซสชันร่วมกันเฉพาะการแสดงผลในคำขอเดียว ไม่แคชข้อมูลสิทธิ์ข้ามผู้ใช้หรือข้ามคำขอ / Session checks are deduplicated within one render request; permissions are never cached across users or requests.
+
+ผลวัดในเครื่องวันที่ 8 กันยายน 2026 ด้วยบัญชี HR บน Chrome โหมด development: เส้นทางพนักงาน ลงเวลา การลา เงินเดือน และแดชบอร์ด เดิมรอประมาณ 1.2–3.7 วินาทีก่อนเปลี่ยน URL หลังปรับเริ่มเปลี่ยนได้ประมาณ 0.04–0.17 วินาที โหมด production ที่ทดสอบในเครื่องหลังแก้เริ่มเปลี่ยนได้ประมาณ 0.03–0.06 วินาที ตัวเลขนี้คือเวลาที่เริ่มเปลี่ยนหน้า ไม่ใช่เวลาที่ข้อมูลทุกส่วนโหลดครบ บางส่วนยังรอฐานข้อมูลประมาณ 1–5 วินาที และเวลาจริงเปลี่ยนตามเครือข่ายกับปริมาณข้อมูล
+
+Local measurements on 8 September 2026 used an HR account in Chrome with the development server. Employee, attendance, leave, payroll, and dashboard navigation previously took about 1.2–3.7 seconds to change the URL; after the changes it took about 0.04–0.17 seconds. A local production build took about 0.03–0.06 seconds after the changes. This measures navigation start, not complete data loading. Some sections still need about 1–5 seconds for data, depending on network conditions and data size.
+
+หากต้องการวัดความเร็วใกล้เคียงการใช้งานจริง ให้รัน `npm run build` แล้ว `npm start` โดยตั้ง `AUTH_URL` เป็น URL ของเซิร์ฟเวอร์นั้น เช่น `http://localhost:3000` โหมด `npm run dev` ยังต้องคอมไพล์หน้าระหว่างพัฒนา จึงไม่ควรใช้ตัวเลขจากการเปิดครั้งแรกเป็นความเร็วของเว็บจริง เว็บออนไลน์ต้องนำโค้ดใหม่นี้ขึ้นระบบก่อนจึงจะได้รับการปรับปรุง
+
+For a production-mode check, run `npm run build` and then `npm start`, setting `AUTH_URL` to that server's address, such as `http://localhost:3000`. Development mode also compiles routes on demand, so its first visit is not a production benchmark. The hosted website needs a deployment of these changes before they take effect there.
+
+หากยังรอข้อมูลนาน ให้เทียบเวลาคำขอใน Network กับเวลา query ของฐานข้อมูล ตรวจว่าเซิร์ฟเวอร์เว็บอยู่ใกล้ฐานข้อมูลและใช้การเชื่อมต่อแบบ pool แล้ว การทดสอบครั้งนี้พบว่าฐานข้อมูล Neon ใช้ pool อยู่ แต่คำสั่งอ่านสั้น ๆ ยังใช้เวลาประมาณ 260 มิลลิวินาทีต่อรอบ การลดรอบที่ต้องรอต่อกันจึงมีผลกับความเร็ว
+
+If data remains slow, compare Network timings with database query timings, and check that the app server is close to the database and uses a pooled connection. This test used an existing Neon pool, but a trivial read still took about 260 ms per round trip, making sequential requests noticeable.
+
+ระหว่างตรวจซ้ำพบฐานข้อมูลเชื่อมต่อไม่ได้ชั่วคราวหนึ่งครั้ง จึงควรแยกปัญหาเครือข่ายออกจากเวลาประมวลผลของหน้าเว็บ การแสดงโครงรอโหลดไม่ได้ทำให้ฐานข้อมูลที่ขาดการเชื่อมต่อกลับมาใช้งานได้
+
+A follow-up check also encountered a temporary database connection failure. Diagnose connectivity separately from page rendering; loading feedback cannot restore an unavailable database connection.
+
 <a id="testing"></a>
 ## ตรวจงานก่อนส่ง · Testing
 
@@ -210,7 +264,7 @@ The seed adds employees, roughly 30 days of attendance, leave requests and balan
 |---|---|
 | `npm run lint` | ข้อผิดพลาดและรูปแบบโค้ดด้วย ESLint / Code issues caught by ESLint. |
 | `npm run typecheck` | ชนิดข้อมูล TypeScript / TypeScript types. |
-| `npm test` | สูตรเงินเดือน กฎลงเวลา วันลา และสิทธิ์ / Payroll, attendance, leave-day calculations, and permissions. |
+| `npm test` | สูตรเงินเดือน กฎลงเวลา วันลา สิทธิ์ การค้นหา และยอดรวมรายการเงินเดือน / Calculations, permissions, search behavior, and payroll list totals. |
 | `npm run build` | สร้างเว็บสำหรับรันจริง โดยสร้าง Prisma Client ก่อน / Build the app after generating Prisma Client. |
 | `npm run test:e2e` | ลองใช้งานผ่านเบราว์เซอร์ / Test the app through a browser. |
 

@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import { PageLoading } from "@/components/shared/page-loading"
 import { Users, UserCheck, Clock, CalendarOff, Inbox, Banknote, LogIn, LogOut as LogOutIcon } from "lucide-react"
 import { Role } from "@prisma/client"
 
@@ -176,6 +178,7 @@ export default async function DashboardPage() {
     <>
       <PageHeader title={t.dashboard.title} description={t.dashboard.description} />
       <QuickActions role={session.user.role} t={t} />
+      <Suspense fallback={<PageLoading />}>
       {session.user.role === Role.ADMIN || session.user.role === Role.HR ? (
         <OrgDashboard t={t} />
       ) : session.user.role === Role.MANAGER && session.user.employeeId ? (
@@ -185,6 +188,7 @@ export default async function DashboardPage() {
       ) : (
         <p className="text-sm text-muted-foreground">{t.dashboard.noEmployeeProfile}</p>
       )}
+      </Suspense>
     </>
   )
 }

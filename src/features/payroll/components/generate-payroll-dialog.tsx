@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useId, useState } from "react"
 import { toast } from "sonner"
 import { format } from "date-fns"
 import { th as thDateLocale } from "date-fns/locale"
@@ -15,8 +14,8 @@ import { useI18n } from "@/i18n/client"
 import { generatePayrollRunAction } from "../actions"
 
 export function GeneratePayrollDialog() {
+  const fieldId = useId()
   const { t, locale } = useI18n()
-  const router = useRouter()
   const now = new Date()
   const [open, setOpen] = useState(false)
   const [month, setMonth] = useState(String(now.getMonth() + 1))
@@ -48,7 +47,6 @@ export function GeneratePayrollDialog() {
     }
     toast.success(t.payroll.generated)
     setOpen(false)
-    router.refresh()
   }
 
   return (
@@ -63,9 +61,9 @@ export function GeneratePayrollDialog() {
         </DialogHeader>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>{t.payroll.month}</Label>
+            <Label htmlFor={`${fieldId}-month`}>{t.payroll.month}</Label>
             <Select items={monthItems} value={month} onValueChange={(value) => setMonth(value ?? month)}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger id={`${fieldId}-month`} className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -78,9 +76,9 @@ export function GeneratePayrollDialog() {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label>{t.payroll.year}</Label>
+            <Label htmlFor={`${fieldId}-year`}>{t.payroll.year}</Label>
             <Select items={yearItems} value={year} onValueChange={(value) => setYear(value ?? year)}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger id={`${fieldId}-year`} className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

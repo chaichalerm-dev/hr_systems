@@ -53,6 +53,9 @@
 }
 
 :root {
+  --scrollbar-track: #edf2f8;
+  --scrollbar-thumb: #a4b6cd;
+  --scrollbar-hover: #6a8ebc;
   --background: #f4f7fb;
   --foreground: #172b46;
   --card: oklch(1 0 0);
@@ -92,6 +95,9 @@
 }
 
 .dark {
+  --scrollbar-track: #14202c;
+  --scrollbar-thumb: #455e78;
+  --scrollbar-hover: #7095be;
   --background: #101923;
   --foreground: oklch(0.985 0 0);
   --card: #182430;
@@ -172,6 +178,92 @@
 .workspace-main { scrollbar-gutter: stable; }
 .workspace-main [data-slot="tabs-content"] { min-width: 0; }
 .workspace-main [data-slot="tabs-list"] { flex-shrink: 0; }
+
+/* ใช้สีและสถานะเดียวกันทั้งตัวเลือกในฟอร์มและเมนูคำสั่ง
+ * Share theme colors and interaction states across selects and action menus. */
+@layer components {
+  .app-select-trigger {
+    border-color: var(--input);
+    border-radius: 0.75rem;
+    background: var(--card);
+    color: var(--foreground);
+    box-shadow: 0 1px 2px rgb(15 35 60 / 4%);
+    cursor: pointer;
+    transition: border-color 150ms, box-shadow 150ms, background-color 150ms;
+  }
+  .app-select-trigger:hover:not(:disabled):not([data-disabled]) {
+    border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+    background: color-mix(in srgb, var(--primary) 3%, var(--card));
+  }
+  .app-select-trigger:is(:focus-visible, [data-popup-open]) {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 14%, transparent);
+  }
+  .app-select-trigger:is([aria-invalid="true"], [data-invalid]) {
+    border-color: var(--destructive);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 12%, transparent);
+  }
+  .app-select-trigger:is(:disabled, [data-disabled]) {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: var(--muted);
+    box-shadow: none;
+  }
+  .app-menu-surface {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--card);
+    color: var(--foreground);
+    box-shadow: 0 16px 40px -12px rgb(15 35 60 / 22%), 0 4px 12px -4px rgb(15 35 60 / 10%);
+  }
+  .dark .app-menu-surface { box-shadow: 0 16px 40px -12px rgb(0 0 0 / 55%); }
+  .app-menu-item {
+    min-height: 2.75rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    transition: background-color 100ms, color 100ms;
+  }
+  .app-menu-item:is([data-highlighted], :focus-visible, [data-popup-open]) {
+    background: color-mix(in srgb, var(--primary) 10%, var(--card));
+    color: var(--primary);
+  }
+  .app-menu-item:is([data-selected], [data-checked]) {
+    background: color-mix(in srgb, var(--primary) 12%, var(--card));
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .app-menu-item[data-variant="destructive"] { color: var(--destructive); }
+  .app-menu-item[data-variant="destructive"]:is([data-highlighted], :focus-visible) {
+    background: color-mix(in srgb, var(--destructive) 10%, var(--card));
+  }
+  .app-menu-item[data-disabled] { pointer-events: none; opacity: 0.45; }
+}
+
+/* ตกแต่งแถบเลื่อนจริงของเบราว์เซอร์ ทั้งแนวตั้งและแนวนอน โดยยังลากหรือใช้ล้อเมาส์ได้ตามปกติ
+ * Theme native vertical and horizontal scrollbars without replacing scrolling behavior. */
+@layer base {
+  * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track); }
+  @supports selector(::-webkit-scrollbar) {
+    * { scrollbar-width: auto; scrollbar-color: auto; }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--scrollbar-track); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb {
+      min-height: 32px;
+      border: 2px solid var(--scrollbar-track);
+      border-radius: 999px;
+      background: var(--scrollbar-thumb);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-hover); }
+    ::-webkit-scrollbar-thumb:active { background: var(--primary); }
+    ::-webkit-scrollbar-corner { background: var(--scrollbar-track); }
+  }
+  @media (forced-colors: active) {
+    * { scrollbar-color: auto; }
+    ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: Canvas; }
+    ::-webkit-scrollbar-thumb { background: ButtonText; border-color: Canvas; }
+    .app-menu-item:is([data-selected], [data-checked], [data-highlighted], :focus-visible) { outline: 1px solid Highlight; }
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }

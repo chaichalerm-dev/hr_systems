@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useId, useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Plus } from "lucide-react"
@@ -14,6 +14,7 @@ import { useTranslations } from "@/i18n/client"
 import { addPayrollAdjustmentAction } from "../actions"
 
 export function AddAdjustmentDialog({ payrollItemId, employeeName }: { payrollItemId: string; employeeName: string }) {
+  const typeId = useId()
   const t = useTranslations()
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -63,9 +64,9 @@ export function AddAdjustmentDialog({ payrollItemId, employeeName }: { payrollIt
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label>{t.payroll.adjustmentType}</Label>
+            <Label htmlFor={typeId}>{t.payroll.adjustmentType}</Label>
             <Select items={typeItems} value={type} onValueChange={(value) => setType(value ?? "INCOME")}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger id={typeId} className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

@@ -1,7 +1,8 @@
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
+import { Suspense } from "react"
+import type { Session } from "next-auth"
 
-import { auth } from "@/server/auth"
+import { requirePageSession } from "@/server/authorization"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import { MobileNav } from "@/components/layout/mobile-nav"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
@@ -13,23 +14,20 @@ import { prisma } from "@/db/client"
 import { WorkspaceTools } from "@/components/layout/workspace-tools"
 import { getDictionary } from "@/i18n/server"
 
-export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth()
-  if (!session?.user) redirect("/login")
-
-  const [employee, cookieStore] = await Promise.all([
-    session.user.employeeId
-      ? prisma.employee.findUnique({
-          where: { id: session.user.employeeId },
-          select: { firstName: true, lastName: true },
-        })
-      : Promise.resolve(null),
-    cookies(),
-  ])
-
+async function NamedUserMenu({ session }: { session: Session }) {
+  const employee = session.user.employeeId
+    ? await prisma.employee.findUnique({
+        where: { id: session.user.employeeId },
+        select: { firstName: true, lastName: true },
+      })
+    : null
   const displayName = employee ? `${employee.firstName} ${employee.lastName}` : session.user.email ?? "User"
+  return <UserMenu name={displayName} email={session.user.email ?? ""} role={session.user.role} />
+}
+
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
+  const [session, cookieStore, t] = await Promise.all([requirePageSession(), cookies(), getDictionary()])
   const sidebarCollapsed = cookieStore.get(SIDEBAR_COOKIE)?.value === "collapsed"
-  const t = await getDictionary()
 
   return (
     // จำกัดโครงหน้าให้สูงเท่าจอ เพื่อให้เมนูและแถบบนอยู่กับที่ขณะเลื่อนเนื้อหา
@@ -51,7 +49,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <div className="flex shrink-0 items-center gap-2">
             <LanguageSwitcher />
             <ThemeToggle />
-            <UserMenu name={displayName} email={session.user.email ?? ""} role={session.user.role} />
+            {/* โหลดชื่อภายหลัง ให้เมนูและหน้าใหม่พร้อมใช้ก่อนฐานข้อมูลตอบกลับ */}
+            {/* Stream the display name without blocking the shell on a database query. */}
+            <Suspense fallback={<UserMenu name={session.user.email ?? "User"} email={session.user.email ?? ""} role={session.user.role} />}>
+              <NamedUserMenu session={session} />
+            </Suspense>
           </div>
         </header>
         <main id="main-content" tabIndex={-1} className="workspace-main flex-1 overflow-y-auto p-4 pb-8 outline-none md:p-8">

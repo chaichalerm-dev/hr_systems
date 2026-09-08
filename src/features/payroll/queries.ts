@@ -16,17 +16,20 @@ export interface PayrollRunListItem {
 }
 
 export async function listPayrollRuns(): Promise<PayrollRunListItem[]> {
-  const runs = await prisma.payrollRun.findMany({
-    include: { items: { select: { netSalary: true } } },
-    orderBy: [{ year: "desc" }, { month: "desc" }],
-  })
+  // ให้ฐานข้อมูลรวมยอด ไม่ส่งรายการเงินเดือนทุกคนมานับซ้ำบนเซิร์ฟเวอร์
+  // Aggregate in the database instead of transferring every employee's pay item.
+  const [runs, totals] = await Promise.all([
+    prisma.payrollRun.findMany({ orderBy: [{ year: "desc" }, { month: "desc" }] }),
+    prisma.payrollItem.groupBy({ by: ["payrollRunId"], _count: { _all: true }, _sum: { netSalary: true } }),
+  ])
+  const totalsByRun = new Map(totals.map((total) => [total.payrollRunId, total]))
   return runs.map((run) => ({
     id: run.id,
     month: run.month,
     year: run.year,
     status: run.status,
-    employeeCount: run.items.length,
-    totalNet: run.items.reduce((sum, i) => sum + Number(i.netSalary), 0),
+    employeeCount: totalsByRun.get(run.id)?._count._all ?? 0,
+    totalNet: Number(totalsByRun.get(run.id)?._sum.netSalary ?? 0),
     createdAt: run.createdAt,
     paidAt: run.paidAt,
   }))

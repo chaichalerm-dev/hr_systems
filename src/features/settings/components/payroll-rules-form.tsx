@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
@@ -56,7 +55,6 @@ function NumberField({
 
 export function PayrollRulesForm({ initial }: { initial: PayrollRules }) {
   const t = useTranslations()
-  const router = useRouter()
   const [isPending, setIsPending] = useState(false)
 
   const form = useForm<PayrollRulesFormInput>({
@@ -77,7 +75,9 @@ export function PayrollRulesForm({ initial }: { initial: PayrollRules }) {
       return
     }
     toast.success(t.settings.payrollRulesUpdated)
-    router.refresh()
+    // ตั้งค่าที่เพิ่งบันทึกให้เป็นค่าฐานใหม่ ปุ่มจะได้กลับไปกดไม่ได้จนกว่าจะแก้จริง
+    // Reset the dirty baseline to what was just saved, so Save disables again until it's actually edited.
+    form.reset(values)
   }
 
   return (
@@ -101,7 +101,9 @@ export function PayrollRulesForm({ initial }: { initial: PayrollRules }) {
             step="1"
           />
         </div>
-        <Button type="submit" disabled={isPending}>
+        {/* กันกดบันทึกทั้งที่ยังไม่ได้แก้อะไร จะได้ไม่งงว่าเซฟอะไรไป */}
+        {/* Disabled until something actually changes, so there's no confusion about what got saved. */}
+        <Button type="submit" disabled={isPending || !form.formState.isDirty}>
           {isPending ? t.common.saving : t.settings.savePayrollRules}
         </Button>
       </form>

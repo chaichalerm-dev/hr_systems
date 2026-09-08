@@ -38,6 +38,7 @@ export async function getMonthlySummary(employeeId: string, month: number, year:
 
   const records = await prisma.attendance.findMany({
     where: { employeeId, date: { gte: start, lte: end } },
+    select: { status: true, workingHours: true },
   })
 
   return {
@@ -56,9 +57,9 @@ export async function listTodayTeamAttendance(employeeIds: string[]) {
       employeeId: { in: employeeIds },
       date: { gte: startOfDay(new Date()), lte: endOfDay(new Date()) },
     },
-    include: {
-      employee: { select: { id: true, firstName: true, lastName: true, employeeCode: true, profileImageUrl: true } },
-    },
+    // หน้านี้มีรายชื่อทีมแล้ว จึงดึงเฉพาะสถานะ ไม่อ่านข้อมูลพนักงานซ้ำอีกรอบ
+    // The page already has team members; fetch statuses without another employee query.
+    select: { employeeId: true, status: true },
   })
 }
 

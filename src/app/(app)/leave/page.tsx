@@ -1,4 +1,8 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
+import type { Session } from "next-auth"
+import type { Dictionary } from "@/i18n/dictionaries/en"
+import { PageLoading } from "@/components/shared/page-loading"
 import { Role } from "@prisma/client"
 
 import { requirePageSession } from "@/server/authorization"
@@ -13,13 +17,16 @@ import { WorkflowGuide } from "@/components/shared/workflow-guide"
 
 export const metadata: Metadata = { title: "Leave" }
 
-export default async function LeavePage() {
-  const [session, t] = await Promise.all([requirePageSession(), getDictionary()])
+async function LeaveRequestButton() {
+  const leaveTypes = await listLeaveTypes()
+  return <NewLeaveRequestDialog leaveTypes={leaveTypes} />
+}
+
+async function LeaveContent({ session, t }: { session: Session; t: Dictionary }) {
   const currentYear = new Date().getFullYear()
   const canApprove = session.user.role === Role.MANAGER || session.user.role === Role.HR || session.user.role === Role.ADMIN
 
-  const [leaveTypes, myRequests, balances, pendingApprovals] = await Promise.all([
-    listLeaveTypes(),
+  const [myRequests, balances, pendingApprovals] = await Promise.all([
     session.user.employeeId ? listMyLeaveRequests(session.user.employeeId) : Promise.resolve([]),
     session.user.employeeId ? listLeaveBalances(session.user.employeeId, currentYear) : Promise.resolve([]),
     canApprove ? listPendingApprovals(session) : Promise.resolve([]),
@@ -45,13 +52,6 @@ export default async function LeavePage() {
 
   return (
     <>
-      <PageHeader
-        title={t.leave.title}
-        description={t.leave.description}
-        actions={session.user.employeeId ? <NewLeaveRequestDialog leaveTypes={leaveTypes} /> : undefined}
-      />
-
-      <WorkflowGuide title={t.workspace.leaveGuide} steps={[t.workspace.leaveStep1, t.workspace.leaveStep2, t.workspace.leaveStep3]} />
       {canApprove ? (
         <Tabs defaultValue="approvals">
           <TabsList>
@@ -70,6 +70,21 @@ export default async function LeavePage() {
       ) : (
         myRequestsView
       )}
+    </>
+  )
+}
+
+export default async function LeavePage() {
+  const [session, t] = await Promise.all([requirePageSession(), getDictionary()])
+  return (
+    <>
+      <PageHeader
+        title={t.leave.title}
+        description={t.leave.description}
+        actions={session.user.employeeId ? <Suspense fallback={<span className="text-sm text-muted-foreground" role="status">{t.common.loading}</span>}><LeaveRequestButton /></Suspense> : undefined}
+      />
+      <WorkflowGuide title={t.workspace.leaveGuide} steps={[t.workspace.leaveStep1, t.workspace.leaveStep2, t.workspace.leaveStep3]} />
+      <Suspense fallback={<PageLoading />}><LeaveContent session={session} t={t} /></Suspense>
     </>
   )
 }

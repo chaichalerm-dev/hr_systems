@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Settings,
   ReceiptText,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react"
 import { Role } from "@prisma/client"
@@ -38,6 +39,7 @@ export interface NavGroup {
 // Show overview, workforce, payroll, and administration in that order.
 export const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard, roles: [Role.ADMIN, Role.HR, Role.MANAGER, Role.EMPLOYEE], group: "groupOverview" },
+  { href: "/guide", labelKey: "guide", icon: BookOpen, roles: [Role.ADMIN, Role.HR, Role.MANAGER, Role.EMPLOYEE], group: "groupOverview" },
 
   { href: "/employees", labelKey: "employees", icon: Users, roles: [Role.ADMIN, Role.HR, Role.MANAGER], group: "groupWorkforce" },
   { href: "/attendance", labelKey: "attendance", icon: CalendarCheck, roles: [Role.ADMIN, Role.HR, Role.MANAGER, Role.EMPLOYEE], group: "groupWorkforce" },
